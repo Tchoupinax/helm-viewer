@@ -32,6 +32,20 @@ Running the command will analyze the Helm chart and generate an HTML report, whi
 # Development
 ## Generate the binary
 
+To generate the binary for the helm-viewer project, we use the `just` command, which is a task runner tool. It helps streamline various development tasks and automates common actions.
+
+The `just` command in this project is configured to perform the necessary steps to generate the binary for helm-viewer. This ensures that the project can be easily built and distributed to users.
+
+To use the `just` command, you'll need to have it installed on your system. You can download it from the official GitHub repository:
+
+- GitHub: [https://github.com/casey/just](https://github.com/casey/just)
+
+Make sure to follow the installation instructions provided in the `just` repository's documentation for your specific operating system.
+
+Once you have `just` installed, generating the binary is as simple as running the following command:
+
 ```bash
 just
 ```
+
+This will execute the predefined tasks and generate the binary file required for running the helm-viewer tool.
