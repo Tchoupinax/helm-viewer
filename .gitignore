@@ -1,0 +1,9 @@
+*.tgz
+.DS_Store
+binary
+compiled
+dist
+global-data.js
+global-data.json
+node_modules
+tmp

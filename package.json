@@ -1,0 +1,50 @@
+{
+  "name": "helm-viewer",
+  "version": "0.2.0-rc1",
+  "description": "Quick tool to easily view your helm charts.",
+  "author": "Tchoupinax <corentinfiloche@hotmail.fr> (https://corentinfiloche.xyz)",
+  "license": "MIT",
+  "bin": {
+    "helm-viewer": "bin/helm-template.mjs"
+  },
+  "keywords": [
+    "helm",
+    "charts",
+    "helm chart"
+  ],
+  "homepage": "https://github.com/Tchoupinax/helm-viewer",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Tchoupinax/helm-viewer"
+  },
+  "bugs": {
+    "url": "https://github.com/Tchoupinax/helm-viewer/issues"
+  },
+  "scripts": {
+    "=== PUBLICATION ======================================": "",
+    "pack": "npm pack --dry-run",
+    "publish": "npm publish",
+    "=== RUN ==============================================": "",
+    "run": "NODE_ENV=development npx vite-node src/index.ts -- ~/Downloads/traefik-helm-chart/traefik",
+    "=== BUILD ============================================": "",
+    "build": "tsc",
+    "=== CLEAN ============================================": "",
+    "clear": "rm -rf dist binary tmp compiled src/assets",
+    "clean": "rm -rf dist binary tmp compiled src/assets"
+  },
+  "dependencies": {
+    "chalk": "5.2.0",
+    "execa": "7.1.1",
+    "open": "8.4.2"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "4.0.5",
+    "@types/node": "20.3.1",
+    "@vercel/ncc": "0.36.1",
+    "js-yaml": "4.1.0",
+    "npm-packlist": "7.0.4",
+    "postject": "1.0.0-alpha.6",
+    "typescript": "5.1.3",
+    "vite-node": "0.32.2"
+  }
+}
