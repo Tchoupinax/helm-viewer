@@ -1,4 +1,6 @@
 *.d.ts
+*.tgz
+.github
 .nvmrc
 binary/xdg-open
 compiled
@@ -10,4 +12,3 @@ tmp
 tsconfig.base.json
 tsconfig.json
 xdg-open
-.github
