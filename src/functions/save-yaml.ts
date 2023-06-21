@@ -1,8 +1,8 @@
 import { mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'fs';
 import yaml from 'js-yaml'
-import { join } from 'path';
+import { join } from "path";
 
-export function saveTemplatedYamlToFiles(helmTemplate: string): void {
+export function saveTemplatedYamlToFiles(tmpDir: string, helmTemplate: string): void {
   const dataFileJSON = { templated: {} };
   const files = helmTemplate.split('---');
 
@@ -10,7 +10,7 @@ export function saveTemplatedYamlToFiles(helmTemplate: string): void {
     const jsonFile = yaml.load(file) as any;
     if (jsonFile) {
       const key = jsonFile.kind + "_" + jsonFile?.metadata?.name.replaceAll('-', "_");
-      writeFileSync(`./tmp/templated/${key}.yaml`, file);
+      writeFileSync(`${tmpDir}/templated/${key}.yaml`, file);
 
       if(!dataFileJSON["templated"][jsonFile.kind]) {
         dataFileJSON["templated"][jsonFile.kind] = {}
@@ -19,11 +19,11 @@ export function saveTemplatedYamlToFiles(helmTemplate: string): void {
     }
   }
 
-  writeFileSync('tmp/global-data.json', JSON.stringify(dataFileJSON, null, 2))
+  writeFileSync(`${tmpDir}/global-data.json`, JSON.stringify(dataFileJSON, null, 2))
 }
 
-export function saveSourcesYamlToFiles(path: string, prefix = false): void {
-  const dataFileJSON = JSON.parse(readFileSync('tmp/global-data.json', 'utf-8'));
+export function saveSourcesYamlToFiles(path: string, tmpDir: string, prefix = false): void {
+  const dataFileJSON = JSON.parse(readFileSync(`${tmpDir}/global-data.json`, 'utf-8'));
   if (!dataFileJSON["sources"]) {
     dataFileJSON["sources"] = {}
   }
@@ -35,10 +35,10 @@ export function saveSourcesYamlToFiles(path: string, prefix = false): void {
 
     if (!statSync(fileFullPath).isDirectory()) {
       const fileContent = readFileSync(fileFullPath);
-      let destinationPath = `./tmp/sources/${file}`
+      let destinationPath = `${tmpDir}/sources/${file}`
       if (prefix) {
-        mkdirSync(`./tmp/sources/${path.split('/').at(-1)}`, { recursive: true });
-        destinationPath = `./tmp/sources/${path.split('/').at(-1)}/${file}` 
+        mkdirSync(`${tmpDir}/sources/${path.split('/').at(-1)}`, { recursive: true });
+        destinationPath = `${tmpDir}/sources/${path.split('/').at(-1)}/${file}` 
       }
       writeFileSync(destinationPath, fileContent);
 
@@ -50,11 +50,11 @@ export function saveSourcesYamlToFiles(path: string, prefix = false): void {
         }
 
         dataFileJSON["sources"][path.split('/').at(-1)][file] = String(fileContent);
-        writeFileSync('tmp/global-data.json', JSON.stringify(dataFileJSON, null, 2))
+        writeFileSync(`${tmpDir}/global-data.json`, JSON.stringify(dataFileJSON, null, 2))
       }
     } else {
-      writeFileSync('tmp/global-data.json', JSON.stringify(dataFileJSON, null, 2))
-      saveSourcesYamlToFiles(fileFullPath, true);
+      writeFileSync(`${tmpDir}/global-data.json`, JSON.stringify(dataFileJSON, null, 2))
+      saveSourcesYamlToFiles(fileFullPath, tmpDir, true);
     }
   }
 }
