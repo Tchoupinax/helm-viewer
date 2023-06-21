@@ -1,5 +1,8 @@
 # helm-viewer
 
+Github: https://github.com/Tchoupinax/helm-viewer
+NPM: https://www.npmjs.com/package/helm-viewer
+
 ## Motivation
 
 When you are writing a [helm Chart](https://helm.sh/docs/topics/charts/), you often want to generate the template and check what is the final result. To reach this goal, helm provides this command : `helm template`.
