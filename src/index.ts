@@ -1,18 +1,20 @@
 import { isChartFolder } from './functions/is-chart-folder';
 import { $ } from 'execa'
 import { saveSourcesYamlToFiles, saveTemplatedYamlToFiles } from './functions/save-yaml';
-import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'fs';
 import open from 'open';
 import { randomUUID } from 'crypto';
 import chalk from 'chalk';
+import { tmpdir } from 'os';
 
 async function run() {
   const currentPath = process.argv?.at(2) ?? process.cwd();
   console.log(chalk.bgCyanBright(`path detected ${currentPath}`));
+  const tmpDir = `${tmpdir()}/${randomUUID()}`;
 
-  rmSync('tmp', { recursive: true, force: true });
-  mkdirSync('tmp/templated', { recursive: true });
-  mkdirSync('tmp/sources', { recursive: true });
+  mkdirSync(tmpDir, { recursive: true });
+  mkdirSync(`${tmpDir}/sources`, { recursive: true });
+  mkdirSync(`${tmpDir}/templated`, { recursive: true });
 
   if(!isChartFolder(currentPath)) {
     console.log('Not a chart folder');
@@ -31,13 +33,13 @@ async function run() {
     process.exit(1)
   }
   
-  saveTemplatedYamlToFiles(stdout)
+  saveTemplatedYamlToFiles(tmpDir, stdout)
 
   // Save sources files
-  saveSourcesYamlToFiles(currentPath);
+  saveSourcesYamlToFiles(currentPath, tmpDir);
 
   // Create the script
-  const JSON = readFileSync('tmp/global-data.json', 'utf-8');
+  const JSON = readFileSync(`${tmpDir}/global-data.json`, 'utf-8');
   if (process.env.NODE_ENV === "development") {
     mkdirSync('src/assets', { recursive: true });
     writeFileSync('src/assets/global-data.js', `const DATA = ${JSON}`)
@@ -53,10 +55,10 @@ async function run() {
 
   const id = randomUUID();
   writeFileSync(
-    `tmp/index-${id}.html`,
+    `${tmpDir}/index-${id}.html`,
     file,
-  )
-  open(`tmp/index-${id}.html`);
+  );
+  open(`${tmpDir}/index-${id}.html`);
 };
 
 run();
