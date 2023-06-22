@@ -1,15 +1,12 @@
 # helm-viewer
 
-- Github: https://github.com/Tchoupinax/helm-viewer
-- NPM: https://www.npmjs.com/package/helm-viewer
+- NPM: [https://www.npmjs.com/package/helm-viewer](https://www.npmjs.com/package/helm-viewer)
 
 ## Motivation
 
-When you are writing a [helm Chart](https://helm.sh/docs/topics/charts/), you often want to generate the template and check what is the final result. To reach this goal, helm provides this command : `helm template`.
+When working with [Helm Charts](https://helm.sh/docs/topics/charts/), it is often helpful to generate the template and check the final result. The `helm template` command provided by Helm serves this purpose. However, the output of this command is a large block of raw text, making it cumbersome to analyze.
 
-However, the output of this command is a huge raw text and it is mainly painful.
-
-This project aims to give you the right tool to build helm chart.
+The helm-viewer project aims to provide a user-friendly tool for building Helm charts.
 
 ## Installation
 
@@ -21,20 +18,34 @@ npm i -g helm-viewer
 ## Usage
 
 ```bash
-# When you are in a chart helm folder
+# Run in a Helm chart folder
 helm-viewer
 
-# To target a specific path
-helm-viewer path/of/the/chart
+# Specify a specific path
+helm-viewer path/to/the/chart
 ```
 
-It will analyze the helm chart and generate a HTML report, automatically opened in your favorite browser.
+Running the command will analyze the Helm chart and generate an HTML report, which will be automatically opened in your default web browser.
 
+![Screenshot of the output](./.github/ressources/demo-1.png)
 
 # Development
 ## Generate the binary
 
-```
+To generate the binary for the helm-viewer project, we use the `just` command, which is a task runner tool. It helps streamline various development tasks and automates common actions.
+
+The `just` command in this project is configured to perform the necessary steps to generate the binary for helm-viewer. This ensures that the project can be easily built and distributed to users.
+
+To use the `just` command, you'll need to have it installed on your system. You can download it from the official GitHub repository:
+
+- GitHub: [https://github.com/casey/just](https://github.com/casey/just)
+
+Make sure to follow the installation instructions provided in the `just` repository's documentation for your specific operating system.
+
+Once you have `just` installed, generating the binary is as simple as running the following command:
+
+```bash
 just
 ```
 
+This will execute the predefined tasks and generate the binary file required for running the helm-viewer tool.
