@@ -1,6 +1,6 @@
 {
   "name": "helm-viewer",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Quick tool to easily view your helm charts.",
   "author": "Tchoupinax <corentinfiloche@hotmail.fr> (https://corentinfiloche.xyz)",
   "license": "MIT",
@@ -25,7 +25,7 @@
     "pack": "npm pack --dry-run",
     "publish": "npm publish",
     "=== RUN ==============================================": "",
-    "run": "NODE_ENV=development npx vite-node src/index.ts -- ~/Downloads/traefik-helm-chart/traefik",
+    "run": "NODE_ENV=development npx vite-node src/index.ts -- ~/Downloads/traefik",
     "=== BUILD ============================================": "",
     "build": "tsc",
     "=== CLEAN ============================================": "",

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.0 | 2023-06-25
+
+#### Features
+
+- Allow to use an external values file to compute the chart
+
 ## 0.2.0 | 2023-06-21
 
 #### Docs
