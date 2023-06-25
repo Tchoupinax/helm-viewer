@@ -22,16 +22,18 @@
 </head>
 <body>
   <div id="app" class="flex h-screen">
-    <div class="w-1/5 bg-blue-50 h-full">
+    <div 
+      class="w-2/5 xl:w-1/5 bg-blue-50 h-screen overflow-scroll"
+    >
       <div class="p-2">
-        <h1 class="italic text-4xl font-thin ml-4 mb-8">>> Computed files</h1>
+        <h1 class="italic text-2xl xl:text-4xl font-thin ml-4 mb-8">>> Computed files</h1>
 
         <div
           v-if="data.templated"
           v-for="template of Object.keys(data.templated)"
-          class="mb-8"
+          class="mb-2"
         >
-          <p class="text-3xl font-thin">
+          <p class="text-xl xl:text-3xl font-thin">
             {{ template }}
           </p>
 

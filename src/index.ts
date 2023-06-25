@@ -9,7 +9,15 @@ import { tmpdir } from 'os';
 
 async function run() {
   const currentPath = process.argv?.at(2) ?? process.cwd();
-  console.log(chalk.bgCyanBright(`path detected ${currentPath}`));
+  const values = process.argv?.at(3) ?? undefined;
+
+  console.log(chalk.cyanBright(`⚡️ Path detected ${currentPath}`));
+  console.log(
+    values
+      ? chalk.greenBright(`🔑 Values detected ${values}`)
+      : chalk.redBright(`❌ No value detected, computing with default values in the Chart`)
+  );
+
   const tmpDir = `${tmpdir()}/${randomUUID()}`;
 
   mkdirSync(tmpDir, { recursive: true });
@@ -23,8 +31,13 @@ async function run() {
 
   // Template files and save them
   let stdout;
+
   try {
-    ({ stdout } = await $`helm template ${currentPath}`);
+    if (!values) {
+      ({ stdout } = await $`helm template ${currentPath}`);
+    } else {
+      ({ stdout } = await $`helm template ${currentPath} --values ${values}`);
+    }
   } catch (err) {
     console.log("\n")
     console.log(chalk.bgRedBright("The computation of the chart failed. (message below)"));
@@ -58,6 +71,7 @@ async function run() {
     `${tmpDir}/index-${id}.html`,
     file,
   );
+
   open(`${tmpDir}/index-${id}.html`);
 };
 

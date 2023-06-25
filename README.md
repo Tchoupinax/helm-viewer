@@ -26,6 +26,9 @@ helm-viewer
 
 # To target a specific path
 helm-viewer path/of/the/chart
+
+# To compute the chart with an external values file
+helm-viewer path/of/the/chart path/of/the/values/file
 ```
 
 It will analyze the helm chart and generate a HTML report, automatically opened in your favorite browser.
