@@ -84,6 +84,13 @@
 
   <script src="assets/global-data.js"></script>
   <script>
+    function load_js() {
+      var head= document.getElementsByTagName('head')[0];
+      var script= document.createElement('script');
+      script.src= 'assets/global-data.js';
+      head.appendChild(script);
+   }
+
     const { createApp, ref } = Vue
     createApp({
       data() {
@@ -92,14 +99,38 @@
           fileName: undefined,
           source: undefined,
           isSourceTemplate: false,
+          data: {}
         }
       },
-      setup() {
-        const message = ref('Hello vue!')
-        return {
-          message,
-          data: DATA,
+      mounted() {
+        this.data = DATA;
+        window.addEventListener("keydown", (e) => {
+        e.preventDefault()
+        
+        if (e.keyCode === 82 && e.metaKey) {
+          this.data = DATA;
+
+          if (this.isTemplate) {
+            document.getElementById('container').innerHTML = ""
+            require(["vs/editor/editor.main"], () => {
+              monaco.editor.create(document.getElementById('container'), {
+                value: this.data["sources"]["templates"][this.fileName],
+                language: 'yaml',
+                theme: 'vs-dark',
+              });
+            });
+          } else {
+            document.getElementById('container').innerHTML = ""
+            require(["vs/editor/editor.main"], () => {
+              monaco.editor.create(document.getElementById('container'), {
+                value: this.data["sources"][this.fileName],
+                language: 'yaml',
+                theme: 'vs-dark',
+              });
+            });
+          }
         }
+      })
       },
       methods: {
         displayTemplatedFile(templateFile, fileName) {

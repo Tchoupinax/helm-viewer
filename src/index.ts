@@ -55,7 +55,7 @@ async function run() {
   const JSON = readFileSync(`${tmpDir}/global-data.json`, 'utf-8');
   if (process.env.NODE_ENV === "development") {
     mkdirSync('src/assets', { recursive: true });
-    writeFileSync('src/assets/global-data.js', `const DATA = ${JSON}`)
+    writeFileSync('src/assets/global-data.js', `DATA = ${JSON}`)
   }
 
   // Generate Production HTML
@@ -72,7 +72,9 @@ async function run() {
     file,
   );
 
-  open(`${tmpDir}/index-${id}.html`);
+  if (process.env.NODE_ENV !== "development") {
+    open(`${tmpDir}/index-${id}.html`);
+  }
 };
 
 run();
