@@ -1,5 +1,7 @@
 <template>
   <div id="app" class="flex flex-col h-12">
+    <Loader v-if="!data.templated" />
+
     <div class="p-2">
       search bar
     </div>
@@ -70,8 +72,8 @@
 <script lang="ts">
 export type Store = {
   data: {
-    templated: {},
-    sources: {}
+    templated: object | undefined,
+    sources: object | undefined,
   }
 };
 
@@ -79,8 +81,8 @@ export default {
   data(): Store {
     return {
       data: {
-        templated: {},
-        sources: {},
+        templated: undefined,
+        sources: undefined,
       }
     }
   },

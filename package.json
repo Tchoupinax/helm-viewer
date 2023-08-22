@@ -25,7 +25,7 @@
     "pack": "npm pack --dry-run",
     "publish": "npm publish",
     "=== RUN ==============================================": "",
-    "run": "NODE_ENV=development npx vite-node src/index.ts -- ~/Downloads/traefik",
+    "run": "NODE_ENV=development npx vite-node src/index.ts -- ~/Documents/swan/deploy-tools/prometheus/master",
     "=== BUILD ============================================": "",
     "test": "vitest",
     "build": "tsc",
