@@ -1,12 +1,12 @@
 import { isChartFolder } from './functions/is-chart-folder';
 import { $ } from 'execa'
 import { saveSourcesYamlToFiles, saveTemplatedYamlToFiles } from './functions/save-yaml';
-import { mkdirSync, readFileSync, writeFileSync } from 'fs';
-import open from 'open';
+import { mkdirSync, readFileSync } from 'fs';
 import { randomUUID } from 'crypto';
 import chalk from 'chalk';
 import { tmpdir } from 'os';
 import { serverFileTemporary } from './functions/serve-file-temporary';
+import open from 'open'
 
 async function run() {
   const currentPath = process.argv?.at(2) ?? process.cwd();
@@ -16,7 +16,7 @@ async function run() {
   console.log(
     values
       ? chalk.greenBright(`🔑 Values detected ${values}`)
-      : chalk.redBright(`❌ No value detected, computing with default values in the Chart`)
+      : chalk.yellowBright(`⚠️ No value detected, computing with default values in the Chart`)
   );
 
   const tmpDir = `${tmpdir()}/${randomUUID()}`;
@@ -54,32 +54,16 @@ async function run() {
 
   // Create the script
   const JSON_DATA = readFileSync(`${tmpDir}/global-data.json`, 'utf-8');
+  
+  const id = randomUUID()
   if (process.env.NODE_ENV === "development") {
-    mkdirSync('src/assets', { recursive: true });
-    writeFileSync('src/assets/global-data.js', `DATA = ${JSON_DATA}`)
-    writeFileSync('src/assets/global-data-d.js', JSON.stringify(JSON_DATA))
-  }
-
-  // Generate Production HTML
-  let file = readFileSync(__dirname+'/index.html', 'utf-8');
-  file = file
-    .replace(
-      '<script src="assets/global-data.js"></script>',
-      `<script>const DATA = ${JSON_DATA};</script>`
-    )
-
-  const id = randomUUID();
-  writeFileSync(
-    `${tmpDir}/index-${id}.html`,
-    file,
-  );
-
-  if (process.env.NODE_ENV !== "development") {
-    open(`${tmpDir}/index-${id}.html`);
+    open(`http://localhost:3000?id=${id}`)
+  } else {
+    open(`https://helm-viewer.vercel.app?id=${id}`)
   }
 
   await serverFileTemporary(JSON_DATA, 12094);
-  console.log('end')
+
   process.exit(0)
 };
 

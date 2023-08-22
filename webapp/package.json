@@ -8,10 +8,12 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
-  "devDependencies": {
+  "dependencies": {
     "@nuxt/devtools": "latest",
     "@nuxtjs/tailwindcss": "6.8.0",
     "@types/node": "18.17.3",
-    "nuxt": "3.6.5"
+    "monaco-editor": "0.41.0",
+    "nuxt": "3.6.5",
+    "nuxt-monaco-editor": "1.2.3"
   }
 }

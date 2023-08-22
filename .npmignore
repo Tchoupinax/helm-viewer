@@ -11,4 +11,5 @@ tailwind.config.ts
 tmp
 tsconfig.base.json
 tsconfig.json
+webapp
 xdg-open
