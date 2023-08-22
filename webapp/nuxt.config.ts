@@ -5,6 +5,7 @@ export default defineNuxtConfig({
   ssr: false,
   devtools: { enabled: true },
   modules: [
+    'nuxt-monaco-editor',
     "@nuxtjs/tailwindcss",
   ],
   experimental: {
