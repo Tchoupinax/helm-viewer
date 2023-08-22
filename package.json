@@ -27,6 +27,7 @@
     "=== RUN ==============================================": "",
     "run": "NODE_ENV=development npx vite-node src/index.ts -- ~/Downloads/traefik",
     "=== BUILD ============================================": "",
+    "test": "vitest",
     "build": "tsc",
     "=== CLEAN ============================================": "",
     "clear": "rm -rf dist binary tmp compiled src/assets",
@@ -34,17 +35,18 @@
   },
   "dependencies": {
     "chalk": "5.3.0",
-    "execa": "7.2.0",
+    "execa": "8.0.1",
     "open": "9.1.0"
   },
   "devDependencies": {
     "@types/js-yaml": "4.0.5",
-    "@types/node": "20.4.9",
+    "@types/node": "20.5.1",
     "@vercel/ncc": "0.36.1",
     "js-yaml": "4.1.0",
     "npm-packlist": "7.0.4",
     "postject": "1.0.0-alpha.6",
     "typescript": "5.1.6",
-    "vite-node": "0.34.1"
+    "vite-node": "0.34.2",
+    "vitest": "^0.34.2"
   }
 }

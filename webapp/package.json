@@ -1,0 +1,17 @@
+{
+  "name": "helm-viewer-webapp",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "watch": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "latest",
+    "@nuxtjs/tailwindcss": "6.8.0",
+    "@types/node": "18.17.3",
+    "nuxt": "3.6.5"
+  }
+}

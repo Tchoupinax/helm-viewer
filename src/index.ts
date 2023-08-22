@@ -6,6 +6,7 @@ import open from 'open';
 import { randomUUID } from 'crypto';
 import chalk from 'chalk';
 import { tmpdir } from 'os';
+import { serverFileTemporary } from './functions/serve-file-temporary';
 
 async function run() {
   const currentPath = process.argv?.at(2) ?? process.cwd();
@@ -52,10 +53,11 @@ async function run() {
   saveSourcesYamlToFiles(currentPath, tmpDir);
 
   // Create the script
-  const JSON = readFileSync(`${tmpDir}/global-data.json`, 'utf-8');
+  const JSON_DATA = readFileSync(`${tmpDir}/global-data.json`, 'utf-8');
   if (process.env.NODE_ENV === "development") {
     mkdirSync('src/assets', { recursive: true });
-    writeFileSync('src/assets/global-data.js', `DATA = ${JSON}`)
+    writeFileSync('src/assets/global-data.js', `DATA = ${JSON_DATA}`)
+    writeFileSync('src/assets/global-data-d.js', JSON.stringify(JSON_DATA))
   }
 
   // Generate Production HTML
@@ -63,7 +65,7 @@ async function run() {
   file = file
     .replace(
       '<script src="assets/global-data.js"></script>',
-      `<script>const DATA = ${JSON};</script>`
+      `<script>const DATA = ${JSON_DATA};</script>`
     )
 
   const id = randomUUID();
@@ -75,6 +77,10 @@ async function run() {
   if (process.env.NODE_ENV !== "development") {
     open(`${tmpDir}/index-${id}.html`);
   }
+
+  await serverFileTemporary(JSON_DATA, 12094);
+  console.log('end')
+  process.exit(0)
 };
 
 run();
