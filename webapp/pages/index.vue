@@ -2,11 +2,26 @@
   <div id="app" class="flex flex-col h-12">
     <Loader v-if="!data.templated" />
 
+    <modal v-if="sharedUrl" @close="sharedUrl=''">
+      <template #body>
+        <div class="flex items-center justify-center w-full">
+          <input v-model="sharedUrl" class="border-black border p-1 text-xl w-full">
+        </div>
+      </template>
+    </modal>
+
+    <HistoryMenu v-if="showHistoryMenu" class="absolute h-full bg-white top-0 right-0 w-96 z-40" />
+
     <button @click="showHistoryMenu = !showHistoryMenu" class="absolute bg-purple-500 p-2 text-white bottom-0 right-0 z-50 mr-6 mb-4 tracking-widest text-xl rounded-xl">
       History
     </button>
 
-    <HistoryMenu v-if="showHistoryMenu" class="absolute h-full bg-white top-0 right-0 w-96 z-40" />
+    <button 
+      @click="shared"
+      class="absolute bg-blue-400 p-2 text-white bottom-0 right-0 z-50 mr-36 mb-4 tracking-widest text-xl rounded-xl"
+    >
+      Shared
+    </button>
 
     <div class="flex">
       <div class="w-3/12 bg-blue-50 h-screen overflow-scroll">
@@ -73,11 +88,13 @@
 </template>
 
 <script lang="ts">
-import { History } from '../storage/history';
+import { loadChart } from '../functions/load-chart'
+import { readSharedChart } from '../functions/read-shared-chart'
 
 export type Store = {
   editorValue: string,
   showHistoryMenu: boolean;
+  sharedUrl: string;
   data: {
     templated: object | undefined;
     sources: object | undefined;
@@ -89,6 +106,7 @@ export default {
     return {
       showHistoryMenu: false,
       editorValue: "",
+      sharedUrl: "",
       data: {
         templated: undefined,
         sources: undefined,
@@ -97,28 +115,17 @@ export default {
   },
   async mounted() {
     const data = new URL(window.location);
-    const id = data.searchParams.get('id')
-    const key = `helm-viewer-${id}`
-
-    if (!localStorage.getItem(key)) {
-      await fetch("http://localhost:12094")
-        .then(res => res.json())
-        .then(e => {
-          this.data = JSON.parse(e);
-          localStorage.setItem(key, e)
-        })
-
-      await fetch("http://localhost:12095")
-        .then(res => res.json())
-        .then((payload) => {
-          History.append({
-            date: new Date(),
-            id: id ?? "",
-            ...payload
-          })
-        })
+    const id = data.searchParams.get('id')!
+    const shared = data.searchParams.get('shared') === "true"
+    
+    if (shared) {
+      this.data = await readSharedChart(
+        new URL(window.location).searchParams.get('id'),
+        data.searchParams.get('encryptionKey')
+      );
+      window.location = `/?id=${id}`
     } else {
-      this.data = JSON.parse(localStorage.getItem(key)!)
+      this.data = await loadChart(id)
     }
 
     this.displaySourceFile("Chart.yaml", false);
@@ -133,6 +140,16 @@ export default {
       } else {
         this.editorValue = this.data["sources"][filename]
       }
+    },
+    async shared() {
+      const data = await $fetch(`/api/shared/upload?id=${new URL(window.location).searchParams.get('id')}`, {
+        method: "POST",
+        body: {
+          content: this.data,
+        }
+      })
+
+      this.sharedUrl = `http://localhost:3000?id=${new URL(window.location).searchParams.get('id')}&&encryptionKey=${data.encryptionKey}&&shared=true`
     }
   }
 };
