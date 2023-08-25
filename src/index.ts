@@ -7,6 +7,7 @@ import chalk from 'chalk';
 import { tmpdir } from 'os';
 import { serverFileTemporary } from './functions/serve-file-temporary';
 import open from 'open'
+import yaml from 'js-yaml'
 
 async function run() {
   const currentPath = process.argv?.at(2) ?? process.cwd();
@@ -62,7 +63,12 @@ async function run() {
     open(`https://helm-viewer.vercel.app?id=${id}`)
   }
 
-  await serverFileTemporary(JSON_DATA, 12094);
+  const { version, name } = yaml.load(JSON.parse(JSON_DATA).sources['Chart.yaml']) as { version: string, name: string };
+
+  await Promise.all([
+    serverFileTemporary(JSON_DATA, 12094),
+    serverFileTemporary({ chartName: name, chartVersion: version }, 12095)
+  ]);
 
   process.exit(0)
 };

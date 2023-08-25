@@ -1227,10 +1227,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-20.5.2.tgz#02850ed821c8113fd6ed9ae5c744b7f7cd6d6f51"
   integrity sha512-5j/lXt7unfPOUlrKC34HIaedONleyLtwkKggiD/0uuMfT8gg2EOpg0dz4lCD15Ga7muC+1WzJZAjIB9simWd6Q==
 
-"@types/node@18.17.3":
-  version "18.17.3"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.17.3.tgz#409febdc84478b452306a8112c692e800ad9f6fe"
-  integrity sha512-2x8HWtFk0S99zqVQABU9wTpr8wPoaDHZUcAkoTKH+nL7kPv3WUI9cRi/Kk5Mz4xdqXSqTkKP7IWNoQQYCnDsTA==
+"@types/node@20.5.6":
+  version "20.5.6"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.5.6.tgz#5e9aaa86be03a09decafd61b128d6cec64a5fe40"
+  integrity sha512-Gi5wRGPbbyOTX+4Y2iULQ27oUPrefaB0PxGQJnfyWN3kvEDGM3mIB5M/gQLmitZf7A9FmLeaqxD3L1CXpm3VKQ==
 
 "@types/parse-json@^4.0.0":
   version "4.0.0"
@@ -4358,7 +4358,7 @@ monaco-editor-nls@^3.1.0:
   resolved "https://registry.yarnpkg.com/monaco-editor-nls/-/monaco-editor-nls-3.1.0.tgz#64086be3b0ee6791ac6bd99c9b1b45ad819c26ee"
   integrity sha512-GdzgKRAiwXlGI/ude/HbzP8ukml28yUoZ7rx/xsSsmYf9W13jTyWjXjoMK/+pjL6JorAThH2WkCYaDoCnIX7Jg==
 
-monaco-editor@^0.41.0:
+monaco-editor@0.41.0:
   version "0.41.0"
   resolved "https://registry.yarnpkg.com/monaco-editor/-/monaco-editor-0.41.0.tgz#2ba31e5af7e3ae93ac5d7467ec2772ef9b3d967f"
   integrity sha512-1o4olnZJsiLmv5pwLEAmzHTE/5geLKQ07BrGxlF4Ri/AXAc2yyDGZwHjiTqD8D/ROKUZmwMA28A+yEowLNOEcA==
@@ -4691,7 +4691,7 @@ nuxi@3.6.5:
   optionalDependencies:
     fsevents "~2.3.2"
 
-nuxt-monaco-editor@^1.2.3:
+nuxt-monaco-editor@1.2.3:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/nuxt-monaco-editor/-/nuxt-monaco-editor-1.2.3.tgz#2245a01ed1d837d23eb00a6d0f78ee82c3b84d70"
   integrity sha512-klN/LVR1Pv29Qa4wfQKCcCGbF5uIRCrSWasvgioh9N+CE6I6tUodOPvgvWE+Nnf1ivvgx0dKOFjM+CkoT1bK/w==
