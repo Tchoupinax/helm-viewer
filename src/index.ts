@@ -58,7 +58,7 @@ async function run() {
   
   const id = randomUUID()
   if (process.env.NODE_ENV === "development") {
-    open(`http://localhost:3000?id=${id}`)
+    open(`http://localhost:3000?id=${id}`, { app: { name: "firefox" } })
   } else {
     open(`https://helm-viewer.vercel.app?id=${id}`)
   }
