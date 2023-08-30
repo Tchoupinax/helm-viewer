@@ -20,11 +20,12 @@ export async function readFileFromS3(
   } catch (err) {
     console.log(err)
     throw err;
-  } finally {
-    s3Client.destroy();
   }
 
-  return answer.Body?.transformToString()
+  const content = await answer.Body.transformToString('utf-8');
+  s3Client.destroy();
+
+  return content
 }
 
 function getClient(): S3Client {

@@ -7,7 +7,7 @@ import config from "config";
 
 export async function uploadFileToS3(
   path: string,
-  content: Buffer,
+  content: string,
 ): Promise<PutObjectCommandOutput> {
   const command = new PutObjectCommand({
     Body: content,

@@ -80,7 +80,9 @@ async function pushOnlineFunction(JSON_DATA) {
     })
   })
 
-  console.log('Uploaded with id=', id)
+  console.log("")
+  console.log(`http://localhost:3000?id=${id}&online=true`)
+  console.log("")
 }
 
 async function serveLocally(JSON_DATA) {

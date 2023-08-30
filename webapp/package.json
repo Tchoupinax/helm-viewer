@@ -11,10 +11,10 @@
   "dependencies": {
     "@nuxt/devtools": "latest",
     "@nuxtjs/tailwindcss": "6.8.0",
-    "@types/node": "20.5.6",
+    "@types/node": "20.5.7",
     "body-scroll-lock": "4.0.0-beta.0",
     "monaco-editor": "0.41.0",
-    "nuxt": "3.6.5",
+    "nuxt": "3.7.0",
     "nuxt-monaco-editor": "1.2.3"
   }
 }

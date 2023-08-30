@@ -89,6 +89,7 @@
 
 <script lang="ts">
 import { loadChart } from '../functions/load-chart'
+import { readRemoteChart } from '../functions/read-remote-chart';
 import { readSharedChart } from '../functions/read-shared-chart'
 
 export type Store = {
@@ -117,12 +118,14 @@ export default {
     const data = new URL(window.location);
     const id = data.searchParams.get('id')!
     const shared = data.searchParams.get('shared') === "true"
-    
-    if (shared) {
-      this.data = await readSharedChart(
-        new URL(window.location).searchParams.get('id'),
-        data.searchParams.get('encryptionKey')
-      );
+    const isOnline = data.searchParams.get('online') === "true";
+    const encryptionKey = data.searchParams.get('encryptionKey') ?? ""
+
+    if (isOnline) {
+      this.data = await readRemoteChart(id, encryptionKey)
+      window.location = `/?id=${id}`
+    } else if (shared) {
+      this.data = await readSharedChart(id, encryptionKey);
       window.location = `/?id=${id}`
     } else {
       this.data = await loadChart(id)
