@@ -1,0 +1,31 @@
+{
+  "name": "helm-viewer-api",
+  "version": "0.1.0",
+  "description": "API for helm-viewer",
+  "author": "Tchoupinax <corentinfiloche@hotmail.fr> (https://corentinfiloche.xyz)",
+  "homepage": "https://github.com/Tchoupinax/helm-viewer",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Tchoupinax/helm-viewer"
+  },
+  "bugs": {
+    "url": "https://github.com/Tchoupinax/helm-viewer/issues"
+  },
+  "private": true,
+  "scripts": {
+    "=== RUN ==============================================": "",
+    "watch": "NODE_ENV=development npx vite-node src/index.ts",
+    "=== BUILD ============================================": "",
+    "build": "tsc",
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "typescript": "5.1.6",
+    "vite-node": "0.34.2"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.400.0",
+    "config": "^3.3.9",
+    "express": "^4.18.2"
+  }
+}

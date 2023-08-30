@@ -18,7 +18,7 @@
     "noImplicitOverride": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "outDir": "./compiled",
+    "outDir": "cli/compiled",
     "removeComments": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
@@ -31,8 +31,8 @@
     "moduleResolution": "node"
   },
   "include": [
-    "src/**/*",
+    "cli/src/**/*",
     "test/**/*"
-  ],
+, "api/src/upload-to-s3.ts"  ],
   "exclude": ["node_modules"]
 }

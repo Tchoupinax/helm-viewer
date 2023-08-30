@@ -1,0 +1,10 @@
+{
+  "services": {
+    "s3": {
+      "endpoint": "",
+      "region": "",
+      "accessKey": "",
+      "secretKey": ""
+    }
+  }
+}

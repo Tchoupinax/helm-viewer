@@ -11,7 +11,8 @@ import yaml from 'js-yaml'
 
 async function run() {
   const currentPath = process.argv?.at(2) ?? process.cwd();
-  const values = process.argv?.at(3) ?? undefined;
+  const values = process.argv?.at(3) !== "--push" ? process.argv?.at(3): undefined;
+  const pushOnline = process.argv.includes('--push')
 
   console.log(chalk.cyanBright(`⚡️ Path detected ${currentPath}`));
   console.log(
@@ -56,6 +57,33 @@ async function run() {
   // Create the script
   const JSON_DATA = readFileSync(`${tmpDir}/global-data.json`, 'utf-8');
   
+  if (pushOnline) {
+    await pushOnlineFunction(JSON_DATA)
+  } else {
+    await serveLocally(JSON_DATA)
+  }
+
+  process.exit(0)
+};
+
+async function pushOnlineFunction(JSON_DATA) {
+  const id = randomUUID();
+
+  await fetch("http://localhost:8000/charts", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      content: JSON_DATA,
+      chartId: id,
+    })
+  })
+
+  console.log('Uploaded with id=', id)
+}
+
+async function serveLocally(JSON_DATA) {
   const id = randomUUID()
   if (process.env.NODE_ENV === "development") {
     open(`http://localhost:3000?id=${id}`, { app: { name: "firefox" } })
@@ -69,8 +97,6 @@ async function run() {
     serverFileTemporary(JSON_DATA, 12094),
     serverFileTemporary({ chartName: name, chartVersion: version }, 12095)
   ]);
-
-  process.exit(0)
-};
+}
 
 run();
