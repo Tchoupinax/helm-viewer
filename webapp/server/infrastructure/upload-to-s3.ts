@@ -3,7 +3,6 @@ import {
   PutObjectCommandOutput,
   S3Client
 } from "@aws-sdk/client-s3";
-import config from "config";
 
 export async function uploadFileToS3(
   path: string,
@@ -32,12 +31,12 @@ export async function uploadFileToS3(
 
 function getClient(): S3Client {
   return new S3Client({
-    endpoint: config.get('services.s3.endpoint'),
-    region: config.get('services.s3.region'),
+    endpoint: process.env.BACKEND_S3_ENDPOINT,
+    region: process.env.BACKEND_S3_REGION,
     forcePathStyle: true,
     credentials: {
-      accessKeyId: config.get('services.s3.accessKey'),
-      secretAccessKey: config.get('services.s3.secretKey'),
+      accessKeyId: process.env.BACKEND_S3_ACCESS_KEY ?? "",
+      secretAccessKey: process.env.BACKEND_S3_SECRET_KEY ?? "",
     }
   });
 }

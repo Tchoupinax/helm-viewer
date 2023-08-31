@@ -1,7 +1,4 @@
 import { defineNuxtConfig } from 'nuxt/config'
-import config from 'config'
-
-console.log(config)
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -16,7 +13,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      remoteURL: config.get('remoteURL')
+      remoteURL: process.env.REMOTE_URL ?? "http://localhost:3000"
     }
   }
 })
