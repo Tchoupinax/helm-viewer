@@ -69,7 +69,7 @@ async function run() {
 async function pushOnlineFunction(JSON_DATA) {
   const id = randomUUID();
 
-  await fetch("http://localhost:8000/charts", {
+  await fetch("http://localhost:3000/api/chart-upload", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
