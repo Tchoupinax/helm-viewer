@@ -79,7 +79,7 @@
     "@aws-sdk/util-utf8-browser" "^3.0.0"
     tslib "^1.11.1"
 
-"@aws-sdk/client-s3@^3.400.0":
+"@aws-sdk/client-s3@3.400.0":
   version "3.400.0"
   resolved "https://registry.yarnpkg.com/@aws-sdk/client-s3/-/client-s3-3.400.0.tgz#579dfa12c93bf12f0d8654fcbfe36f7989209a4d"
   integrity sha512-lnv0pb79Czl8fCMs/z7yM56LvoKTri1I4jX/V33trHMFKPQDoy8i24wxG8+TZl3MUmnUyoQS7tlukh7IFkii1Q==
@@ -1260,6 +1260,11 @@ cross-spawn@^7.0.3:
     shebang-command "^2.0.0"
     which "^2.0.1"
 
+crypto-js@4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-4.1.1.tgz#9e485bcf03521041bd85844786b83fb7619736cf"
+  integrity sha512-o2JlM7ydqd3Qk9CA0L4NL6mTzU2sdx96a+oOfPu8Mkl/PK51vSyoi8/rQ8NknZtk44vq15lmhAj9CIAGwgeWKw==
+
 debug@^4.3.4:
   version "4.3.4"
   resolved "https://registry.npmjs.org/debug/-/debug-4.3.4.tgz"
@@ -1441,7 +1446,7 @@ mlly@^1.2.0, mlly@^1.4.0:
     pkg-types "^1.0.3"
     ufo "^1.1.2"
 
-monaco-editor@^0.41.0:
+monaco-editor@0.41.0:
   version "0.41.0"
   resolved "https://registry.yarnpkg.com/monaco-editor/-/monaco-editor-0.41.0.tgz#2ba31e5af7e3ae93ac5d7467ec2772ef9b3d967f"
   integrity sha512-1o4olnZJsiLmv5pwLEAmzHTE/5geLKQ07BrGxlF4Ri/AXAc2yyDGZwHjiTqD8D/ROKUZmwMA28A+yEowLNOEcA==
@@ -1686,7 +1691,7 @@ vite-node@0.34.2:
   optionalDependencies:
     fsevents "~2.3.2"
 
-vitest@^0.34.2:
+vitest@0.34.2:
   version "0.34.2"
   resolved "https://registry.yarnpkg.com/vitest/-/vitest-0.34.2.tgz#c90d563df18383f1749b8a4544adda1871bbc859"
   integrity sha512-WgaIvBbjsSYMq/oiMlXUI7KflELmzM43BEvkdC/8b5CAod4ryAiY2z8uR6Crbi5Pjnu5oOmhKa9sy7uk6paBxQ==

@@ -11,6 +11,14 @@ However, the output of this command is a huge raw text and it is mainly painful.
 
 This project aims to give you the right tool to build helm chart.
 
+Also, as DevOps we build, maintain and deploy our chart. When we do a review of a chart, it is hard to determine if the chart is correctly done or not. A subgoal is to easily build the chart in the CI and be able to see the built chart from a link, automatically pasted in the merge request.
+
+## Features
+
+- Local usage by design: if you don't do nothing, all what you do works offline. Your date are not sent, no backend server is used.
+- Create a sharing link by CLI or Web interface. Read a chart from a link, only. Internet required.
+- Encryption by design: You can share the result with link. Data are encrypted end-to-end by designed and then stored on S3. The encrypted key in the shared link is the **only way** to access your data. Backend side is just a proxy to store charts on a S3 backend.
+
 ## Installation
 
 ```bash
@@ -29,6 +37,9 @@ helm-viewer path/of/the/chart
 
 # To compute the chart with an external values file
 helm-viewer path/of/the/chart path/of/the/values/file
+
+# To get a public link (with encrypted data)
+helm-viewer path/of/the/chart --push
 ```
 
 It will analyze the helm chart and generate a HTML report, automatically opened in your favorite browser.

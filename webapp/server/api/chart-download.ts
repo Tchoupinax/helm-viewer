@@ -11,12 +11,6 @@ export default defineEventHandler(async (event) => {
     content = JSON.parse(payload)
   }
 
-  const { version, name } = yaml.load(content.sources['Chart.yaml']) as { version: string, name: string };
-
-  return {
-    chartVersion: version,
-    chartName: name,
-    content
-  }
+  return content
 });
 

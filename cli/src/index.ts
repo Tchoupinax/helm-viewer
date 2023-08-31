@@ -8,11 +8,13 @@ import { tmpdir } from 'os';
 import { serverFileTemporary } from './functions/serve-file-temporary';
 import open from 'open'
 import yaml from 'js-yaml'
+import { encrypt } from './functions/encryption';
 
 async function run() {
   const currentPath = process.argv?.at(2) ?? process.cwd();
-  const values = process.argv?.at(3) !== "--push" ? process.argv?.at(3): undefined;
+  const values = !process.argv?.at(3).includes("--encryption-key") && !process.argv?.at(3).includes("--push") ? process.argv?.at(3): undefined;
   const pushOnline = process.argv.includes('--push')
+  const encryptionKey = process.argv.find(p => p.includes("--encryption-key")) != null ? process.argv.find(p => p.includes("--encryption-key")).split('=')[1] : randomUUID()
 
   console.log(chalk.cyanBright(`⚡️ Path detected ${currentPath}`));
   console.log(
@@ -58,7 +60,7 @@ async function run() {
   const JSON_DATA = readFileSync(`${tmpDir}/global-data.json`, 'utf-8');
   
   if (pushOnline) {
-    await pushOnlineFunction(JSON_DATA)
+    await pushOnlineFunction(JSON_DATA, encryptionKey)
   } else {
     await serveLocally(JSON_DATA)
   }
@@ -66,8 +68,15 @@ async function run() {
   process.exit(0)
 };
 
-async function pushOnlineFunction(JSON_DATA) {
+async function pushOnlineFunction(JSON_DATA, encryptionKey: string) {
   const id = randomUUID();
+
+  const { version, name } = yaml.load(JSON.parse(JSON_DATA).sources['Chart.yaml']) as { version: string, name: string };
+  const payload = {
+    chartVersion: version,
+    chartName: name,
+    content: encrypt(JSON_DATA,encryptionKey)
+  }
 
   await fetch("http://localhost:3000/api/chart-upload", {
     method: "POST",
@@ -75,13 +84,13 @@ async function pushOnlineFunction(JSON_DATA) {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      content: JSON_DATA,
+      content: JSON.stringify(payload),
       chartId: id,
     })
   })
 
   console.log("")
-  console.log(`http://localhost:3000?id=${id}&online=true`)
+  console.log(`http://localhost:3000?id=${id}&encryptionKey=${encryptionKey}&online=true`)
   console.log("")
 }
 

@@ -97,7 +97,7 @@
     "@aws-sdk/util-utf8-browser" "^3.0.0"
     tslib "^1.11.1"
 
-"@aws-sdk/client-s3@^3.400.0":
+"@aws-sdk/client-s3@3.400.0":
   version "3.400.0"
   resolved "https://registry.yarnpkg.com/@aws-sdk/client-s3/-/client-s3-3.400.0.tgz#579dfa12c93bf12f0d8654fcbfe36f7989209a4d"
   integrity sha512-lnv0pb79Czl8fCMs/z7yM56LvoKTri1I4jX/V33trHMFKPQDoy8i24wxG8+TZl3MUmnUyoQS7tlukh7IFkii1Q==
@@ -2258,7 +2258,7 @@
   resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.3.5.tgz#ae69bcbb1bebb68c4ac0b11e9d8ed04526b3562b"
   integrity sha512-mEo1sAde+UCE6b2hxn332f1g1E8WfYRu6p5SvTKr2ZKC1f7gFJXk4h5PyGP9Dt6gCaG8y8XhwnXWC6Iy2cmBng==
 
-"@types/config@^3.3.0":
+"@types/config@3.3.0":
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/@types/config/-/config-3.3.0.tgz#2b632cb37c639bf8d57054561f5a77d31dcebc1e"
   integrity sha512-9kZSbl3/X3TVNowLCu5HFQdQmD+4287Om55avknEYkuo6R2dDrsp/EXEHUFvfYeG7m1eJ0WYGj+cbcUIhARJAQ==
@@ -3349,7 +3349,7 @@ concat-map@0.0.1:
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
   integrity sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==
 
-config@^3.3.9:
+config@3.3.9:
   version "3.3.9"
   resolved "https://registry.yarnpkg.com/config/-/config-3.3.9.tgz#27fae95b43e0e1d5723e54143c090954d8e49572"
   integrity sha512-G17nfe+cY7kR0wVpc49NCYvNtelm/pPy8czHoFkAgtV1lkmcp7DHtWCdDu+C9Z7gb2WVqa9Tm3uF9aKaPbCfhg==
@@ -3438,6 +3438,11 @@ cross-spawn@^7.0.0, cross-spawn@^7.0.3:
     path-key "^3.1.0"
     shebang-command "^2.0.0"
     which "^2.0.1"
+
+crypto-js@4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-4.1.1.tgz#9e485bcf03521041bd85844786b83fb7619736cf"
+  integrity sha512-o2JlM7ydqd3Qk9CA0L4NL6mTzU2sdx96a+oOfPu8Mkl/PK51vSyoi8/rQ8NknZtk44vq15lmhAj9CIAGwgeWKw==
 
 css-declaration-sorter@^6.3.1:
   version "6.4.1"
@@ -5032,7 +5037,7 @@ js-tokens@^4.0.0:
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
   integrity sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==
 
-js-yaml@^4.1.0:
+js-yaml@4.1.0, js-yaml@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-4.1.0.tgz#c1fb65f8f5017901cdd2c951864ba18458a10602"
   integrity sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==
@@ -7956,7 +7961,7 @@ vite-plugin-vue-inspector@^3.6.0:
   optionalDependencies:
     fsevents "~2.3.2"
 
-vitest@^0.34.3:
+vitest@0.34.3:
   version "0.34.3"
   resolved "https://registry.yarnpkg.com/vitest/-/vitest-0.34.3.tgz#863d61c133d01b16e49fd52d380c09fa5ac03188"
   integrity sha512-7+VA5Iw4S3USYk+qwPxHl8plCMhA5rtfwMjgoQXMT7rO5ldWcdsdo3U1QD289JgglGK4WeOzgoLTsGFu6VISyQ==

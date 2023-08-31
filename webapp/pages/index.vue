@@ -90,7 +90,8 @@
 <script lang="ts">
 import { loadChart } from '../functions/load-chart'
 import { readRemoteChart } from '../functions/read-remote-chart';
-import { readSharedChart } from '../functions/read-shared-chart'
+import { encrypt } from '../functions/encryption'
+import yaml from 'js-yaml'
 
 export type Store = {
   editorValue: string,
@@ -141,15 +142,24 @@ export default {
       }
     },
     async shared() {
-      const data = await $fetch('/api/chart-upload', {
+      const encryptionKey = "secret";
+
+      const { version, name } = yaml.load(this.data.sources['Chart.yaml']) as { version: string, name: string };
+      const payload = {
+        chartVersion: version,
+        chartName: name,
+        content: encrypt(JSON.stringify(this.data), encryptionKey)
+      }
+
+      await $fetch('/api/chart-upload', {
         method: "POST",
         body: JSON.stringify({
           chartId: new URL(window.location).searchParams.get('id'),
-          content: JSON.stringify(this.data),
+          content: JSON.stringify(payload),
         })
       })
 
-      this.sharedUrl = `http://localhost:3000?id=${new URL(window.location).searchParams.get('id')}&encryptionKey=${data.encryptionKey}&online=true`
+      this.sharedUrl = `http://localhost:3000?id=${new URL(window.location).searchParams.get('id')}&encryptionKey=${encryptionKey}&online=true`
     }
   }
 };
