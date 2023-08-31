@@ -1,8 +1,11 @@
 import { defineNuxtConfig } from 'nuxt/config'
+import config from 'config'
+
+console.log(config)
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  ssr: false,
+  ssr: true,
   devtools: { enabled: true },
   modules: [
     'nuxt-monaco-editor',
@@ -10,5 +13,10 @@ export default defineNuxtConfig({
   ],
   experimental: {
     payloadExtraction: false,
+  },
+  runtimeConfig: {
+    public: {
+      remoteURL: config.get('remoteURL')
+    }
   }
 })

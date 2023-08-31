@@ -10,6 +10,8 @@ import open from 'open'
 import yaml from 'js-yaml'
 import { encrypt } from './functions/encryption';
 
+const remoteURL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://helm-viewer.vercel.app"
+
 async function run() {
   const currentPath = process.argv?.at(2) ?? process.cwd();
   const values = !process.argv?.at(3).includes("--encryption-key") && !process.argv?.at(3).includes("--push") ? process.argv?.at(3): undefined;
@@ -78,7 +80,7 @@ async function pushOnlineFunction(JSON_DATA, encryptionKey: string) {
     content: encrypt(JSON_DATA,encryptionKey)
   }
 
-  await fetch("http://localhost:3000/api/chart-upload", {
+  await fetch(`${remoteURL}/api/chart-upload`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -90,16 +92,16 @@ async function pushOnlineFunction(JSON_DATA, encryptionKey: string) {
   })
 
   console.log("")
-  console.log(`http://localhost:3000?id=${id}&encryptionKey=${encryptionKey}&online=true`)
+  console.log(`${remoteURL}?id=${id}&encryptionKey=${encryptionKey}&online=true`)
   console.log("")
 }
 
 async function serveLocally(JSON_DATA) {
   const id = randomUUID()
   if (process.env.NODE_ENV === "development") {
-    open(`http://localhost:3000?id=${id}`, { app: { name: "firefox" } })
+    open(`${remoteURL}?id=${id}`, { app: { name: "firefox" } })
   } else {
-    open(`https://helm-viewer.vercel.app?id=${id}`)
+    open(`${remoteURL}?id=${id}`)
   }
 
   const { version, name } = yaml.load(JSON.parse(JSON_DATA).sources['Chart.yaml']) as { version: string, name: string };

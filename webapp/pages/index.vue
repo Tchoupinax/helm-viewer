@@ -121,8 +121,10 @@ export default {
     const isOnline = data.searchParams.get('online') === "true";
     const encryptionKey = data.searchParams.get('encryptionKey') ?? ""
 
+    console.log(this.$config.public.remoteURL)
+
     if (isOnline) {
-      this.data = await readRemoteChart(id, encryptionKey)
+      this.data = await readRemoteChart(id, encryptionKey, this.$config.public.remoteURL)
       window.location = `/?id=${id}`
     } else {
       this.data = await loadChart(id)
@@ -159,7 +161,7 @@ export default {
         })
       })
 
-      this.sharedUrl = `http://localhost:3000?id=${new URL(window.location).searchParams.get('id')}&encryptionKey=${encryptionKey}&online=true`
+      this.sharedUrl = `${this.$config.public.remoteURL}?id=${new URL(window.location).searchParams.get('id')}&encryptionKey=${encryptionKey}&online=true`
     }
   }
 };
