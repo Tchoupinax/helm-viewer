@@ -92,6 +92,7 @@ import { loadChart } from '../functions/load-chart'
 import { readRemoteChart } from '../functions/read-remote-chart';
 import { encrypt } from '../functions/encryption'
 import yaml from 'js-yaml'
+import { nanoid } from 'nanoid'
 
 export type Store = {
   editorValue: string,
@@ -144,7 +145,7 @@ export default {
       }
     },
     async shared() {
-      const encryptionKey = "secret";
+      const encryptionKey = nanoid()
 
       const { version, name } = yaml.load(this.data.sources['Chart.yaml']) as { version: string, name: string };
       const payload = {

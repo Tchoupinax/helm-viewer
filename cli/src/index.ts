@@ -9,6 +9,7 @@ import { serverFileTemporary } from './functions/serve-file-temporary';
 import open from 'open'
 import yaml from 'js-yaml'
 import { encrypt } from './functions/encryption';
+import fs from 'fs';
 
 const remoteURL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://helm-viewer.vercel.app"
 
@@ -94,6 +95,8 @@ async function pushOnlineFunction(JSON_DATA, encryptionKey: string) {
   console.log("")
   console.log(`${remoteURL}?id=${id}&encryptionKey=${encryptionKey}&online=true`)
   console.log("")
+
+  fs.writeFileSync('.helm-viewer-url', `${remoteURL}?id=${id}&encryptionKey=${encryptionKey}&online=true`)
 }
 
 async function serveLocally(JSON_DATA) {

@@ -17,6 +17,7 @@
     "crypto-js": "4.1.1",
     "js-yaml": "4.1.0",
     "monaco-editor": "0.41.0",
+    "nanoid": "4.0.2",
     "nuxt": "3.7.0",
     "nuxt-monaco-editor": "1.2.3"
   },

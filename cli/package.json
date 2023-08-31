@@ -1,6 +1,6 @@
 {
   "name": "helm-viewer",
-  "version": "0.5.0-rc.4",
+  "version": "0.5.0-rc.5",
   "description": "Quick tool to easily view your helm charts.",
   "author": "Tchoupinax <corentinfiloche@hotmail.fr> (https://corentinfiloche.xyz)",
   "license": "MIT",
@@ -48,8 +48,8 @@
     "monaco-editor": "0.41.0",
     "npm-packlist": "7.0.4",
     "postject": "1.0.0-alpha.6",
-    "typescript": "5.1.6",
-    "vite-node": "0.34.2",
-    "vitest": "0.34.2"
+    "typescript": "5.2.2",
+    "vite-node": "0.34.3",
+    "vitest": "0.34.3"
   }
 }
