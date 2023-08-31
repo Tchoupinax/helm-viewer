@@ -14,9 +14,9 @@ const remoteURL = process.env.NODE_ENV === "development" ? "http://localhost:300
 
 async function run() {
   const currentPath = process.argv?.at(2) ?? process.cwd();
-  const values = !process.argv?.at(3).includes("--encryption-key") && !process.argv?.at(3).includes("--push") ? process.argv?.at(3): undefined;
-  const pushOnline = process.argv.includes('--push')
-  const encryptionKey = process.argv.find(p => p.includes("--encryption-key")) != null ? process.argv.find(p => p.includes("--encryption-key")).split('=')[1] : randomUUID()
+  const values = !process.argv?.at(3)?.includes("--encryption-key") && !process.argv?.at(3)?.includes("--push") ? process.argv?.at(3): undefined;
+  const pushOnline = process.argv?.includes('--push')
+  const encryptionKey = process.argv.find(p => p?.includes("--encryption-key")) != null ? process.argv.find(p => p?.includes("--encryption-key")).split('=')[1] : randomUUID()
 
   console.log(chalk.cyanBright(`⚡️ Path detected ${currentPath}`));
   console.log(
