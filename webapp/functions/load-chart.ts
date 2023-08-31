@@ -18,6 +18,6 @@ export async function loadChart(id: string): Promise<any> {
       localStorage.setItem(key, payload)
       return JSON.parse(payload);
   } else {
-    return JSON.parse(localStorage.getItem(key)!)
+    return JSON.parse(localStorage.getItem(key)!).content
   }
 }

@@ -117,15 +117,11 @@ export default {
   async mounted() {
     const data = new URL(window.location);
     const id = data.searchParams.get('id')!
-    const shared = data.searchParams.get('shared') === "true"
     const isOnline = data.searchParams.get('online') === "true";
     const encryptionKey = data.searchParams.get('encryptionKey') ?? ""
 
     if (isOnline) {
       this.data = await readRemoteChart(id, encryptionKey)
-      window.location = `/?id=${id}`
-    } else if (shared) {
-      this.data = await readSharedChart(id, encryptionKey);
       window.location = `/?id=${id}`
     } else {
       this.data = await loadChart(id)
@@ -145,14 +141,15 @@ export default {
       }
     },
     async shared() {
-      const data = await $fetch(`/api/shared/upload?id=${new URL(window.location).searchParams.get('id')}`, {
+      const data = await $fetch('/api/chart-upload', {
         method: "POST",
-        body: {
-          content: this.data,
-        }
+        body: JSON.stringify({
+          chartId: new URL(window.location).searchParams.get('id'),
+          content: JSON.stringify(this.data),
+        })
       })
 
-      this.sharedUrl = `http://localhost:3000?id=${new URL(window.location).searchParams.get('id')}&&encryptionKey=${data.encryptionKey}&&shared=true`
+      this.sharedUrl = `http://localhost:3000?id=${new URL(window.location).searchParams.get('id')}&encryptionKey=${data.encryptionKey}&online=true`
     }
   }
 };
