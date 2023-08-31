@@ -3,13 +3,14 @@ import {
   GetObjectCommandOutput,
   S3Client
 } from "@aws-sdk/client-s3";
+import { join } from 'path'
 
 export async function readFileFromS3(
   path: string,
 ): Promise<string | undefined> {
   const command = new GetObjectCommand({
     Bucket: "helm-viewer-computed-charts",
-    Key: path,
+    Key: join(process.env.NODE_ENV ?? "default", path),
   });
   
   const s3Client = getClient();

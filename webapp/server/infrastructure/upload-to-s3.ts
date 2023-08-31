@@ -3,6 +3,7 @@ import {
   PutObjectCommandOutput,
   S3Client
 } from "@aws-sdk/client-s3";
+import { join } from 'path'
 
 export async function uploadFileToS3(
   path: string,
@@ -11,7 +12,7 @@ export async function uploadFileToS3(
   const command = new PutObjectCommand({
     Body: content,
     Bucket: "helm-viewer-computed-charts",
-    Key: path,
+    Key: join(process.env.NODE_ENV ?? "default", path),
     Expires: new Date(),
   });
   

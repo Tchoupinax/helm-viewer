@@ -1,7 +1,7 @@
 default: build
 
 build:
-  npx ncc build src/index.ts -m -o binary
+  cd cli && npx ncc build src/index.ts -m -o binary && cd -
 
 make-executable:
   echo '{ "main": "binary/index.js", "output": "binary/sea-prep.blob" }' > binary/sea-config.json
