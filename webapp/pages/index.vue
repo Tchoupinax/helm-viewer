@@ -89,7 +89,9 @@
 
 <script lang="ts">
 import { loadChart } from '../functions/load-chart'
-import { readSharedChart } from '../functions/read-shared-chart'
+import { readRemoteChart } from '../functions/read-remote-chart';
+import { encrypt } from '../functions/encryption'
+import yaml from 'js-yaml'
 
 export type Store = {
   editorValue: string,
@@ -116,13 +118,13 @@ export default {
   async mounted() {
     const data = new URL(window.location);
     const id = data.searchParams.get('id')!
-    const shared = data.searchParams.get('shared') === "true"
-    
-    if (shared) {
-      this.data = await readSharedChart(
-        new URL(window.location).searchParams.get('id'),
-        data.searchParams.get('encryptionKey')
-      );
+    const isOnline = data.searchParams.get('online') === "true";
+    const encryptionKey = data.searchParams.get('encryptionKey') ?? ""
+
+    console.log(this.$config.public.remoteURL)
+
+    if (isOnline) {
+      this.data = await readRemoteChart(id, encryptionKey, this.$config.public.remoteURL)
       window.location = `/?id=${id}`
     } else {
       this.data = await loadChart(id)
@@ -142,14 +144,24 @@ export default {
       }
     },
     async shared() {
-      const data = await $fetch(`/api/shared/upload?id=${new URL(window.location).searchParams.get('id')}`, {
+      const encryptionKey = "secret";
+
+      const { version, name } = yaml.load(this.data.sources['Chart.yaml']) as { version: string, name: string };
+      const payload = {
+        chartVersion: version,
+        chartName: name,
+        content: encrypt(JSON.stringify(this.data), encryptionKey)
+      }
+
+      await $fetch('/api/chart-upload', {
         method: "POST",
-        body: {
-          content: this.data,
-        }
+        body: JSON.stringify({
+          chartId: new URL(window.location).searchParams.get('id'),
+          content: JSON.stringify(payload),
+        })
       })
 
-      this.sharedUrl = `http://localhost:3000?id=${new URL(window.location).searchParams.get('id')}&&encryptionKey=${data.encryptionKey}&&shared=true`
+      this.sharedUrl = `${this.$config.public.remoteURL}?id=${new URL(window.location).searchParams.get('id')}&encryptionKey=${encryptionKey}&online=true`
     }
   }
 };

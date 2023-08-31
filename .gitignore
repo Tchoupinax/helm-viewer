@@ -7,3 +7,5 @@ global-data.js
 global-data.json
 node_modules
 tmp
+
+local.json

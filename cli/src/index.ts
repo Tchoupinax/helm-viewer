@@ -8,10 +8,15 @@ import { tmpdir } from 'os';
 import { serverFileTemporary } from './functions/serve-file-temporary';
 import open from 'open'
 import yaml from 'js-yaml'
+import { encrypt } from './functions/encryption';
+
+const remoteURL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://helm-viewer.vercel.app"
 
 async function run() {
   const currentPath = process.argv?.at(2) ?? process.cwd();
-  const values = process.argv?.at(3) ?? undefined;
+  const values = !process.argv?.at(3).includes("--encryption-key") && !process.argv?.at(3).includes("--push") ? process.argv?.at(3): undefined;
+  const pushOnline = process.argv.includes('--push')
+  const encryptionKey = process.argv.find(p => p.includes("--encryption-key")) != null ? process.argv.find(p => p.includes("--encryption-key")).split('=')[1] : randomUUID()
 
   console.log(chalk.cyanBright(`⚡️ Path detected ${currentPath}`));
   console.log(
@@ -56,11 +61,47 @@ async function run() {
   // Create the script
   const JSON_DATA = readFileSync(`${tmpDir}/global-data.json`, 'utf-8');
   
+  if (pushOnline) {
+    await pushOnlineFunction(JSON_DATA, encryptionKey)
+  } else {
+    await serveLocally(JSON_DATA)
+  }
+
+  process.exit(0)
+};
+
+async function pushOnlineFunction(JSON_DATA, encryptionKey: string) {
+  const id = randomUUID();
+
+  const { version, name } = yaml.load(JSON.parse(JSON_DATA).sources['Chart.yaml']) as { version: string, name: string };
+  const payload = {
+    chartVersion: version,
+    chartName: name,
+    content: encrypt(JSON_DATA,encryptionKey)
+  }
+
+  await fetch(`${remoteURL}/api/chart-upload`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      content: JSON.stringify(payload),
+      chartId: id,
+    })
+  })
+
+  console.log("")
+  console.log(`${remoteURL}?id=${id}&encryptionKey=${encryptionKey}&online=true`)
+  console.log("")
+}
+
+async function serveLocally(JSON_DATA) {
   const id = randomUUID()
   if (process.env.NODE_ENV === "development") {
-    open(`http://localhost:3000?id=${id}`, { app: { name: "firefox" } })
+    open(`${remoteURL}?id=${id}`, { app: { name: "firefox" } })
   } else {
-    open(`https://helm-viewer.vercel.app?id=${id}`)
+    open(`${remoteURL}?id=${id}`)
   }
 
   const { version, name } = yaml.load(JSON.parse(JSON_DATA).sources['Chart.yaml']) as { version: string, name: string };
@@ -69,8 +110,6 @@ async function run() {
     serverFileTemporary(JSON_DATA, 12094),
     serverFileTemporary({ chartName: name, chartVersion: version }, 12095)
   ]);
-
-  process.exit(0)
-};
+}
 
 run();
