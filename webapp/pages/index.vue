@@ -2,25 +2,51 @@
   <div id="app" class="flex flex-col h-12">
     <Loader v-if="!data.templated" />
 
-    <modal v-if="sharedUrl" @close="sharedUrl=''">
-      <template #body>
-        <div class="flex items-center justify-center w-full">
-          <input v-model="sharedUrl" class="border-black border p-1 text-xl w-full">
+    <modal
+      v-if="sharingProcess"
+      @close="closeSharingModal"
+    >
+      <template #body v-if="sharedUrl">
+        <div class="flex flex-col w-full h-full items-center">
+          <h1 class="text-4xl mt-16 underline">Sharing URL</h1>
+
+          <div class="flex items-center justify-center mt-28 w-2/3">
+            <textarea
+              v-model="sharedUrl"
+              class="rounded-xl h-40 text-gray-600 p-2 bg-gray-100 border-black border text-2xl w-full"
+            />
+          </div>
+
+          <button
+            @click="copyText(sharedUrl)"
+            class="bg-blue-500 mt-16 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
+          >
+            {{ copyButtonText }}
+          </button>
         </div>
       </template>
     </modal>
 
-    <HistoryMenu v-if="showHistoryMenu" class="absolute h-full bg-white top-0 right-0 w-96 z-40" />
+    <HistoryMenu 
+      v-if="showHistoryMenu"
+      @close="showHistoryMenu = false"
+      class="absolute h-full bg-white top-0 right-0 w-96 z-40"
+    />
 
-    <button @click="showHistoryMenu = !showHistoryMenu" class="absolute bg-purple-500 p-2 text-white bottom-0 right-0 z-50 mr-6 mb-4 tracking-widest text-xl rounded-xl">
+    <button
+      v-if="!showHistoryMenu"
+      @click="showHistoryMenu = !showHistoryMenu"
+      class="absolute bg-purple-300 p-2 text-purple-700 bottom-0 right-0 z-50 mr-4 mb-4 tracking-widest text-xl rounded-xl"
+    >
       History
     </button>
 
     <button 
+      v-if="!showHistoryMenu"
       @click="shared"
-      class="absolute bg-blue-400 p-2 text-white bottom-0 right-0 z-50 mr-36 mb-4 tracking-widest text-xl rounded-xl"
+      class="cursor-pointer absolute bg-purple-300 p-2 text-purple-700 bottom-0 right-0 z-50 mr-32 mb-4 tracking-widest text-xl rounded-xl"
     >
-      Shared
+      Share
     </button>
 
     <div class="flex">
@@ -97,7 +123,9 @@ import { nanoid } from 'nanoid'
 export type Store = {
   editorValue: string,
   showHistoryMenu: boolean;
+  sharingProcess: boolean;
   sharedUrl: string;
+  copyButtonText: string;
   data: {
     templated: object | undefined;
     sources: object | undefined;
@@ -110,6 +138,8 @@ export default {
       showHistoryMenu: false,
       editorValue: "",
       sharedUrl: "",
+      sharingProcess: false,
+      copyButtonText: "Copy",
       data: {
         templated: undefined,
         sources: undefined,
@@ -117,7 +147,7 @@ export default {
     }
   },
   async mounted() {
-    const data = new URL(window.location);
+    const data = new URL(window.location.href);
     const id = data.searchParams.get('id')!
     const isOnline = data.searchParams.get('online') === "true";
     const encryptionKey = data.searchParams.get('encryptionKey') ?? ""
@@ -126,7 +156,7 @@ export default {
 
     if (isOnline) {
       this.data = await readRemoteChart(id, encryptionKey, this.$config.public.remoteURL)
-      window.location = `/?id=${id}`
+      window.location.assign(`/?id=${id}`)
     } else {
       this.data = await loadChart(id)
     }
@@ -145,6 +175,8 @@ export default {
       }
     },
     async shared() {
+      this.sharingProcess = true;
+
       const encryptionKey = nanoid()
 
       const { version, name } = yaml.load(this.data.sources['Chart.yaml']) as { version: string, name: string };
@@ -154,15 +186,28 @@ export default {
         content: encrypt(JSON.stringify(this.data), encryptionKey)
       }
 
-      await $fetch('/api/chart-upload', {
-        method: "POST",
-        body: JSON.stringify({
-          chartId: new URL(window.location).searchParams.get('id'),
-          content: JSON.stringify(payload),
-        })
-      })
+      //await $fetch('/api/chart-upload', {
+      //  method: "POST",
+      //  body: JSON.stringify({
+      //    chartId: new URL(window.location).searchParams.get('id'),
+      //    content: JSON.stringify(payload),
+      //  })
+      //})
 
-      this.sharedUrl = `${this.$config.public.remoteURL}?id=${new URL(window.location).searchParams.get('id')}&encryptionKey=${encryptionKey}&online=true`
+      const id = new URL(window.location).searchParams.get('id');
+      this.sharedUrl = `${this.$config.public.remoteURL}?id=${id}&encryptionKey=${encryptionKey}&online=true`
+    },
+    closeSharingModal() {
+      this.copyButtonText = 'Copy';
+      this.sharingProcess = false;
+    },
+    async copyText (mytext: string) {
+      try {
+        await navigator.clipboard.writeText(mytext);
+        this.copyButtonText = "Copied!";
+      } catch($e) {
+        alert('Cannot copy');
+      }
     }
   }
 };

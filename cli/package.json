@@ -25,7 +25,7 @@
     "pack": "npm pack --dry-run",
     "publish": "npm publish",
     "=== RUN ==============================================": "",
-    "run": "NODE_ENV=development npx vite-node src/index.ts ~/Downloads/traefik-helm-chart/traefik --push",
+    "run": "NODE_ENV=development npx vite-node src/index.ts ~/Documents/swan/helm-charts/account-contract",
     "=== BUILD ============================================": "",
     "test": "vitest",
     "build": "tsc",
