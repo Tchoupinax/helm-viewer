@@ -10,15 +10,17 @@ import open from 'open'
 import yaml from 'js-yaml'
 import { encrypt } from './functions/encryption';
 import fs from 'fs';
+import { startWebsocketServer } from './functions/websocket-server';
+import { watchHelmChartFilesModifications } from './functions/file-watcher'
+import { getArguments } from './functions/parse-cli';
 
 const remoteURL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://helm-viewer.vercel.app"
 
 async function run() {
-  const currentPath = process.argv?.at(2) ?? process.cwd();
-  const values = !process.argv?.at(3)?.includes("--encryption-key") && !process.argv?.at(3)?.includes("--push") ? process.argv?.at(3): undefined;
-  const pushOnline = process.argv?.includes('--push')
-  const encryptionKey = process.argv.find(p => p?.includes("--encryption-key")) != null ? process.argv.find(p => p?.includes("--encryption-key")).split('=')[1] : randomUUID()
-
+  const args = getArguments();
+  const currentPath = args.positionals.at(0) ?? process.cwd();
+  const values = args.positionals.at(1)
+  
   console.log(chalk.cyanBright(`⚡️ Path detected ${currentPath}`));
   console.log(
     values
@@ -62,10 +64,10 @@ async function run() {
   // Create the script
   const JSON_DATA = readFileSync(`${tmpDir}/global-data.json`, 'utf-8');
   
-  if (pushOnline) {
-    await pushOnlineFunction(JSON_DATA, encryptionKey)
+  if (args.values.push) {
+    await pushOnlineFunction(JSON_DATA, args.values.encryptionKey)
   } else {
-    await serveLocally(JSON_DATA)
+    await serveLocally(JSON_DATA, currentPath, args.values.watch)
   }
 
   process.exit(0)
@@ -99,7 +101,11 @@ async function pushOnlineFunction(JSON_DATA, encryptionKey: string) {
   fs.writeFileSync('.helm-viewer-url', `${remoteURL}?id=${id}&encryptionKey=${encryptionKey}&online=true`)
 }
 
-async function serveLocally(JSON_DATA) {
+async function serveLocally(
+  JSON_DATA: string,
+  currentPath: string,
+  watchingMode: boolean
+) {
   const id = randomUUID()
   if (process.env.NODE_ENV === "development") {
     open(`${remoteURL}?id=${id}`, { app: { name: "firefox" } })
@@ -113,6 +119,12 @@ async function serveLocally(JSON_DATA) {
     serverFileTemporary(JSON_DATA, 12094),
     serverFileTemporary({ chartName: name, chartVersion: version }, 12095)
   ]);
+
+  if (watchingMode) {
+    startWebsocketServer(currentPath)
+    watchHelmChartFilesModifications(currentPath)
+    await new Promise(resolve => setTimeout(resolve, 1e8))
+  }
 }
 
 run();

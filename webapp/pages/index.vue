@@ -109,6 +109,8 @@
         v-model="editorValue"
         lang="yaml"
       />
+
+      <notifications />
     </div>
   </div>
 </template>
@@ -119,10 +121,12 @@ import { readRemoteChart } from '../functions/read-remote-chart';
 import { encrypt } from '../functions/encryption'
 import yaml from 'js-yaml'
 import { nanoid } from 'nanoid'
+import { useNotification } from "@kyvg/vue3-notification";
 
 export type Store = {
   editorValue: string,
   showHistoryMenu: boolean;
+  currentEditorValue: { type: 'Template', template: string, filename: string } | { type: "Source"; filename: string, isTemplate: boolean } | undefined;
   sharingProcess: boolean;
   sharedUrl: string;
   copyButtonText: string;
@@ -137,6 +141,7 @@ export default {
     return {
       showHistoryMenu: false,
       editorValue: "",
+      currentEditorValue: undefined,
       sharedUrl: "",
       sharingProcess: false,
       copyButtonText: "Copy",
@@ -152,8 +157,6 @@ export default {
     const isOnline = data.searchParams.get('online') === "true";
     const encryptionKey = data.searchParams.get('encryptionKey') ?? ""
 
-    console.log(this.$config.public.remoteURL)
-
     if (isOnline) {
       this.data = await readRemoteChart(id, encryptionKey, this.$config.public.remoteURL)
       window.location.assign(`/?id=${id}`)
@@ -162,12 +165,45 @@ export default {
     }
 
     this.displaySourceFile("Chart.yaml", false);
+    const notification = useNotification()
+
+    setTimeout(() => {
+      const socket = new WebSocket('ws://localhost:12096');
+      socket.addEventListener("message", (event) => {
+        const { filePath, chartContentUpdated } = JSON.parse(event.data)
+
+        notification.notify({
+          title: "Chart updated",
+          text: filePath,
+          type: "warn"
+        })
+
+        this.data = { ...chartContentUpdated }
+        if (this.currentEditorValue?.type === "Template") {
+          this.displayTemplatedFile(this.currentEditorValue.template, this.currentEditorValue.filename)
+        } else if (this.currentEditorValue?.type === "Source") {
+          this.displaySourceFile(this.currentEditorValue.filename, this.currentEditorValue.isTemplate)
+        }
+      });
+    }, 1000)
   },
   methods: {
     displayTemplatedFile(template: string, filename: string) {
-      this.editorValue = this.data["templated"][template][filename].replace("\n", "")
+      this.currentEditorValue = {
+        type: "Template",
+        template,
+        filename,
+      };
+
+      this.editorValue = this.data["templated"][this.currentEditorValue.template][this.currentEditorValue.filename].replace("\n", "")
     },
     displaySourceFile(filename: string, isTemplate: boolean) {
+      this.currentEditorValue = {
+        type: "Source",
+        filename,
+        isTemplate,
+      };
+
       if (isTemplate) {
         this.editorValue = this.data["sources"]["templates"][filename]
       } else {
@@ -176,9 +212,7 @@ export default {
     },
     async shared() {
       this.sharingProcess = true;
-
       const encryptionKey = nanoid()
-
       const { version, name } = yaml.load(this.data.sources['Chart.yaml']) as { version: string, name: string };
       const payload = {
         chartVersion: version,
