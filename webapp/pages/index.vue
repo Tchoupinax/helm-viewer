@@ -186,13 +186,13 @@ export default {
         content: encrypt(JSON.stringify(this.data), encryptionKey)
       }
 
-      //await $fetch('/api/chart-upload', {
-      //  method: "POST",
-      //  body: JSON.stringify({
-      //    chartId: new URL(window.location).searchParams.get('id'),
-      //    content: JSON.stringify(payload),
-      //  })
-      //})
+      await $fetch('/api/chart-upload', {
+        method: "POST",
+        body: JSON.stringify({
+          chartId: new URL(window.location).searchParams.get('id'),
+          content: JSON.stringify(payload),
+        })
+      })
 
       const id = new URL(window.location).searchParams.get('id');
       this.sharedUrl = `${this.$config.public.remoteURL}?id=${id}&encryptionKey=${encryptionKey}&online=true`
