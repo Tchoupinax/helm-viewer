@@ -16,10 +16,15 @@ export function startWebsocketServer(currentPath: string) {
         const payload = await computeChart(currentPath)
         ws.send(JSON.stringify({
           filePath,
-          chartContentUpdated: payload
+          chartContentUpdated: payload,
+          error: null,
         }));
       } catch (err) {
-        console.log(err)
+        ws.send(JSON.stringify({
+          filePath: null,
+          chartContentUpdated: null,
+          error: err.stderr
+        }));
       }
     })
   });

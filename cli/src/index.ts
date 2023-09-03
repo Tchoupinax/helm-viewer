@@ -41,7 +41,6 @@ async function run() {
 
   // Template files and save them
   let stdout;
-
   try {
     if (!values) {
       ({ stdout } = await $`helm template ${currentPath}`);

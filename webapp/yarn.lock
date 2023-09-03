@@ -1202,7 +1202,7 @@
   resolved "https://registry.yarnpkg.com/@kwsites/promise-deferred/-/promise-deferred-1.1.1.tgz#8ace5259254426ccef57f3175bc64ed7095ed919"
   integrity sha512-GaHYm+c0O9MjZRu0ongGBRbinu8gVAMd2UZjji6jVmqKtZluZnptXGWhz1E8j8D2HJ3f/yMxKAUC0b+57wncIw==
 
-"@kyvg/vue3-notification@^3.0.1":
+"@kyvg/vue3-notification@3.0.1":
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/@kyvg/vue3-notification/-/vue3-notification-3.0.1.tgz#138447f4629ba0867b89fead5f2c03f84ca55d95"
   integrity sha512-6g4Sm03PM1Cc0atHHqQk5+ZtekXaxEXf9YVhfTv9FnUiNYKdquwVMuysj0cJabobsNSQSOASjqMg3+ndV2SqWw==
@@ -7067,6 +7067,11 @@ shell-quote@^1.7.3, shell-quote@^1.8.0:
   resolved "https://registry.yarnpkg.com/shell-quote/-/shell-quote-1.8.1.tgz#6dbf4db75515ad5bac63b4f1894c3a154c766680"
   integrity sha512-6j1W9l1iAs/4xYBI1SYOVZyFcCis9b4KCLQ8fgAGG07QvzaRLVVRQvAy85yNmmZSjYjg4MWh4gNvlPujU/5LpA==
 
+shikiji@0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/shikiji/-/shikiji-0.4.0.tgz#b05434b766b878f361877e1c3d7be67873059712"
+  integrity sha512-ICMciNhkc9VqjNZU8gWWK+biHCQvLYO6im8/s+Q+6Ns5jmiaN1019VDgOJcWPzMcyu3TB9LIARSVOy47k7KDfw==
+
 siginfo@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/siginfo/-/siginfo-2.0.0.tgz#32e76c70b79724e3bb567cb9d543eb858ccfaf30"
@@ -8180,7 +8185,7 @@ wrappy@1:
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
   integrity sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==
 
-ws@^8.13.0:
+ws@8.13.0, ws@^8.13.0:
   version "8.13.0"
   resolved "https://registry.yarnpkg.com/ws/-/ws-8.13.0.tgz#9a9fb92f93cf41512a0735c8f4dd09b8a1211cd0"
   integrity sha512-x9vcZYTrFPC7aSIbj7sRCYo7L/Xb8Iy+pW0ng0wt2vCJv7M9HOMy0UoN3rr+IFC7hb7vXoqS+P9ktyLLLhO+LA==

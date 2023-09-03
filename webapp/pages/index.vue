@@ -2,6 +2,9 @@
   <div id="app" class="flex flex-col h-12">
     <Loader v-if="!data.templated" />
 
+    {{ helmError }}
+    <Error v-if="helmError" :error="helmError" />
+
     <modal
       v-if="sharingProcess"
       @close="closeSharingModal"
@@ -122,9 +125,11 @@ import { encrypt } from '../functions/encryption'
 import yaml from 'js-yaml'
 import { nanoid } from 'nanoid'
 import { useNotification } from "@kyvg/vue3-notification";
+import Error from '../components/global/error.vue'
 
 export type Store = {
-  editorValue: string,
+  helmError: string | null;
+  editorValue: string;
   showHistoryMenu: boolean;
   currentEditorValue: { type: 'Template', template: string, filename: string } | { type: "Source"; filename: string, isTemplate: boolean } | undefined;
   sharingProcess: boolean;
@@ -140,6 +145,7 @@ export default {
   data(): Store {
     return {
       showHistoryMenu: false,
+      helmError: null,
       editorValue: "",
       currentEditorValue: undefined,
       sharedUrl: "",
@@ -170,12 +176,20 @@ export default {
     setTimeout(() => {
       const socket = new WebSocket('ws://localhost:12096');
       socket.addEventListener("message", (event) => {
-        const { filePath, chartContentUpdated } = JSON.parse(event.data)
+        const { filePath, chartContentUpdated, error } = JSON.parse(event.data)
+
+        if (error) {
+          console.log(error)
+          this.helmError = error
+          return
+        }
+
+        this.helmError = null;
 
         notification.notify({
           title: "Chart updated",
-          text: filePath,
-          type: "warn"
+          text: filePath.split("/").at(-1),
+          type: "info"
         })
 
         this.data = { ...chartContentUpdated }
