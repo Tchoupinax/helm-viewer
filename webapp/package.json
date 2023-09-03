@@ -19,7 +19,8 @@
     "monaco-editor": "0.41.0",
     "nanoid": "4.0.2",
     "nuxt": "3.7.0",
-    "nuxt-monaco-editor": "1.2.3"
+    "nuxt-monaco-editor": "1.2.3",
+    "timeago.js": "4.0.2"
   },
   "devDependencies": {
     "vitest": "0.34.3"
