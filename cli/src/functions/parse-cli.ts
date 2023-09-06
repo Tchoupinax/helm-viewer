@@ -19,6 +19,17 @@ export function getArguments() {
           type: "string",
           short: "k",
           default: randomUUID()
+        },
+        browser: {
+          type: "string",
+          short: "b",
+          default: "default"
+        },
+        values: {
+          type: "string",
+          short: "v",
+          multiple: true,
+          default: []
         }
       },
       allowPositionals: true

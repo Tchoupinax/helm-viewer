@@ -14,17 +14,19 @@ import { startWebsocketServer } from './functions/websocket-server';
 import { watchHelmChartFilesModifications } from './functions/file-watcher'
 import { getArguments } from './functions/parse-cli';
 
+type BrowserName = "firefox" | "chrome" | null;
+
 const remoteURL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://helm-viewer.vercel.app"
 
 async function run() {
   const args = getArguments();
   const currentPath = args.positionals.at(0) ?? process.cwd();
-  const values = args.positionals.at(1)
-  
+  const valuesPathArray = args.values.values;
+
   console.log(chalk.cyanBright(`⚡️ Path detected ${currentPath}`));
   console.log(
-    values
-      ? chalk.greenBright(`🔑 Values detected ${values}`)
+    valuesPathArray.length > 0
+      ? chalk.greenBright(`🔑 Values detected : ${valuesPathArray.join(",")}`)
       : chalk.yellowBright(`⚠️ No value detected, computing with default values in the Chart`)
   );
 
@@ -42,10 +44,12 @@ async function run() {
   // Template files and save them
   let stdout;
   try {
-    if (!values) {
+    if (valuesPathArray.length === 0) {
       ({ stdout } = await $`helm template ${currentPath}`);
-    } else {
-      ({ stdout } = await $`helm template ${currentPath} --values ${values}`);
+    } else if (valuesPathArray.length === 1) {
+      ({ stdout } = await $`helm template ${currentPath} --values ${valuesPathArray.at(0)}`);
+    } else if (valuesPathArray.length === 2) {
+      ({ stdout } = await $`helm template ${currentPath} --values ${valuesPathArray.at(0)} --values ${valuesPathArray.at(1)}`);
     }
   } catch (err) {
     console.log("\n")
@@ -66,7 +70,12 @@ async function run() {
   if (args.values.push) {
     await pushOnlineFunction(JSON_DATA, args.values.encryptionKey)
   } else {
-    await serveLocally(JSON_DATA, currentPath, args.values.watch)
+    await serveLocally(
+      JSON_DATA,
+      currentPath,
+      args.values.watch,
+      args.values.browser as BrowserName ?? null
+    )
   }
 
   process.exit(0)
@@ -103,13 +112,18 @@ async function pushOnlineFunction(JSON_DATA, encryptionKey: string) {
 async function serveLocally(
   JSON_DATA: string,
   currentPath: string,
-  watchingMode: boolean
+  watchingMode: boolean,
+  browserName: BrowserName,
 ) {
   const id = randomUUID()
   if (process.env.NODE_ENV === "development") {
     open(`${remoteURL}?id=${id}`, { app: { name: "firefox" } })
   } else {
-    open(`${remoteURL}?id=${id}`)
+    if (browserName) {
+      open(`${remoteURL}?id=${id}`, { app: { name: browserName } })
+    } else {
+      open(`${remoteURL}?id=${id}`)
+    }
   }
 
   const { version, name } = yaml.load(JSON.parse(JSON_DATA).sources['Chart.yaml']) as { version: string, name: string };

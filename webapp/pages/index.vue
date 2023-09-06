@@ -107,7 +107,7 @@
       </div>
 
       <MonacoEditor 
-        :options="{ theme: 'vs-dark', fontSize: 16, readOnly: true }"
+        :options="{ theme: 'vs-dark', fontSize: 16, readOnly: true, automaticLayout: true }"
         class="w-full h-full text-xl"
         v-model="editorValue"
         lang="yaml"
