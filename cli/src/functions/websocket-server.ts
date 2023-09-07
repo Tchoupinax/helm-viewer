@@ -23,7 +23,7 @@ export function startWebsocketServer(currentPath: string) {
         ws.send(JSON.stringify({
           filePath: null,
           chartContentUpdated: null,
-          error: err.stderr
+          error: (err as any).stderr
         }));
       }
     })

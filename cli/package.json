@@ -1,6 +1,6 @@
 {
   "name": "helm-viewer",
-  "version": "0.5.0",
+  "version": "0.6.0-rc.2",
   "description": "Quick tool to easily view your helm charts.",
   "author": "Tchoupinax <corentinfiloche@hotmail.fr> (https://corentinfiloche.xyz)",
   "license": "MIT",
@@ -40,13 +40,13 @@
     "crypto-js": "4.1.1",
     "execa": "8.0.1",
     "open": "8",
-    "ws": "8.13.0"
+    "ws": "8.14.0"
   },
   "devDependencies": {
     "@types/js-yaml": "4.0.5",
     "@types/node": "20.5.9",
     "@types/ws": "8.5.5",
-    "@vercel/ncc": "0.36.1",
+    "@vercel/ncc": "0.38.0",
     "js-yaml": "4.1.0",
     "monaco-editor": "0.41.0",
     "npm-packlist": "7.0.4",
