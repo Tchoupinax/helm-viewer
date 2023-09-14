@@ -22,8 +22,7 @@ async function run() {
 
   // Display options
   if (args.values.help) {
-    const { version } = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
-    console.log(`\nhelm-viewer v${version}
+    console.log(`\nhelm-viewer v0.7.4
 
   -b/--browser:       allow to open with a specific browser (firefox, chromium)
   -h/--help:          displays this menu
@@ -55,7 +54,7 @@ async function run() {
   console.log(
     valuesPathArray.length > 0
       ? chalk.greenBright(`🔑 Values detected : ${valuesPathArray.join(",")}`)
-      : chalk.yellowBright(`⚠️ No value detected, computing with default values in the Chart`)
+      : chalk.yellowBright(`⚠️  No value detected, computing with default values in the Chart`)
   );
 
   const tmpDir = `${tmpdir()}/${randomUUID()}`;
@@ -80,8 +79,6 @@ async function run() {
     console.log("\n")
     process.exit(1)
   }
-
-  console.log(Object.keys(payload))
 
   if (args.values.push) {
     await pushOnlineFunction(payload, args.values.encryptionKey)
