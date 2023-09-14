@@ -17,7 +17,7 @@ export function serverFileTemporary(payload: Object, port: number) {
   
       response.writeHead(200, headers);
       response.end(JSON.stringify(payload), 'utf-8');
-      console.log(chalk.cyanBright('Closing server...'))
+      console.log(chalk.cyanBright(`Closing server on port ${port}...`))
       
       httpServer.close(() => {
         resolve(undefined)

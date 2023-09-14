@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.0 | 2023-09-14
+
+We release the watch feature: be able to watch your local change and reload the UI!
+
 ## 0.5.0 | 2023-09-03
 
 This new release bring the ability to compute a chart and to share it easily by url, no more required. The content of the chart is e2e encrypted so it's safe.

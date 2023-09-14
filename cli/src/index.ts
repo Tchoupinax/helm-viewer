@@ -10,19 +10,25 @@ import open from 'open'
 import yaml from 'js-yaml'
 import { encrypt } from './functions/encryption';
 import fs from 'fs';
+import { startWebsocketServer } from './functions/websocket-server';
+import { watchHelmChartFilesModifications } from './functions/file-watcher'
+import { getArguments } from './functions/parse-cli';
+import { stdout } from 'process';
+import { computeChart } from './functions/compute-chart';
+
+type BrowserName = "firefox" | "chrome" | null;
 
 const remoteURL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://helm-viewer.vercel.app"
 
 async function run() {
-  const currentPath = process.argv?.at(2) ?? process.cwd();
-  const values = !process.argv?.at(3)?.includes("--encryption-key") && !process.argv?.at(3)?.includes("--push") ? process.argv?.at(3): undefined;
-  const pushOnline = process.argv?.includes('--push')
-  const encryptionKey = process.argv.find(p => p?.includes("--encryption-key")) != null ? process.argv.find(p => p?.includes("--encryption-key")).split('=')[1] : randomUUID()
+  const args = getArguments();
+  const currentPath = args.positionals.at(0) ?? process.cwd();
+  const valuesPathArray = args.values.values;
 
   console.log(chalk.cyanBright(`⚡️ Path detected ${currentPath}`));
   console.log(
-    values
-      ? chalk.greenBright(`🔑 Values detected ${values}`)
+    valuesPathArray.length > 0
+      ? chalk.greenBright(`🔑 Values detected : ${valuesPathArray.join(",")}`)
       : chalk.yellowBright(`⚠️ No value detected, computing with default values in the Chart`)
   );
 
@@ -38,14 +44,9 @@ async function run() {
   }
 
   // Template files and save them
-  let stdout;
-
+  let payload;
   try {
-    if (!values) {
-      ({ stdout } = await $`helm template ${currentPath}`);
-    } else {
-      ({ stdout } = await $`helm template ${currentPath} --values ${values}`);
-    }
+    payload = await computeChart(currentPath, valuesPathArray)
   } catch (err) {
     console.log("\n")
     console.log(chalk.bgRedBright("The computation of the chart failed. (message below)"));
@@ -62,10 +63,15 @@ async function run() {
   // Create the script
   const JSON_DATA = readFileSync(`${tmpDir}/global-data.json`, 'utf-8');
   
-  if (pushOnline) {
-    await pushOnlineFunction(JSON_DATA, encryptionKey)
+  if (args.values.push) {
+    await pushOnlineFunction(JSON_DATA, args.values.encryptionKey)
   } else {
-    await serveLocally(JSON_DATA)
+    await serveLocally(
+      JSON_DATA,
+      currentPath,
+      args.values.watch,
+      args.values.browser as BrowserName ?? null
+    )
   }
 
   process.exit(0)
@@ -99,12 +105,21 @@ async function pushOnlineFunction(JSON_DATA, encryptionKey: string) {
   fs.writeFileSync('.helm-viewer-url', `${remoteURL}?id=${id}&encryptionKey=${encryptionKey}&online=true`)
 }
 
-async function serveLocally(JSON_DATA) {
+async function serveLocally(
+  JSON_DATA: string,
+  currentPath: string,
+  watchingMode: boolean,
+  browserName: BrowserName,
+) {
   const id = randomUUID()
   if (process.env.NODE_ENV === "development") {
     open(`${remoteURL}?id=${id}`, { app: { name: "firefox" } })
   } else {
-    open(`${remoteURL}?id=${id}`)
+    if (browserName) {
+      open(`${remoteURL}?id=${id}`, { app: { name: browserName } })
+    } else {
+      open(`${remoteURL}?id=${id}`)
+    }
   }
 
   const { version, name } = yaml.load(JSON.parse(JSON_DATA).sources['Chart.yaml']) as { version: string, name: string };
@@ -113,6 +128,12 @@ async function serveLocally(JSON_DATA) {
     serverFileTemporary(JSON_DATA, 12094),
     serverFileTemporary({ chartName: name, chartVersion: version }, 12095)
   ]);
+
+  if (watchingMode) {
+    startWebsocketServer(currentPath)
+    watchHelmChartFilesModifications(currentPath)
+    await new Promise(resolve => setTimeout(resolve, 1e8))
+  }
 }
 
 run();
