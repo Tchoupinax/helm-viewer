@@ -30,6 +30,11 @@ export function getArguments() {
           short: "v",
           multiple: true,
           default: []
+        },
+        help: {
+          type: "boolean",
+          short: "h",
+          default: false
         }
       },
       allowPositionals: true

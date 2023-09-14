@@ -22,6 +22,21 @@ const remoteURL = process.env.NODE_ENV === "development" ? "http://localhost:300
 
 async function run() {
   const args = getArguments();
+
+  // Display options
+  if (args.values.help) {
+    console.log(`\nhelm-viewer
+
+  -b/--browser:       allow to open with a specific browser (firefox, chromium)
+  -h/--help:          displays this menu
+  -k/--encryptionKey: specify the encryption key
+  -p/--push:          push the result of the build online and returns an URL
+  -v/--values:        provide values files for the chart, can be provided several times
+  -w/--watch:         activate the watch mode
+    `)
+    process.exit(0);
+  }
+
   const currentPath = args.positionals.at(0) ?? process.cwd();
   const valuesPathArray = args.values.values;
 
