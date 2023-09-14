@@ -5,13 +5,17 @@ import yaml from 'js-yaml'
 import { join } from "path";
 import { tmpdir } from "os";
 
-export async function computeChart(currentPath: string, values?: any) {
+export async function computeChart(
+  currentPath: string,
+  valuesPathArray: Array<string> = []
+) {
   let stdout;
-
-  if (!values) {
+  if (valuesPathArray.length === 0) {
     ({ stdout } = await $`helm template ${currentPath}`);
-  } else {
-    ({ stdout } = await $`helm template ${currentPath} --values ${values}`);
+  } else if (valuesPathArray.length === 1) {
+    ({ stdout } = await $`helm template ${currentPath} --values ${valuesPathArray.at(0)}`);
+  } else if (valuesPathArray.length === 2) {
+    ({ stdout } = await $`helm template ${currentPath} --values ${valuesPathArray.at(0)} --values ${valuesPathArray.at(1)}`);
   }
 
   const { templated } = await computeTemplated(stdout)

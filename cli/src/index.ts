@@ -13,6 +13,8 @@ import fs from 'fs';
 import { startWebsocketServer } from './functions/websocket-server';
 import { watchHelmChartFilesModifications } from './functions/file-watcher'
 import { getArguments } from './functions/parse-cli';
+import { stdout } from 'process';
+import { computeChart } from './functions/compute-chart';
 
 type BrowserName = "firefox" | "chrome" | null;
 
@@ -42,15 +44,9 @@ async function run() {
   }
 
   // Template files and save them
-  let stdout;
+  let payload;
   try {
-    if (valuesPathArray.length === 0) {
-      ({ stdout } = await $`helm template ${currentPath}`);
-    } else if (valuesPathArray.length === 1) {
-      ({ stdout } = await $`helm template ${currentPath} --values ${valuesPathArray.at(0)}`);
-    } else if (valuesPathArray.length === 2) {
-      ({ stdout } = await $`helm template ${currentPath} --values ${valuesPathArray.at(0)} --values ${valuesPathArray.at(1)}`);
-    }
+    payload = await computeChart(currentPath, valuesPathArray)
   } catch (err) {
     console.log("\n")
     console.log(chalk.bgRedBright("The computation of the chart failed. (message below)"));
