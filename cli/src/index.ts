@@ -2,7 +2,7 @@ import { isChartFolder } from './functions/is-chart-folder';
 import { mkdirSync } from 'fs';
 import { randomUUID } from 'crypto';
 import chalk from 'chalk';
-import { tmpdir, version } from 'os';
+import { tmpdir } from 'os';
 import { serverFileTemporary } from './functions/serve-file-temporary';
 import open from 'open'
 import yaml from 'js-yaml'
