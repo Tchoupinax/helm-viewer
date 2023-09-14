@@ -35,6 +35,11 @@ export function getArguments() {
           type: "boolean",
           short: "h",
           default: false
+        },
+        name: {
+          type: "string",
+          short: "n",
+          default: "release-name"
         }
       },
       allowPositionals: true
