@@ -160,8 +160,8 @@ export default {
   async mounted() {
     const data = new URL(window.location.href);
     const id = data.searchParams.get('id')!
-    const isOnline = data.searchParams.get('online') === "true";
-    const encryptionKey = data.searchParams.get('encryptionKey') ?? ""
+    const isOnline = data.searchParams.get('online') === "true" ?? data.searchParams.get('o') === "t";
+    const encryptionKey = data.searchParams.get('k') ?? data.searchParams.get('encryptionKey') ?? ""
 
     if (isOnline) {
       this.data = await readRemoteChart(id, encryptionKey, this.$config.public.remoteURL)
@@ -243,7 +243,7 @@ export default {
       })
 
       const id = new URL(window.location).searchParams.get('id');
-      this.sharedUrl = `${this.$config.public.remoteURL}?id=${id}&encryptionKey=${encryptionKey}&online=true`
+      this.sharedUrl = `${this.$config.public.remoteURL}?id=${id}&k=${encryptionKey}&o=t`
     },
     closeSharingModal() {
       this.copyButtonText = 'Copy';
