@@ -1,4 +1,4 @@
-import { randomUUID } from "node:crypto";
+import { nanoid } from "nanoid";
 import { parseArgs } from "node:util";
 
 export function getArguments() {
@@ -18,7 +18,7 @@ export function getArguments() {
         encryptionKey: {
           type: "string",
           short: "k",
-          default: randomUUID()
+          default: nanoid().slice(0, 10)
         },
         browser: {
           type: "string",

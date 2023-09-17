@@ -12,8 +12,9 @@ import { startWebsocketServer } from './functions/websocket-server';
 import { watchHelmChartFilesModifications } from './functions/file-watcher'
 import { getArguments } from './functions/parse-cli';
 import { computeChart } from './functions/compute-chart';
+import { nanoid } from 'nanoid'
 
-type BrowserName = "firefox" | "chrome" | null;
+type BrowserName = "firefox" | "chrome" | "default";
 
 const remoteURL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://helm-viewer.vercel.app"
 
@@ -22,7 +23,7 @@ async function run() {
 
   // Display options
   if (args.values.help) {
-    console.log(`\nhelm-viewer v0.7.4
+    console.log(`\nhelm-viewer v0.7.7
 
   -b/--browser:       allow to open with a specific browser (firefox, chromium)
   -h/--help:          displays this menu
@@ -95,14 +96,16 @@ async function run() {
   process.exit(0)
 };
 
-async function pushOnlineFunction(JSON_DATA, encryptionKey: string) {
-  const id = randomUUID();
-
-  const { version, name } = yaml.load(JSON.parse(JSON_DATA).sources['Chart.yaml']) as { version: string, name: string };
-  const payload = {
+async function pushOnlineFunction(
+  payload: { name: string, version: string, templated: {}, sources: {} },
+  encryptionKey: string
+) {
+  const id = nanoid();
+  const { version, name } = yaml.load(payload.sources['Chart.yaml']) as { version: string, name: string };
+  const content = {
     chartVersion: version,
     chartName: name,
-    content: encrypt(JSON_DATA,encryptionKey)
+    content: encrypt(JSON.stringify(payload), encryptionKey)
   }
 
   await fetch(`${remoteURL}/api/chart-upload`, {
@@ -111,16 +114,16 @@ async function pushOnlineFunction(JSON_DATA, encryptionKey: string) {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      content: JSON.stringify(payload),
+      content: JSON.stringify(content),
       chartId: id,
     })
   })
 
   console.log("")
-  console.log(`${remoteURL}?id=${id}&encryptionKey=${encryptionKey}&online=true`)
+  console.log(`${remoteURL}?id=${id}&k=${encryptionKey}&o=t`)
   console.log("")
 
-  fs.writeFileSync('.helm-viewer-url', `${remoteURL}?id=${id}&encryptionKey=${encryptionKey}&online=true`)
+  fs.writeFileSync('.helm-viewer-url', `${remoteURL}?id=${id}&k=${encryptionKey}&o=t`)
 }
 
 async function serveLocally(
@@ -130,11 +133,11 @@ async function serveLocally(
   browserName: BrowserName,
   releaseName: string
 ) {
-  const id = randomUUID()
+  const id = nanoid()
   if (process.env.NODE_ENV === "development") {
     open(`${remoteURL}?id=${id}`, { app: { name: "firefox" } })
   } else {
-    if (browserName) {
+    if (browserName !== "default") {
       open(`${remoteURL}?id=${id}`, { app: { name: browserName } })
     } else {
       open(`${remoteURL}?id=${id}`)
