@@ -160,7 +160,9 @@ export default {
   async mounted() {
     const data = new URL(window.location.href);
     const id = data.searchParams.get('id')!
-    const isOnline = data.searchParams.get('online') === "true" ?? data.searchParams.get('o') === "t";
+    const isOnline = data.searchParams.get('online') !== null ? 
+      data.searchParams.get('online') === "true" : 
+      data.searchParams.get('o') === "t";
     const encryptionKey = data.searchParams.get('k') ?? data.searchParams.get('encryptionKey') ?? ""
 
     if (isOnline) {
