@@ -13,7 +13,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      remoteURL: process.env.REMOTE_URL ?? "http://localhost:3000"
+      remoteURL: process.env.BACKEND_ENDPOINT ?? process.env.REMOTE_URL ?? "http://localhost:3000"
     }
   }
 })
