@@ -1,1 +1,26 @@
+FROM node:20-alpine as builder
+
+RUN  apk add --no-cache --virtual .gyp git
+
+WORKDIR /app
+
+COPY package.json yarn.lock /app
+
+RUN yarn
+
+COPY . .
+
+RUN yarn build
+
+#########################################################
+#########################################################
+
 FROM node:20-alpine
+
+WORKDIR /app
+
+COPY --from=builder /app/.output /app/.output
+
+EXPOSE 80
+
+CMD NITRO_HOST=0.0.0.0 NITRO_PORT=80 node .output/server/index.mjs
