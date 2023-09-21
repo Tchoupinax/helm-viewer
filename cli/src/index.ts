@@ -16,7 +16,7 @@ import { nanoid } from 'nanoid'
 
 type BrowserName = "firefox" | "chrome" | "default";
 
-const remoteURL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://helm-viewer.vercel.app"
+const remoteURL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : process.env.BACKEND_ENDPOINT ?? "https://helm-viewer.vercel.app"
 
 async function run() {
   const args = getArguments();
