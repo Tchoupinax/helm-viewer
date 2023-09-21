@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.8.0 | 2023-09-21
+
+#### Features
+
+- Allow to target a different backend via env var (`BACKEND_ENDPOINT`, cli and webapp)
+
 ## 0.6.0 | 2023-09-14
 
 We release the watch feature: be able to watch your local change and reload the UI!
