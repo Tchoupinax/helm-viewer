@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.9.0 | 2023-09-21
+
+#### Features
+
+- Provide Docker container for the webapp
+
 ## 0.8.0 | 2023-09-21
 
 #### Features

@@ -1,0 +1,16 @@
+**
+
+!package.json
+!yarn.lock
+
+!components
+!functions
+!layouts
+!pages
+!plugins
+!server
+!storage
+
+!nuxt.config.ts
+!tailwind.config.ts
+!tsconfig.json
