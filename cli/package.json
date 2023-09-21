@@ -25,7 +25,7 @@
     "pack": "npm pack --dry-run",
     "publish": "npm publish",
     "=== RUN ==============================================": "",
-    "run": "BACKEND_ENDPOINT=toto npx vite-node src/index.ts ~/Downloads/traefik-helm-chart/traefik",
+    "run": "NODE_ENV=development npx vite-node src/index.ts ~/Downloads/traefik-helm-chart/traefik",
     "=== BUILD ============================================": "",
     "test": "vitest",
     "build": "tsc",
