@@ -28,4 +28,4 @@ jobs:
           context: "{{defaultContext}}:webapp"
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: tchoupinax/helm-viewer-webapp:latest
+          tags: tchoupinax/helm-viewer-webapp:next
