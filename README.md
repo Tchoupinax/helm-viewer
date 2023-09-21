@@ -44,6 +44,15 @@ helm-viewer path/of/the/chart --push
 
 It will analyze the helm chart and generate a HTML report, automatically opened in your favorite browser.
 
+# Selfhost
+
+The application is a CLI alone. If you want to use the share and the CI feature, you need to use the backend (e2e encryption). If you want to host the backend on your side, you can customize the app using the env var `BACKEND_ENDPOINT`.
+
+```bash
+BACKEND_ENDPOINT="http://my-custom-domain.com" helm-viewer my-chart --push
+```
+
+And do not forget to provide the env var to our backend!
 
 # Development
 ## Generate the binary
