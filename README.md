@@ -54,6 +54,16 @@ BACKEND_ENDPOINT="http://my-custom-domain.com" helm-viewer my-chart --push
 
 And do not forget to provide the env var to our backend!
 
+```bash
+BACKEND_S3_BUCKETNAME=""
+```
+
+⚠️ For the moment, the custom BACKEND_ENDPOINT must be provided while building the Docker image for the frontend
+
+```bash
+docker build -t myregistry.com/helm-viewer-webapp --build-arg BACKEND_ENDPOINT=https://custom.url .
+```
+
 # Development
 ## Generate the binary
 

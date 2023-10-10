@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.10.0 | 2023-09-21
+
+#### Features
+
+- Configure S3 Client to accept IAM based configuration backend
+
+#### Docs
+
+- Fix and add documentation about how to build Docker image with custom backend endpoint
+
 ## 0.9.0 | 2023-09-21
 
 #### Features

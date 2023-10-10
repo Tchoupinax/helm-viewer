@@ -11,7 +11,7 @@ export async function uploadFileToS3(
 ): Promise<PutObjectCommandOutput> {
   const command = new PutObjectCommand({
     Body: content,
-    Bucket: "helm-viewer-computed-charts",
+    Bucket: process.env.BACKEND_S3_BUCKETNAME,
     Key: join(process.env.NODE_ENV ?? "default", path),
     Expires: new Date(),
   });
@@ -31,13 +31,22 @@ export async function uploadFileToS3(
 }
 
 function getClient(): S3Client {
-  return new S3Client({
-    endpoint: process.env.BACKEND_S3_ENDPOINT,
-    region: process.env.BACKEND_S3_REGION,
-    forcePathStyle: true,
-    credentials: {
-      accessKeyId: process.env.BACKEND_S3_ACCESS_KEY ?? "",
-      secretAccessKey: process.env.BACKEND_S3_SECRET_KEY ?? "",
+  let config = { region: process.env.BACKEND_S3_REGION };
+
+  if (
+    process.env.BACKEND_S3_ACCESS_KEY &&
+    process.env.BACKEND_S3_SECRET_KEY
+  ) {
+    config = {
+      endpoint: process.env.BACKEND_S3_ENDPOINT,
+      region: process.env.BACKEND_S3_REGION,
+      forcePathStyle: true,
+      credentials: {
+        accessKeyId: process.env.BACKEND_S3_ACCESS_KEY ?? "",
+        secretAccessKey: process.env.BACKEND_S3_SECRET_KEY ?? "",
+      }
     }
-  });
+  }
+
+  return new S3Client(config);
 }

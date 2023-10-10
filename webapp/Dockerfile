@@ -2,6 +2,10 @@ FROM node:20-alpine as builder
 
 RUN  apk add --no-cache --virtual .gyp git
 
+ARG BACKEND_ENDPOINT
+
+ENV BACKEND_ENDPOINT $BACKEND_ENDPOINT
+
 WORKDIR /app
 
 COPY package.json yarn.lock /app
