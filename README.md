@@ -21,6 +21,8 @@ Also, as DevOps we build, maintain and deploy our chart. When we do a review of 
 
 ## Installation
 
+⚠️ Node.js >= 20 is required to use the CLI
+
 ```bash
 # Install globally
 npm i -g helm-viewer

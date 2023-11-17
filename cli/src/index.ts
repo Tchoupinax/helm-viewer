@@ -13,6 +13,7 @@ import { watchHelmChartFilesModifications } from './functions/file-watcher'
 import { getArguments } from './functions/parse-cli';
 import { computeChart } from './functions/compute-chart';
 import { nanoid } from 'nanoid'
+import { checkNodeVersion } from './functions/check-node-version';
 
 type BrowserName = "firefox" | "chrome" | "default";
 
@@ -20,6 +21,8 @@ const remoteURL = process.env.NODE_ENV === "development" ? "http://localhost:300
 const remoteReadURL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : process.env.BACKEND_READ_ENDPOINT ?? process.env.BACKEND_ENDPOINT ?? "https://helm-viewer.vercel.app"
 
 async function run() {
+  checkNodeVersion()
+
   const args = getArguments();
 
   // Display options
