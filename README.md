@@ -47,6 +47,7 @@ It will analyze the helm chart and generate a HTML report, automatically opened 
 # Selfhost
 
 The application is a CLI alone. If you want to use the share and the CI feature, you need to use the backend (e2e encryption). If you want to host the backend on your side, you can customize the app using the env var `BACKEND_ENDPOINT`.
+Also, you can provide a different url for the push operation and the read operation. By default, both will be defined by `BACKEND_ENDPOINT`. If you want to set a different url for the read operation, you can do it by `BACKEND_READ_ENDPOINT`.
 
 ```bash
 BACKEND_ENDPOINT="http://my-custom-domain.com" helm-viewer my-chart --push
@@ -70,4 +71,3 @@ docker build -t myregistry.com/helm-viewer-webapp --build-arg BACKEND_ENDPOINT=h
 ```
 just
 ```
-

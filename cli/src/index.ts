@@ -17,6 +17,7 @@ import { nanoid } from 'nanoid'
 type BrowserName = "firefox" | "chrome" | "default";
 
 const remoteURL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : process.env.BACKEND_ENDPOINT ?? "https://helm-viewer.vercel.app"
+const remoteReadURL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : process.env.BACKEND_READ_ENDPOINT ?? process.env.BACKEND_ENDPOINT ?? "https://helm-viewer.vercel.app"
 
 async function run() {
   const args = getArguments();
@@ -120,10 +121,10 @@ async function pushOnlineFunction(
   })
 
   console.log("")
-  console.log(`${remoteURL}?id=${id}&k=${encryptionKey}&o=t`)
+  console.log(`${remoteReadURL}?id=${id}&k=${encryptionKey}&o=t`)
   console.log("")
 
-  fs.writeFileSync('.helm-viewer-url', `${remoteURL}?id=${id}&k=${encryptionKey}&o=t`)
+  fs.writeFileSync('.helm-viewer-url', `${remoteReadURL}?id=${id}&k=${encryptionKey}&o=t`)
 }
 
 async function serveLocally(
