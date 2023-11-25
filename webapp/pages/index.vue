@@ -1,6 +1,7 @@
 <template>
   <div id="app" class="flex flex-col h-12">
     <Loader v-if="!data.templated" />
+    <InstructionsHelper v-if="fetchDataError" />
 
     {{ helmError }}
     <Error v-if="helmError" :error="helmError" />
@@ -37,7 +38,7 @@
     />
 
     <button
-      v-if="!showHistoryMenu"
+      v-if="!showHistoryMenu && !fetchDataError"
       @click="showHistoryMenu = !showHistoryMenu"
       class="absolute bg-purple-300 p-2 text-purple-700 bottom-0 right-0 z-50 mr-4 mb-4 tracking-widest text-xl rounded-xl"
     >
@@ -45,7 +46,7 @@
     </button>
 
     <button 
-      v-if="!showHistoryMenu"
+      v-if="!showHistoryMenu && !fetchDataError"
       @click="shared"
       class="cursor-pointer absolute bg-purple-300 p-2 text-purple-700 bottom-0 right-0 z-50 mr-32 mb-4 tracking-widest text-xl rounded-xl"
     >
@@ -139,6 +140,7 @@ export type Store = {
     templated: object | undefined;
     sources: object | undefined;
   }
+  fetchDataError: boolean;
 };
 
 export default {
@@ -154,7 +156,8 @@ export default {
       data: {
         templated: undefined,
         sources: undefined,
-      }
+      },
+      fetchDataError: false,
     }
   },
   async mounted() {
@@ -169,7 +172,18 @@ export default {
       this.data = await readRemoteChart(id, encryptionKey, this.$config.public.remoteURL)
       window.location.assign(`/?id=${id}`)
     } else {
-      this.data = await loadChart(id)
+      try {
+        const data = await loadChart(id)
+        this.data = data;
+        
+      } catch (err) {
+        this.fetchDataError = true
+      }
+    }
+
+    // If there is an error we won't continue the process
+    if (this.fetchDataError) {
+      return
     }
 
     this.displaySourceFile("Chart.yaml", false);
