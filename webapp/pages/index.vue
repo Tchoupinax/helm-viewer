@@ -46,14 +46,14 @@
     </button>
 
     <button 
-      v-if="!showHistoryMenu && !fetchDataError && !data.templated"
+      v-if="!showHistoryMenu && !fetchDataError && data.templated"
       @click="shared"
       class="cursor-pointer absolute bg-purple-300 p-2 text-purple-700 bottom-0 right-0 z-50 mr-32 mb-4 tracking-widest text-xl rounded-xl"
     >
       Share
     </button>
 
-    <div class="flex" v-if="!fetchDataError">
+    <div class="flex" v-if="!fetchDataError && data.templated">
       <div class="w-3/12 bg-blue-50 h-screen overflow-scroll">
         <div class="p-2">
           <h1 class="italic text-3xl font-thin ml-4 mb-4 underline">Computed files</h1>
@@ -175,7 +175,6 @@ export default {
       try {
         const data = await loadChart(id)
         this.data = data;
-        
       } catch (err) {
         this.fetchDataError = true
       }
