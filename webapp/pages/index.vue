@@ -55,12 +55,14 @@
 
     <div class="flex" v-if="!fetchDataError && data.templated">
       <div class="w-3/12 bg-blue-50 h-screen overflow-scroll">
-        <div class="p-2">
-          <h1 class="italic text-3xl font-thin ml-4 mb-4 underline">Computed files</h1>
+        <h1 class="text-3xl text-center mb-4 mt-2 bg-blue-200">
+          {{ data.name }}
+        </h1>
 
+        <div class="p-2">
           <div
             v-if="data.templated"
-            v-for="template of Object.keys(data.templated)"
+            v-for="template of Object.keys(data.templated).sort((a, b) => a > b)"
             class="mb-2"
           >
             <p class="text-xl font-thin">
@@ -72,13 +74,13 @@
               v-for="file of Object.keys(data.templated[template])"
               @click="displayTemplatedFile(template, file)"
             >
-              🟢 {{ file }}
+              {{ file }}
             </div>
           </div>
         </div>
 
         <div v-if="data.sources" class="bg-green-100 border-t-2 border-black">
-          <h1 class="italic text-3xl font-thin mt-2 ml-4 mb-4 underline">Sources</h1>
+          <h2 class="italic text-3xl font-thin mt-2 ml-4 mb-4 underline">Sources</h2>
           <div class="mb-1" v-for="file of Object.keys(data.sources).filter(n => n !== 'templates')">
             <p
               class="ml-6 font-thin hover:bg-slate-300 pl-2 cursor-pointer"
@@ -101,14 +103,19 @@
               class="ml-8 font-thin"
               @click="displaySourceFile(file, true)"
             >
-              🟢 {{ file }}
+              {{ file }}
             </p>
           </div>
         </div>
       </div>
 
       <MonacoEditor 
-        :options="{ theme: 'vs-dark', fontSize: 16, readOnly: true, automaticLayout: true }"
+        :options="{
+          theme: 'vs-dark',
+          fontSize: 16,
+          readOnly: true,
+          automaticLayout: true
+        }"
         class="w-full h-full text-xl"
         v-model="editorValue"
         lang="yaml"
@@ -139,6 +146,7 @@ export type Store = {
   data: {
     templated: object | undefined;
     sources: object | undefined;
+    name: string;
   }
   fetchDataError: boolean;
 };
