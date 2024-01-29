@@ -5,11 +5,18 @@ import yaml from 'js-yaml'
 import { join } from "path";
 import { tmpdir } from "os";
 
+export type Chart = {
+  name: string;
+  version: string;
+  templated: Record<string, any>;
+  sources: Record<string, any>;
+};
+
 export async function computeChart(
   currentPath: string,
   releaseName: string,
   valuesPathArray: Array<string> = []
-) {
+): Promise<Chart> {
   let stdout;
   if (valuesPathArray.length === 0) {
     ({ stdout } = await $`helm template --name-template ${releaseName} ${currentPath}`);

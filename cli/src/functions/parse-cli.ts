@@ -40,7 +40,11 @@ export function getArguments() {
           type: "string",
           short: "n",
           default: "release-name"
-        }
+        },
+        noserve: {
+          type: "boolean",
+          default: false
+        },
       },
       allowPositionals: true
     }

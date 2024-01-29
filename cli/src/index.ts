@@ -3,22 +3,14 @@ import { mkdirSync } from 'fs';
 import { randomUUID } from 'crypto';
 import chalk from 'chalk';
 import { tmpdir } from 'os';
-import { serverFileTemporary } from './functions/serve-file-temporary';
-import open from 'open'
-import yaml from 'js-yaml'
-import { encrypt } from './functions/encryption';
-import fs from 'fs';
-import { startWebsocketServer } from './functions/websocket-server';
-import { watchHelmChartFilesModifications } from './functions/file-watcher'
 import { getArguments } from './functions/parse-cli';
-import { computeChart } from './functions/compute-chart';
-import { nanoid } from 'nanoid'
+import { type Chart, computeChart } from './functions/compute-chart';
 import { checkNodeVersion } from './functions/check-node-version';
+import { pushOnlineFunction } from './functions/push-online';
+import { serveLocally } from './functions/serve-locally';
+import { featureDetectUnusedValues } from './features/detect-unused-values';
 
-type BrowserName = "firefox" | "chrome" | "default";
-
-const remoteURL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : process.env.BACKEND_ENDPOINT ?? "https://helm-viewer.vercel.app"
-const remoteReadURL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : process.env.BACKEND_READ_ENDPOINT ?? process.env.BACKEND_ENDPOINT ?? "https://helm-viewer.vercel.app"
+export type BrowserName = "firefox" | "chrome" | "default";
 
 async function run() {
   checkNodeVersion()
@@ -36,6 +28,7 @@ async function run() {
   -p/--push:          push the result of the build online and returns an URL
   -v/--values:        provide values files for the chart, can be provided several times
   -w/--watch:         activate the watch mode
+     --noserve:       prevent to open the browser locally
 
   # When you are in a chart helm folder
   helm-viewer
@@ -74,7 +67,7 @@ async function run() {
   }
 
   // Template files and save them
-  let payload;
+  let payload: Chart;
   try {
     payload = await computeChart(currentPath, args.values.name, valuesPathArray)
   } catch (err) {
@@ -85,81 +78,26 @@ async function run() {
     process.exit(1)
   }
 
+  await featureDetectUnusedValues(
+    valuesPathArray,
+    payload.templated
+  );
+
   if (args.values.push) {
     await pushOnlineFunction(payload, args.values.encryptionKey)
   } else {
-    await serveLocally(
-      payload,
-      currentPath,
-      args.values.watch,
-      args.values.browser as BrowserName ?? null,
-      args.values.name
-    )
+    if (!args.values.noserve) {
+      await serveLocally(
+        payload,
+        currentPath,
+        args.values.watch,
+        args.values.browser as BrowserName ?? null,
+        args.values.name
+      )
+    }
   }
 
   process.exit(0)
 };
-
-async function pushOnlineFunction(
-  payload: { name: string, version: string, templated: {}, sources: {} },
-  encryptionKey: string
-) {
-  const id = nanoid();
-  const { version, name } = yaml.load(payload.sources['Chart.yaml']) as { version: string, name: string };
-  const content = {
-    chartVersion: version,
-    chartName: name,
-    content: encrypt(JSON.stringify(payload), encryptionKey)
-  }
-
-  await fetch(`${remoteURL}/api/chart-upload`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      content: JSON.stringify(content),
-      chartId: id,
-    })
-  })
-
-  console.log("")
-  console.log(`${remoteReadURL}?id=${id}&k=${encryptionKey}&o=t`)
-  console.log("")
-
-  fs.writeFileSync('.helm-viewer-url', `${remoteReadURL}?id=${id}&k=${encryptionKey}&o=t`)
-}
-
-async function serveLocally(
-  payload: { name: string, version: string, templated: {}, sources: {} },
-  currentPath: string,
-  watchingMode: boolean,
-  browserName: BrowserName,
-  releaseName: string
-) {
-  const id = nanoid()
-  if (process.env.NODE_ENV === "development") {
-    open(`${remoteURL}?id=${id}`, { app: { name: "firefox" } })
-  } else {
-    if (browserName !== "default") {
-      open(`${remoteURL}?id=${id}`, { app: { name: browserName } })
-    } else {
-      open(`${remoteURL}?id=${id}`)
-    }
-  }
-
-  const { version, name } = yaml.load(payload.sources['Chart.yaml']) as { version: string, name: string };
-
-  await Promise.all([
-    serverFileTemporary(JSON.stringify(payload), 12094),
-    serverFileTemporary({ chartName: name, chartVersion: version }, 12095)
-  ]);
-
-  if (watchingMode) {
-    startWebsocketServer(currentPath, releaseName)
-    watchHelmChartFilesModifications(currentPath)
-    await new Promise(resolve => setTimeout(resolve, 1e8))
-  }
-}
 
 run();
