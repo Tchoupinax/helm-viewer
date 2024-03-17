@@ -10,6 +10,13 @@ export async function computeChart(
   releaseName: string,
   valuesPathArray: Array<string> = []
 ) {
+
+  try {
+    await $`cd ${currentPath} && helm dependency build`;
+  } catch (err) {
+    console.log(err);
+  }
+
   let stdout;
   if (valuesPathArray.length === 0) {
     ({ stdout } = await $`helm template --name-template ${releaseName} ${currentPath}`);
@@ -25,7 +32,7 @@ export async function computeChart(
   const { version, name } = yaml.load(sources['Chart.yaml']) as { version: string, name: string };
 
   return {
-    name,
+
     version,
     templated,
     sources
@@ -44,7 +51,7 @@ export async function computeTemplated(
       if(!dataFileJSON["templated"][jsonFile.kind]) {
         dataFileJSON["templated"][jsonFile.kind] = {}
       }
-      dataFileJSON["templated"][jsonFile.kind][jsonFile?.metadata?.name.replaceAll('-', "_")] = file;
+      dataFileJSON["templated"][jsonFile.kind][jsonFile?.metadata?.name] = file;
     }
   }
 
@@ -66,7 +73,7 @@ export async function computeSources(
   for(const file of yamlFiles) {
     const jsonFile = yaml.load(file) as any;
     if (jsonFile) {
-      const key = jsonFile.kind + "_" + jsonFile?.metadata?.name.replaceAll('-', "_");
+      const key = jsonFile.kind + "-" + jsonFile?.metadata?.name;
       writeFileSync(`${tmpDir}/templated/${key}.yaml`, file);
     }
   }
