@@ -32,7 +32,7 @@ export async function computeChart(
   const { version, name } = yaml.load(sources['Chart.yaml']) as { version: string, name: string };
 
   return {
-
+    name,
     version,
     templated,
     sources
