@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import { History, HistoryItem } from '../storage/history'
+import { History, type HistoryItem } from '../storage/history'
 import * as timeago from 'timeago.js'
 
 type Store = {

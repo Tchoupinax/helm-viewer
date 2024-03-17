@@ -9,13 +9,13 @@ export function saveTemplatedYamlToFiles(tmpDir: string, helmTemplate: string): 
   for(const file of files) {
     const jsonFile = yaml.load(file) as any;
     if (jsonFile) {
-      const key = jsonFile.kind + "_" + jsonFile?.metadata?.name.replaceAll('-', "_");
+      const key = jsonFile.kind + "-" + jsonFile?.metadata?.name
       writeFileSync(`${tmpDir}/templated/${key}.yaml`, file);
 
       if(!dataFileJSON["templated"][jsonFile.kind]) {
         dataFileJSON["templated"][jsonFile.kind] = {}
       }
-      dataFileJSON["templated"][jsonFile.kind][jsonFile?.metadata?.name.replaceAll('-', "_")] = file;
+      dataFileJSON["templated"][jsonFile.kind][jsonFile?.metadata?.name] = file;
     }
   }
 

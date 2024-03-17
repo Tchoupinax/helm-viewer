@@ -23,7 +23,7 @@
 
           <button
             @click="copyText(sharedUrl)"
-            class="bg-blue-500 mt-16 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
+            class="mt-16 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
           >
             {{ copyButtonText }}
           </button>
@@ -54,8 +54,8 @@
     </button>
 
     <div class="flex" v-if="!fetchDataError && data.templated">
-      <div class="w-3/12 bg-blue-50 h-screen overflow-scroll">
-        <h1 class="text-3xl text-center mb-4 mt-2 bg-blue-200">
+      <div class="w-1/3 xl:w-3/12 h-screen overflow-scroll">
+        <h1 class="text-3xl text-center mb-4 mt-2">
           {{ data.name }}
         </h1>
 
@@ -79,7 +79,7 @@
           </div>
         </div>
 
-        <div v-if="data.sources" class="bg-green-100 border-t-2 border-black">
+        <div v-if="data.sources" class="border-t-2 border-black">
           <h2 class="italic text-3xl font-thin mt-2 ml-4 mb-4 underline">Sources</h2>
           <div class="mb-1" v-for="file of Object.keys(data.sources).filter(n => n !== 'templates')">
             <p
