@@ -21,23 +21,23 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "3.456.0",
-    "@kyvg/vue3-notification": "3.0.2",
+    "@aws-sdk/client-s3": "3.535.0",
+    "@kyvg/vue3-notification": "3.2.0",
     "@nuxt/devtools": "latest",
-    "@nuxtjs/tailwindcss": "6.10.1",
-    "@types/node": "20.10.0",
+    "@nuxtjs/tailwindcss": "6.11.4",
+    "@types/node": "20.11.28",
     "body-scroll-lock": "4.0.0-beta.0",
     "crypto-js": "4.2.0",
     "js-yaml": "4.1.0",
-    "monaco-editor": "0.44.0",
-    "nanoid": "4.0.2",
-    "nuxt": "3.7.3",
-    "nuxt-monaco-editor": "1.2.3",
-    "shikiji": "0.7.4",
+    "monaco-editor": "0.47.0",
+    "nanoid": "5.0.6",
+    "nuxt": "3.10.3",
+    "nuxt-monaco-editor": "1.2.7",
+    "shikiji": "0.10.2",
     "timeago.js": "4.0.2",
-    "ws": "8.14.2"
+    "ws": "8.16.0"
   },
   "devDependencies": {
-    "vitest": "0.34.6"
+    "vitest": "1.4.0"
   }
 }
