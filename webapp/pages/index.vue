@@ -54,60 +54,11 @@
     </button>
 
     <div class="flex" v-if="!fetchDataError && data.templated">
-      <div class="w-1/3 xl:w-3/12 h-screen overflow-scroll">
-        <h1 class="text-3xl text-center mb-4 mt-2">
-          {{ data.name }}
-        </h1>
-
-        <div class="p-2">
-          <div
-            v-if="data.templated"
-            v-for="template of Object.keys(data.templated).sort((a, b) => a > b)"
-            class="mb-2"
-          >
-            <p class="text-xl font-thin">
-              ➡ {{ template }}
-            </p>
-
-            <div
-              class="ml-6 mt-2 flex cursor-pointer hover:bg-slate-300 pl-2"
-              v-for="file of Object.keys(data.templated[template])"
-              @click="displayTemplatedFile(template, file)"
-            >
-              {{ file }}
-            </div>
-          </div>
-        </div>
-
-        <div v-if="data.sources" class="border-t-2 border-black">
-          <h2 class="italic text-3xl font-thin mt-2 ml-4 mb-4 underline">Sources</h2>
-          <div class="mb-1" v-for="file of Object.keys(data.sources).filter(n => n !== 'templates')">
-            <p
-              class="ml-6 font-thin hover:bg-slate-300 pl-2 cursor-pointer"
-              @click="displaySourceFile(file)"
-            >
-              {{ file }}
-            </p>
-          </div>
-          
-          <p v-if="data.sources['templates']" class="font-thin ml-2">
-            ➡ templates
-          </p>
-
-          <div
-            v-if="data.sources['templates']"
-            v-for="file of Object.keys(data.sources['templates'])"
-            class="mb-1 hover:bg-slate-300 pl-2 cursor-pointer"
-          >
-            <p
-              class="ml-8 font-thin"
-              @click="displaySourceFile(file, true)"
-            >
-              {{ file }}
-            </p>
-          </div>
-        </div>
-      </div>
+      <Sidebar
+        :data="data"
+        :fetchDataError="fetchDataError"
+        @displayTemplateFile="({ file, k8sResourceName }) => displayTemplatedFile(k8sResourceName, file)"
+      />
 
       <MonacoEditor 
         :options="{

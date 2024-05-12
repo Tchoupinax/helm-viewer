@@ -1,6 +1,6 @@
 {
   "name": "helm-viewer-webapp",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "description": "Quick tool to easily view your helm charts.",
   "author": "Tchoupinax <corentinfiloche@hotmail.fr> (https://corentinfiloche.xyz)",
   "license": "MIT",
@@ -21,23 +21,23 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "3.535.0",
-    "@kyvg/vue3-notification": "3.2.0",
+    "@aws-sdk/client-s3": "3.574.0",
+    "@kyvg/vue3-notification": "3.2.1",
     "@nuxt/devtools": "latest",
-    "@nuxtjs/tailwindcss": "6.11.4",
-    "@types/node": "20.11.28",
+    "@nuxtjs/tailwindcss": "6.12.0",
+    "@types/node": "20.12.11",
     "body-scroll-lock": "4.0.0-beta.0",
     "crypto-js": "4.2.0",
     "js-yaml": "4.1.0",
-    "monaco-editor": "0.47.0",
-    "nanoid": "5.0.6",
-    "nuxt": "3.10.3",
-    "nuxt-monaco-editor": "1.2.7",
+    "monaco-editor": "0.48.0",
+    "nanoid": "5.0.7",
+    "nuxt": "3.11.2",
+    "nuxt-monaco-editor": "1.2.9",
     "shikiji": "0.10.2",
     "timeago.js": "4.0.2",
-    "ws": "8.16.0"
+    "ws": "8.17.0"
   },
   "devDependencies": {
-    "vitest": "1.4.0"
+    "vitest": "1.6.0"
   }
 }
