@@ -1155,7 +1155,7 @@
   resolved "https://registry.yarnpkg.com/@kwsites/promise-deferred/-/promise-deferred-1.1.1.tgz#8ace5259254426ccef57f3175bc64ed7095ed919"
   integrity sha512-GaHYm+c0O9MjZRu0ongGBRbinu8gVAMd2UZjji6jVmqKtZluZnptXGWhz1E8j8D2HJ3f/yMxKAUC0b+57wncIw==
 
-"@kyvg/vue3-notification@3.2.1":
+"@kyvg/vue3-notification@3.2.1", "@kyvg/vue3-notification@^3.1.4":
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/@kyvg/vue3-notification/-/vue3-notification-3.2.1.tgz#b7dc9f1855b43a24797acee92988dff89aefb45d"
   integrity sha512-qn4bCBBCxW0Ya+RmHXu2SYBVwGXWsAGdlDKqCqyLryaZTbtFXi32iSSLnuKjSUVxFqQRToFc6g1zp1XLTyHrvw==
@@ -1390,7 +1390,7 @@
     which "^3.0.1"
     ws "^8.17.0"
 
-"@nuxt/kit@3.11.2", "@nuxt/kit@^3.11.2":
+"@nuxt/kit@3.11.2", "@nuxt/kit@^3.11.1", "@nuxt/kit@^3.11.2":
   version "3.11.2"
   resolved "https://registry.yarnpkg.com/@nuxt/kit/-/kit-3.11.2.tgz#dfc43c05992691bcd6aa58c14f88cf43e3abb788"
   integrity sha512-yiYKP0ZWMW7T3TCmsv4H8+jEsB/nFriRAR8bKoSqSV9bkVYWPE36sf7JDux30dQ91jSlQG6LQkB3vCHYTS2cIg==
@@ -1901,6 +1901,11 @@
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/@shikijs/core/-/core-1.3.0.tgz#5b93b51ddb8def1e3a1543107f9b5b0540f716f6"
   integrity sha512-7fedsBfuILDTBmrYZNFI8B6ATTxhQAasUHllHmjvSZPnoq4bULWoTpHwmuQvZ8Aq03/tAa2IGo6RXqWtHdWaCA==
+
+"@shikijs/core@1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@shikijs/core/-/core-1.6.0.tgz#ec8c199715859c7bbd2717c26526edc93e18d1c7"
+  integrity sha512-NIEAi5U5R7BLkbW1pG/ZKu3eb1lzc3/+jD0lFsuxMT7zjaf9bbNwdNyMr7zh/Zl8EXQtQ+MYBAt5G+JLu+5DlA==
 
 "@sigstore/bundle@^2.3.0", "@sigstore/bundle@^2.3.1":
   version "2.3.1"
@@ -5535,6 +5540,24 @@ nuxt-monaco-editor@1.2.9:
     defu "^6.1.4"
     vite-plugin-static-copy "^1.0.3"
 
+nuxt-shiki@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/nuxt-shiki/-/nuxt-shiki-0.3.0.tgz#53405ccbde20ff85e429500a218198acf16c95e0"
+  integrity sha512-edeP230QQmQ02PdquCjE0noM8+RNTrpjJk1pfR1tIJ5gBp1DegzTe4WdFUWXu7sjSiIndfDy2KbQ9SPscGROJw==
+  dependencies:
+    "@nuxt/kit" "^3.11.1"
+    knitwork "^1.1.0"
+    shiki "^1.2.3"
+    unwasm "^0.3.9"
+
+nuxt3-notifications@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/nuxt3-notifications/-/nuxt3-notifications-1.2.0.tgz#5b4440c1fc913ebda7bb88495aeb01f74cbdae2d"
+  integrity sha512-WHYviscx7EcstMCQkv8QBvn0mPLZrsLTgrciHltNCMURAY+afXPq6TS/TcLJoPAZoH8TyHZxRkYOnOEADGUXpA==
+  dependencies:
+    "@kyvg/vue3-notification" "^3.1.4"
+    scule "^1.0.0"
+
 nuxt@3.11.2:
   version "3.11.2"
   resolved "https://registry.yarnpkg.com/nuxt/-/nuxt-3.11.2.tgz#38e14b96ff5669b1fbae7fc99e8d79042dce658d"
@@ -6497,6 +6520,13 @@ shiki@1.3.0:
   integrity sha512-9aNdQy/etMXctnPzsje1h1XIGm9YfRcSksKOGqZWXA/qP9G18/8fpz5Bjpma8bOgz3tqIpjERAd6/lLjFyzoww==
   dependencies:
     "@shikijs/core" "1.3.0"
+
+shiki@^1.2.3:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/shiki/-/shiki-1.6.0.tgz#f017ed09d467f99a28d5dfb572bcba6dfcadbcf3"
+  integrity sha512-P31ROeXcVgW/k3Z+vUUErcxoTah7ZRaimctOpzGuqAntqnnSmx1HOsvnbAB8Z2qfXPRhw61yptAzCsuKOhTHwQ==
+  dependencies:
+    "@shikijs/core" "1.6.0"
 
 shikiji-core@0.10.2:
   version "0.10.2"

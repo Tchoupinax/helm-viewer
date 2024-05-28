@@ -1,6 +1,6 @@
 {
   "name": "helm-viewer-webapp",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "description": "Quick tool to easily view your helm charts.",
   "author": "Tchoupinax <corentinfiloche@hotmail.fr> (https://corentinfiloche.xyz)",
   "license": "MIT",
@@ -33,11 +33,14 @@
     "nanoid": "5.0.7",
     "nuxt": "3.11.2",
     "nuxt-monaco-editor": "1.2.9",
+    "nuxt-shiki": "^0.3.0",
+    "nuxt3-notifications": "^1.2.0",
     "shikiji": "0.10.2",
     "timeago.js": "4.0.2",
     "ws": "8.17.0"
   },
   "devDependencies": {
     "vitest": "1.6.0"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

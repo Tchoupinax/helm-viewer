@@ -3,7 +3,6 @@
     <Loader v-if="!data.templated" />
     <InstructionsHelper v-if="fetchDataError" />
 
-    {{ helmError }}
     <Error v-if="helmError" :error="helmError" />
 
     <modal
@@ -72,7 +71,7 @@
         lang="yaml"
       />
 
-      <notifications />
+      <NuxtNotifications position="bottom left" :speed="500" />
     </div>
   </div>
 </template>
@@ -135,6 +134,17 @@ export default {
         const data = await loadChart(id)
         this.data = data;
       } catch (err) {
+        // When the localstorage is full
+        // @ts-ignore
+        if (err.message === "The quota has been exceeded.") {
+          localStorage.clear()
+          try {
+            const data = await loadChart(id)
+            this.data = data;
+          } catch (err) {
+            this.fetchDataError = true
+          }
+        }
         this.fetchDataError = true
       }
     }
