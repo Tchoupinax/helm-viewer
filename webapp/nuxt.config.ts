@@ -7,6 +7,8 @@ export default defineNuxtConfig({
   modules: [
     'nuxt-monaco-editor',
     "@nuxtjs/tailwindcss",
+    "nuxt3-notifications",
+    "nuxt-shiki",
   ],
   experimental: {
     payloadExtraction: false,
