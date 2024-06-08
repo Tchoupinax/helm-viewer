@@ -1,6 +1,6 @@
 {
   "name": "helm-viewer",
-  "version": "0.15.0",
+  "version": "0.15.1",
   "description": "Quick tool to easily view your helm charts.",
   "author": "Tchoupinax <corentinfiloche@hotmail.fr> (https://corentinfiloche.xyz)",
   "license": "MIT",
@@ -15,7 +15,7 @@
   "homepage": "https://github.com/Tchoupinax/helm-viewer",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Tchoupinax/helm-viewer"
+    "url": "git+https://github.com/Tchoupinax/helm-viewer.git"
   },
   "bugs": {
     "url": "https://github.com/Tchoupinax/helm-viewer/issues"

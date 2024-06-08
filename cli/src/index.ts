@@ -27,7 +27,7 @@ async function run() {
 
   // Display options
   if (args.values.help) {
-    console.log(`\nhelm-viewer v0.9.0
+    console.log(`\nhelm-viewer v0.15.1
 
   -b/--browser:       allow to open with a specific browser (firefox, chromium)
   -h/--help:          displays this menu
