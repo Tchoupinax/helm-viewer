@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.16.0 | 2024-06-08
+
+#### Features
+
+- Improve UI when selecting file
+
 ## 0.15.0 | 2024-06-08
 
 #### Features
