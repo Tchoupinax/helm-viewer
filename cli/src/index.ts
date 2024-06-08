@@ -14,11 +14,11 @@ import { getArguments } from './functions/parse-cli';
 import { computeChart } from './functions/compute-chart';
 import { nanoid } from 'nanoid'
 import { checkNodeVersion } from './functions/check-node-version';
+import { computeUrls } from './functions/compute-urls';
 
 type BrowserName = "firefox" | "chrome" | "default";
 
-const remoteURL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : process.env.BACKEND_ENDPOINT ?? "https://helm-viewer.vercel.app"
-const remoteReadURL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : process.env.BACKEND_READ_ENDPOINT ?? process.env.BACKEND_ENDPOINT ?? "https://helm-viewer.vercel.app"
+const { remoteReadURL, remoteURL } = computeUrls();
 
 async function run() {
   checkNodeVersion()
