@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.15.0 | 2024-06-08
+
+#### Features
+
+- Automatically install helm dependencies if possible
+- Remove trailing slash on `BACKEND_ENDPOINT`
+
 ## 0.10.0 | 2023-09-21
 
 #### Features
