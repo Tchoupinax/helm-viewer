@@ -1,8 +1,17 @@
 <template>
-  <div @click="showFiles = !showFiles" class="template flex items-center text-2xl cursor-pointer font-thin">
-    <p>+</p>
-    <p class="name">{{ name }}</p>
-    <span class="text-xs font-bold ml-2 rounded-xl bg-cyan-100 p-1 px-2">{{ Object.keys(template).length }}</span>
+  <div
+    @click="onSelected"
+    class="border-b-4 template flex items-center justify-between text-2xl cursor-pointer font-thin"
+    :class="{
+      'border-b-red-200': selected,
+      'border-b-transparent hover:border-b-yellow-200': !selected,
+    }"
+  >
+    <div class="flex">
+      <p>+</p>
+      <p class="name">{{ name }}</p>
+    </div>
+    <span class="text-xs font-bold ml-2 border bg-cyan-100 p-1 px-2">{{ Object.keys(template).length }}</span>
   </div>
 
   <div
@@ -23,12 +32,13 @@
 
 <script lang="ts">
 export type Store = {
+  selected: boolean;
   showFiles: boolean;
   selectedFile: string;
 };
 
 export default {
-  emits: ["fileSelected"],
+  emits: ["fileSelected", "selected"],
   props: {
     name: {
       type: String,
@@ -42,22 +52,39 @@ export default {
       type: String,
       required: true,
     },
+    resetSelectedFile: {
+      type: String,
+      required: true,
+    },
   },
   watch: {
     reset: function() {
+      this.selected = false;
+    },
+    resetSelectedFile: function() {
       this.selectedFile = "";
-    }
+    },
   },
   data(): Store {
     return {
-      showFiles: false,
+      selected: false,
       selectedFile: "",
+      showFiles: false,
     }
   },
   methods: {
+    onSelected(file: string) {
+      this.$emit('selected', file)
+      setTimeout(() => {
+        this.selected = !this.selected;
+        this.showFiles = !this.showFiles;
+      }, 10)
+    },
     onFileSelected(file: string) {
-      this.selectedFile = file;
       this.$emit('fileSelected', file)
+      setTimeout(() => {
+        this.selectedFile = file
+      }, 10)
     }
   }
 }

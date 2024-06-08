@@ -7,12 +7,16 @@
     <div class="p-2">
       <div
         v-if="data.templated"
-        v-for="template of Object.keys(data.templated).sort((a, b) => a > b)"
+        v-for="(template, index) of Object.keys(data.templated).sort((a, b) => a > b)"
         class="mb-2"
       >
         <SidebarTemplate
+          :key="index"
           :name="template"
+          :reset="resetTemplate"
+          :resetSelectedFile="resetSelectedFile"
           :template="data.templated[template]"
+          @selected="onTemplateSelected"
           @file-selected="file => onFileSelected(template, file)"
         />
       </div>
@@ -62,9 +66,19 @@ export default {
       required: true,
     }
   },
+  data() {
+    return {
+      resetTemplate: new Date().toISOString(),
+      resetSelectedFile: new Date().toISOString(),
+    }
+  },
   methods: {
+    onTemplateSelected() {
+      this.resetTemplate = new Date().toISOString();
+    },
     onFileSelected(k8sResourceName: string, file: string) {
-      this.$emit('displayTemplateFile', { file, k8sResourceName })
+      this.resetSelectedFile = new Date().toISOString();
+      this.$emit('displayTemplateFile', { file, k8sResourceName });
     }
   }
 }
