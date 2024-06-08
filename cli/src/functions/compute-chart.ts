@@ -4,26 +4,23 @@ import { mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'f
 import yaml from 'js-yaml'
 import { join } from "path";
 import { tmpdir } from "os";
+import chalk from "chalk";
 
 export async function computeChart(
   currentPath: string,
   releaseName: string,
   valuesPathArray: Array<string> = []
 ) {
-
-  try {
-    await $`cd ${currentPath} && helm dependency build`;
-  } catch (err) {
-    console.log(err);
-  }
-
   let stdout;
-  if (valuesPathArray.length === 0) {
-    ({ stdout } = await $`helm template --name-template ${releaseName} ${currentPath}`);
-  } else if (valuesPathArray.length === 1) {
-    ({ stdout } = await $`helm template --name-template ${releaseName} ${currentPath} --values ${valuesPathArray.at(0)}`);
-  } else if (valuesPathArray.length === 2) {
-    ({ stdout } = await $`helm template --name-template ${releaseName} ${currentPath} --values ${valuesPathArray.at(0)} --values ${valuesPathArray.at(1)}`);
+  try {
+    stdout = await computeCommands(releaseName, valuesPathArray, currentPath);
+  } catch (err: any) {
+    if (err?.stderr.includes('You may need to run `helm dependency build`')) {
+      console.log(chalk.greenBright(`⬇️ Trying to refresh helm dependencies. Might be long...`));
+      const $$ = $({cwd: currentPath})
+      await $$`helm dependency build`
+      stdout = await computeCommands(releaseName, valuesPathArray, currentPath);
+    }
   }
 
   const { templated } = await computeTemplated(stdout)
@@ -56,6 +53,23 @@ export async function computeTemplated(
   }
 
   return dataFileJSON
+}
+
+async function computeCommands (
+  releaseName: string,
+  valuesPathArray: Array<string> = [],
+  currentPath: string,
+) {
+  let stdout;
+  if (valuesPathArray.length === 0) {
+    ({ stdout } = await $`helm template --name-template ${releaseName} ${currentPath}`);
+  } else if (valuesPathArray.length === 1) {
+    ({ stdout } = await $`helm template --name-template ${releaseName} ${currentPath} --values ${valuesPathArray.at(0)}`);
+  } else if (valuesPathArray.length === 2) {
+    ({ stdout } = await $`helm template --name-template ${releaseName} ${currentPath} --values ${valuesPathArray.at(0)} --values ${valuesPathArray.at(1)}`);
+  }
+
+  return stdout;
 }
 
 export async function computeSources(
