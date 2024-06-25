@@ -57,6 +57,7 @@
         :data="data"
         :fetchDataError="fetchDataError"
         @displayTemplateFile="({ file, k8sResourceName }) => displayTemplatedFile(k8sResourceName, file)"
+        @displaySourceFile="({ filename }) => displaySourceFile(filename)"
       />
 
       <MonacoEditor 
@@ -68,7 +69,7 @@
         }"
         class="w-full h-full text-xl"
         v-model="editorValue"
-        lang="yaml"
+        :lang="fileLanguage"
       />
 
       <NuxtNotifications position="bottom left" :speed="500" />
@@ -99,6 +100,7 @@ export type Store = {
     name: string;
   }
   fetchDataError: boolean;
+  fileLanguage: "yaml" | "markdown";
 };
 
 export default {
@@ -111,6 +113,7 @@ export default {
       sharedUrl: "",
       sharingProcess: false,
       copyButtonText: "Copy",
+      fileLanguage: "yaml",
       data: {
         templated: undefined,
         sources: undefined,
@@ -194,8 +197,9 @@ export default {
       };
 
       this.editorValue = this.data["templated"][this.currentEditorValue.template][this.currentEditorValue.filename].replace("\n", "")
+      this.fileLanguage = "yaml"
     },
-    displaySourceFile(filename: string, isTemplate: boolean) {
+    displaySourceFile(filename: string, isTemplate) {
       this.currentEditorValue = {
         type: "Source",
         filename,
@@ -206,6 +210,10 @@ export default {
         this.editorValue = this.data["sources"]["templates"][filename]
       } else {
         this.editorValue = this.data["sources"][filename]
+      }
+
+      if (filename.endsWith('.md')) {
+        this.fileLanguage = "markdown"
       }
     },
     async shared() {

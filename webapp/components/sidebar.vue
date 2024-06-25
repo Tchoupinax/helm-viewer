@@ -16,7 +16,6 @@
           :reset="resetTemplate"
           :resetSelectedFile="resetSelectedFile"
           :template="data.templated[template]"
-          @selected="onTemplateSelected"
           @file-selected="file => onFileSelected(template, file)"
         />
       </div>
@@ -24,12 +23,12 @@
 
     <div v-if="data.sources" class="border-t-2 border-black">
       <h2 class="italic text-3xl font-thin mt-2 ml-4 mb-4 underline">Sources</h2>
-      <div class="mb-1" v-for="file of Object.keys(data.sources).filter(n => n !== 'templates')">
+      <div class="mb-1" v-for="filename of Object.keys(data.sources).filter(n => n !== 'templates')">
         <p
           class="ml-6 font-thin hover:bg-slate-300 pl-2 cursor-pointer"
-          @click="displaySourceFile(file)"
+          @click="onSourceSelected(filename)"
         >
-          {{ file }}
+          {{ filename }}
         </p>
       </div>
       
@@ -39,14 +38,14 @@
 
       <div
         v-if="data.sources['templates']"
-        v-for="file of Object.keys(data.sources['templates'])"
+        v-for="filename of Object.keys(data.sources['templates'])"
         class="mb-1 hover:bg-slate-300 pl-2 cursor-pointer"
       >
         <p
           class="ml-8 font-thin"
-          @click="displaySourceFile(file, true)"
+          @click="onSourceSelected(filename)"
         >
-          {{ file }}
+          {{ filename }}
         </p>
       </div>
     </div>
@@ -55,7 +54,7 @@
 
 <script lang="ts">
 export default {
-  emits: ["displayTemplateFile"],
+  emits: ["displayTemplateFile", "displaySourceFile"],
   props: {
     data: {
       type: Object,
@@ -73,8 +72,9 @@ export default {
     }
   },
   methods: {
-    onTemplateSelected() {
-      this.resetTemplate = new Date().toISOString();
+    onSourceSelected(filename: string) {
+      this.resetSelectedFile = new Date().toISOString();
+      this.$emit('displaySourceFile', { filename });
     },
     onFileSelected(k8sResourceName: string, file: string) {
       this.resetSelectedFile = new Date().toISOString();
