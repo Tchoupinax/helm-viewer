@@ -5,19 +5,19 @@
 
 ## Motivation
 
-When you are writing a [helm Chart](https://helm.sh/docs/topics/charts/), you often want to generate the template and check what is the final result. To reach this goal, helm provides this command : `helm template`.
+When writing a [helm Chart](https://helm.sh/docs/topics/charts/), you often want to generate the template and check what the final result is. To help reach this goal, helm provides this command : `helm template`.
 
-However, the output of this command is a huge raw text and it is mainly painful.
+However, the command output is a huge raw text and it's very painful to read.
 
 This project aims to give you the right tool to build helm chart.
 
-Also, as DevOps we build, maintain and deploy our chart. When we do a review of a chart, it is hard to determine if the chart is correctly done or not. A subgoal is to easily build the chart in the CI and be able to see the built chart from a link, automatically pasted in the merge request.
+Also as DevOps we, build, maintain and deploy our charts. When doing a chart review, it may be hard to determine if the chart is correctly done. A subgoal is to easily build the chart in the CI and be able to see the built chart from a link, automatically pasted in the merge request.
 
 ## Features
 
-- Local usage by design: if you don't do nothing, all what you do works offline. Your date are not sent, no backend server is used.
-- Create a sharing link by CLI or Web interface. Read a chart from a link, only. Internet required.
-- Encryption by design: You can share the result with link. Data are encrypted end-to-end by designed and then stored on S3. The encrypted key in the shared link is the **only way** to access your data. Backend side is just a proxy to store charts on a S3 backend.
+- Local by design : all your work is offline. Your data are not sent anywhere and no backend server is used.
+- Create a share link by using the CLI or the Web interface. Read a chart from a link, only. Internet's required.
+- Encryption by design: You can share the result with a link. Data are encrypted end-to-end and then stored on S3. The encrypted key in the shared link is the **only way** to access your data. Backend side is just a proxy to store charts on a S3 backend.
 
 ## Installation
 
@@ -31,7 +31,7 @@ npm i -g helm-viewer
 ## Usage
 
 ```bash
-# When you are in a chart helm folder
+# When you are in a helm chart folder
 helm-viewer
 
 # To target a specific path
@@ -48,14 +48,14 @@ It will analyze the helm chart and generate a HTML report, automatically opened 
 
 # Selfhost
 
-The application is a CLI alone. If you want to use the share and the CI feature, you need to use the backend (e2e encryption). If you want to host the backend on your side, you can customize the app using the env var `BACKEND_ENDPOINT`.
+The application is only a CLI. If you want to use the share and the CI feature, you need to use the backend (e2e encryption). If you want to host the backend on your side, you can customize the app using the env var `BACKEND_ENDPOINT`.
 Also, you can provide a different url for the push operation and the read operation. By default, both will be defined by `BACKEND_ENDPOINT`. If you want to set a different url for the read operation, you can do it by `BACKEND_READ_ENDPOINT`.
 
 ```bash
 BACKEND_ENDPOINT="http://my-custom-domain.com" helm-viewer my-chart --push
 ```
 
-And do not forget to provide the env var to our backend!
+And do not forget to provide the env var to your backend!
 
 ```bash
 BACKEND_S3_BUCKETNAME=""
