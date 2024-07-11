@@ -85,6 +85,7 @@ import yaml from 'js-yaml'
 import { nanoid } from 'nanoid'
 import { useNotification } from "@kyvg/vue3-notification";
 import Error from '../components/global/error.vue'
+import levenshtein from 'js-levenshtein';
 
 export type Store = {
   helmError: string | null;
@@ -178,12 +179,25 @@ export default {
           text: filePath.split("/").at(-1),
           type: "info"
         })
-
+        
         this.data = { ...chartContentUpdated }
         if (this.currentEditorValue?.type === "Template") {
-          this.displayTemplatedFile(this.currentEditorValue.template, this.currentEditorValue.filename)
+          let min = 1000;
+          let goodKey = "";
+          const keys = Object.keys(this.data["templated"][this.currentEditorValue.template]);
+
+          for (const key of keys) {
+            const distance = levenshtein(this.currentEditorValue.filename, key);
+            console.log(distance);
+            if (distance < min) {
+              goodKey = key;
+              min = distance;
+            }
+          }
+
+          this.displayTemplatedFile(this.currentEditorValue.template, goodKey)
         } else if (this.currentEditorValue?.type === "Source") {
-          this.displaySourceFile(this.currentEditorValue.filename, this.currentEditorValue.isTemplate)
+          this.displaySourceFile(goodKey, this.currentEditorValue.isTemplate)
         }
       });
     }, 1000)

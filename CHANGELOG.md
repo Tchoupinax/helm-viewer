@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.17.1 | 2024-07-11
+
+#### Fixes
+
+- When the name of resources is changed, the editor refreshes automatically
+
 ## 0.16.0 | 2024-06-08
 
 #### Features
