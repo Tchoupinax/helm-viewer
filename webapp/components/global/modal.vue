@@ -1,5 +1,6 @@
-// https://codesandbox.io/s/github/vuejs/vuejs.org/tree/master/src/v2/examples/vue-20-modal-component?from-embed=&file=/style.css:0-1063
-// Add  body-scroll-lock-ignore on element you want to continue to scroll (iOS)
+//
+https://codesandbox.io/s/github/vuejs/vuejs.org/tree/master/src/v2/examples/vue-20-modal-component?from-embed=&file=/style.css:0-1063
+// Add body-scroll-lock-ignore on element you want to continue to scroll (iOS)
 
 <template>
   <div id="modal-template" type="text/x-template">
@@ -7,21 +8,33 @@
       <div class="modal-mask" @click.self="close">
         <div class="modal-wrapper">
           <div class="relative flex flex-col rounded-lg h-1/3 modal-container">
-            <button class="absolute right-0 mr-6 modal-default-button" @click="close">
+            <button
+              class="absolute right-0 mr-6 modal-default-button"
+              @click="close"
+            >
               <svg
                 class="w-6 h-6"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
-              ><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M6 18L18 6M6 6l12 12" /></svg>
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="4"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
             </button>
 
             <div class="flex justify-center h-full overflow-hidden">
               <slot name="body">
                 <div class="flex items-center justify-center w-full">
                   <div class="lds-facebook">
-                    <div /><div /><div />
+                    <div />
+                    <div />
+                    <div />
                   </div>
                 </div>
               </slot>
@@ -34,34 +47,34 @@
 </template>
 
 <script>
-import * as bodyScrollLock from 'body-scroll-lock'
-const disableBodyScroll = bodyScrollLock.disableBodyScroll
-const enableBodyScroll = bodyScrollLock.enableBodyScroll
+import * as bodyScrollLock from "body-scroll-lock";
+const disableBodyScroll = bodyScrollLock.disableBodyScroll;
+const enableBodyScroll = bodyScrollLock.enableBodyScroll;
 
 export default {
-  emits: ['close'],
-  mounted () {
+  emits: ["close"],
+  mounted() {
     setTimeout(() => {
-      disableBodyScroll(document.querySelector('#modal-template'), {
+      disableBodyScroll(document.querySelector("#modal-template"), {
         allowTouchMove: (el) => {
           while (el && el !== document.body) {
-            if (el.getAttribute('body-scroll-lock-ignore') !== null) {
-              return true
+            if (el.getAttribute("body-scroll-lock-ignore") !== null) {
+              return true;
             }
 
-            el = el.parentElement
+            el = el.parentElement;
           }
         },
-      })
-    }, 1)
+      });
+    }, 1);
   },
   methods: {
-    close () {
-      enableBodyScroll(document.querySelector('#modal-template'))
-      this.$emit('close')
+    close() {
+      enableBodyScroll(document.querySelector("#modal-template"));
+      this.$emit("close");
     },
   },
-}
+};
 </script>
 
 <style>
@@ -145,7 +158,8 @@ export default {
     top: 8px;
     height: 64px;
   }
-  50%, 100% {
+  50%,
+  100% {
     top: 24px;
     height: 32px;
   }

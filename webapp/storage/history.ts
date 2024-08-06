@@ -3,13 +3,13 @@ export type HistoryItem = {
   chartVersion: string;
   date: Date;
   id: string;
-}
+};
 
 export class History {
-  private static key = 'helm-viewer-history';
+  private static key = "helm-viewer-history";
 
   static list(): Array<HistoryItem> {
-    return JSON.parse(localStorage.getItem(this.key) ?? '[]')
+    return JSON.parse(localStorage.getItem(this.key) ?? "[]");
   }
 
   static append(element: HistoryItem) {

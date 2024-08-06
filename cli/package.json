@@ -21,6 +21,11 @@
     "url": "https://github.com/Tchoupinax/helm-viewer/issues"
   },
   "scripts": {
+    "lint": "yarn lint:eslint && yarn lint:prettier",
+    "lint:eslint": "eslint .",
+    "lint:fix": "yarn lint:eslint --fix && prettier --write .",
+    "lint:inspect": "npx @eslint/config-inspector@latest",
+    "lint:prettier": "prettier . --check",
     "=== PUBLICATION ======================================": "",
     "pack": "npm pack --dry-run",
     "publish": "npm publish",
@@ -48,9 +53,12 @@
     "@types/node": "20.14.10",
     "@types/ws": "8.5.10",
     "@vercel/ncc": "0.38.1",
+    "eslint": "^9.8.0",
+    "eslint-plugin-perfectionist": "^3.1.2",
     "js-yaml": "4.1.0",
     "npm-packlist": "7.0.4",
     "postject": "1.0.0-alpha.6",
+    "prettier": "^3.3.3",
     "typescript": "5.5.3",
     "vite-node": "2.0.2",
     "vitest": "2.0.2"

@@ -1,26 +1,40 @@
-import { defineNuxtConfig } from 'nuxt/config'
+import { defineNuxtConfig } from "nuxt/config";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  compatibilityDate: "2024-08-06",
   ssr: true,
-  devtools: { enabled: true },
+  devtools: { enabled: process.env.NODE_ENV !== "production" },
 
   modules: [
-    'nuxt-monaco-editor',
+    "@nuxt/eslint",
     "@nuxtjs/tailwindcss",
-    "nuxt3-notifications",
     "nuxt-shiki",
+    "nuxt3-notifications",
+    "nuxt-monaco-editor",
   ],
 
   experimental: {
     payloadExtraction: false,
   },
 
-  runtimeConfig: {
-    public: {
-      remoteURL: process.env.BACKEND_ENDPOINT ?? process.env.REMOTE_URL ?? "http://localhost:3000"
-    }
+  app: {
+    head: {
+      script: [
+        {
+          src: "https://www.gstatic.com/charts/loader.js",
+          type: "text/javascript",
+        },
+      ],
+    },
   },
 
-  compatibilityDate: "2024-07-11"
-})
+  runtimeConfig: {
+    public: {
+      remoteURL:
+        process.env.BACKEND_ENDPOINT ??
+        process.env.REMOTE_URL ??
+        "http://localhost:3000",
+    },
+  },
+});
