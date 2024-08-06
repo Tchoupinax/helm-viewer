@@ -1,8 +1,6 @@
-import fs from 'node:fs';
+import fs from "node:fs";
 
-export function isChartFolder(
-  path: string
-): boolean {
+export function isChartFolder(path: string): boolean {
   const files = fs.readdirSync(path);
-  return files.includes('Chart.yaml')
+  return files.includes("Chart.yaml");
 }

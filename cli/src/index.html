@@ -1,156 +1,156 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            clifford: '#da373d',
-          }
-        }
-      }
-    }
-  </script>
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-</head>
-<body>
-  <div id="app" class="flex flex-col h-12">
-    <div class="p-2">
-      search bar
-    </div>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              clifford: "#da373d",
+            },
+          },
+        },
+      };
+    </script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="app" class="flex flex-col h-12">
+      <div class="p-2">search bar</div>
 
-    <div class="flex">
-      <div 
-        class="w-2/5 xl:w-1/5 bg-blue-50 h-screen overflow-scroll"
-      >
-        <div class="p-2">
-          <h1 class="italic text-2xl xl:text-4xl font-thin ml-4 mb-8">>> Computed files</h1>
+      <div class="flex">
+        <div class="w-2/5 xl:w-1/5 bg-blue-50 h-screen overflow-scroll">
+          <div class="p-2">
+            <h1 class="italic text-2xl xl:text-4xl font-thin ml-4 mb-8">
+              >> Computed files
+            </h1>
 
-          <div
-            v-if="data.templated"
-            v-for="template of Object.keys(data.templated)"
-            class="mb-2"
-          >
-            <p class="text-xl xl:text-3xl font-thin">
-              {{ template }}
+            <div
+              v-if="data.templated"
+              v-for="template of Object.keys(data.templated)"
+              class="mb-2"
+            >
+              <p class="text-xl xl:text-3xl font-thin">{{ template }}</p>
+
+              <div
+                class="ml-6 mt-2"
+                v-for="file of Object.keys(data.templated[template])"
+                @click="displayTemplatedFile(template, file)"
+              >
+                {{ file }}
+              </div>
+            </div>
+          </div>
+
+          <div v-if="data.sources" class="bg-green-100">
+            <h1 class="italic text-4xl font-thin ml-4 mb-8">>> Sources</h1>
+            <div
+              class="mb-1"
+              v-for="file of Object.keys(data.sources).filter(n => n !== 'templates')"
+            >
+              <p
+                class="text-xl ml-8 font-thin"
+                @click="displaySourceFile(file)"
+              >
+                {{ file }}
+              </p>
+            </div>
+
+            <p v-if="data.sources['templates']" class="text-xl ml-8 font-thin">
+              templates
             </p>
 
             <div
-              class="ml-6 mt-2"
-              v-for="file of Object.keys(data.templated[template])"
-              @click="displayTemplatedFile(template, file)"
+              v-if="data.sources['templates']"
+              v-for="file of Object.keys(data.sources['templates'])"
+              class="mb-1 ml-6"
             >
-              {{ file }}
+              <p
+                class="text-xl ml-8 font-thin"
+                @click="displaySourceFile(file, true)"
+              >
+                {{ file }}
+              </p>
             </div>
           </div>
         </div>
 
-        <div
-          v-if="data.sources"
-          class="bg-green-100"
-        >
-          <h1 class="italic text-4xl font-thin ml-4 mb-8">>> Sources</h1>
-          <div class="mb-1" v-for="file of Object.keys(data.sources).filter(n => n !== 'templates')">
-            <p
-              class="text-xl ml-8 font-thin"
-              @click="displaySourceFile(file)"
-            >
-              {{ file }}
-            </p>
-          </div>
-          
-          <p v-if="data.sources['templates']" class="text-xl ml-8 font-thin">templates</p>
-
-          <div
-            v-if="data.sources['templates']"
-            v-for="file of Object.keys(data.sources['templates'])"
-            class="mb-1 ml-6"
-          >
-            <p
-              class="text-xl ml-8 font-thin"
-              @click="displaySourceFile(file, true)"
-            >
-              {{ file }}
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div id="container" class="w-4/5">
+        <div id="container" class="w-4/5"></div>
       </div>
     </div>
-  </div>
 
-  <script>
-    const { createApp, ref } = Vue
-    createApp({
-      data() {
-        return {
-          templateFile: undefined,
-          fileName: undefined,
-          source: undefined,
-          isSourceTemplate: false,
-          data: {}
-        }
-      },
-      mounted() {
-        fetch("http://localhost:12094")
-        .then(res => res.json())
-        .then(e => {
-          this.data = JSON.parse(e)
-        })
-      },
-      methods: {
-        displayTemplatedFile(templateFile, fileName) {
-          document.getElementById('container').innerHTML = ""
-          require(["vs/editor/editor.main"], () => {
-            monaco.editor.create(document.getElementById('container'), {
-              value: this.data["templated"][templateFile][fileName],
-              language: 'yaml',
-              theme: 'vs-dark',
-            });
-          });
+    <script>
+      const { createApp, ref } = Vue;
+      createApp({
+        data() {
+          return {
+            templateFile: undefined,
+            fileName: undefined,
+            source: undefined,
+            isSourceTemplate: false,
+            data: {},
+          };
         },
-        displaySourceFile(fileName, isTemplate = false) {
-          this.source = "source"
-          this.fileName = fileName
-          this.isSourceTemplate = isTemplate
-
-          if (isTemplate) {
-            document.getElementById('container').innerHTML = ""
+        mounted() {
+          fetch("http://localhost:12094")
+            .then((res) => res.json())
+            .then((e) => {
+              this.data = JSON.parse(e);
+            });
+        },
+        methods: {
+          displayTemplatedFile(templateFile, fileName) {
+            document.getElementById("container").innerHTML = "";
             require(["vs/editor/editor.main"], () => {
-              monaco.editor.create(document.getElementById('container'), {
-                value: this.data["sources"]["templates"][fileName],
-                language: 'yaml',
-                theme: 'vs-dark',
+              monaco.editor.create(document.getElementById("container"), {
+                value: this.data["templated"][templateFile][fileName],
+                language: "yaml",
+                theme: "vs-dark",
               });
             });
-          } else {
-            document.getElementById('container').innerHTML = ""
-            require(["vs/editor/editor.main"], () => {
-              monaco.editor.create(document.getElementById('container'), {
-                value: this.data["sources"][fileName],
-                language: 'yaml',
-                theme: 'vs-dark',
-              });
-            });
-          }
-        }
-      }
-    }).mount('#app')
-  </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.26.1/min/vs/loader.min.js"></script>
-  <script>
-  // require is provided by loader.min.js.
-  require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.26.1/min/vs' }});
+          },
+          displaySourceFile(fileName, isTemplate = false) {
+            this.source = "source";
+            this.fileName = fileName;
+            this.isSourceTemplate = isTemplate;
 
-  </script>
-</body>
+            if (isTemplate) {
+              document.getElementById("container").innerHTML = "";
+              require(["vs/editor/editor.main"], () => {
+                monaco.editor.create(document.getElementById("container"), {
+                  value: this.data["sources"]["templates"][fileName],
+                  language: "yaml",
+                  theme: "vs-dark",
+                });
+              });
+            } else {
+              document.getElementById("container").innerHTML = "";
+              require(["vs/editor/editor.main"], () => {
+                monaco.editor.create(document.getElementById("container"), {
+                  value: this.data["sources"][fileName],
+                  language: "yaml",
+                  theme: "vs-dark",
+                });
+              });
+            }
+          },
+        },
+      }).mount("#app");
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.26.1/min/vs/loader.min.js"></script>
+    <script>
+      // require is provided by loader.min.js.
+      require.config({
+        paths: {
+          vs: "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.26.1/min/vs",
+        },
+      });
+    </script>
+  </body>
 </html>

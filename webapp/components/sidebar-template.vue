@@ -11,22 +11,19 @@
       <p>+</p>
       <p class="name">{{ name }}</p>
     </div>
-    <span class="text-xs font-bold ml-2 border bg-cyan-100 p-1 px-2">{{ Object.keys(template).length }}</span>
+    <span class="text-xs font-bold ml-2 border bg-cyan-100 p-1 px-2">{{
+      Object.keys(template).length
+    }}</span>
   </div>
 
-  <div
-    v-if="showFiles"
-    v-for="file of Object.keys(template)"
-  >
-    <p 
+  <div v-if="showFiles" v-for="file of Object.keys(template)">
+    <div
       class="ml-6 mt-2 flex cursor-pointer pl-2 hover:text-yellow-500 justify-between"
       @click="onFileSelected(file)"
     >
       <p>{{ file }}</p>
-      <p v-if="file === selectedFile">
-        🟢
-      </p>
-    </p>
+      <p v-if="file === selectedFile">🟢</p>
+    </div>
   </div>
 </template>
 
@@ -58,10 +55,10 @@ export default {
     },
   },
   watch: {
-    reset: function() {
+    reset: function () {
       this.selected = false;
     },
-    resetSelectedFile: function() {
+    resetSelectedFile: function () {
       this.selectedFile = "";
     },
   },
@@ -70,24 +67,24 @@ export default {
       selected: false,
       selectedFile: "",
       showFiles: false,
-    }
+    };
   },
   methods: {
     onSelected(file: string) {
-      this.$emit('selected', file)
+      this.$emit("selected", file);
       setTimeout(() => {
         this.selected = !this.selected;
         this.showFiles = !this.showFiles;
-      }, 10)
+      }, 10);
     },
     onFileSelected(file: string) {
-      this.$emit('fileSelected', file)
+      this.$emit("fileSelected", file);
       setTimeout(() => {
-        this.selectedFile = file
-      }, 10)
-    }
-  }
-}
+        this.selectedFile = file;
+      }, 10);
+    },
+  },
+};
 </script>
 
 <style>

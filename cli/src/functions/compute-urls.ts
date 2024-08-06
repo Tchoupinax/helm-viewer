@@ -1,4 +1,4 @@
-export function computeUrls(): { remoteURL: string, remoteReadURL: string } {
+export function computeUrls(): { remoteURL: string; remoteReadURL: string } {
   let remoteURL = "https://helm-viewer.vercel.app";
   let remoteReadURL = "https://helm-viewer.vercel.app";
 
@@ -19,5 +19,5 @@ export function computeUrls(): { remoteURL: string, remoteReadURL: string } {
   return {
     remoteURL,
     remoteReadURL,
-  }
+  };
 }
