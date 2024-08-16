@@ -4,7 +4,7 @@ import { decrypt } from "./encryption";
 export async function readRemoteChart(
   id: string,
   encryptionKey: string,
-  remoteURL: string,
+  remoteURL: string
 ): Promise<any> {
   const key = `helm-viewer-${id}`;
 

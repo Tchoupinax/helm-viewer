@@ -1,11 +1,11 @@
 <template>
   <div
-    @click="onSelected"
     class="border-b-4 template flex items-center justify-between text-2xl cursor-pointer font-thin"
     :class="{
       'border-b-red-200': selected,
       'border-b-transparent hover:border-b-yellow-200': !selected,
     }"
+    @click="onSelected"
   >
     <div class="flex">
       <p>+</p>
@@ -16,7 +16,7 @@
     }}</span>
   </div>
 
-  <div v-if="showFiles" v-for="file of Object.keys(template)">
+  <div v-for="file of Object.keys(template)" v-if="showFiles">
     <div
       class="ml-6 mt-2 flex cursor-pointer pl-2 hover:text-yellow-500 justify-between"
       @click="onFileSelected(file)"
@@ -35,7 +35,6 @@ export type Store = {
 };
 
 export default {
-  emits: ["fileSelected", "selected"],
   props: {
     name: {
       type: String,
@@ -54,6 +53,14 @@ export default {
       required: true,
     },
   },
+  emits: ["fileSelected", "selected"],
+  data(): Store {
+    return {
+      selected: false,
+      selectedFile: "",
+      showFiles: false,
+    };
+  },
   watch: {
     reset: function () {
       this.selected = false;
@@ -61,13 +68,6 @@ export default {
     resetSelectedFile: function () {
       this.selectedFile = "";
     },
-  },
-  data(): Store {
-    return {
-      selected: false,
-      selectedFile: "",
-      showFiles: false,
-    };
   },
   methods: {
     onSelected(file: string) {

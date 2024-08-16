@@ -19,8 +19,8 @@
       class="flex justify-center absolute z-20 bottom-0 w-full h-16 left-0 right-0"
     >
       <button
-        @click="$emit('close')"
         class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow absolute"
+        @click="$emit('close')"
       >
         Close history
       </button>
@@ -29,8 +29,9 @@
 </template>
 
 <script lang="ts">
-import { History, type HistoryItem } from "../storage/history";
 import * as timeago from "timeago.js";
+
+import { History, type HistoryItem } from "../storage/history";
 
 type Store = {
   histories: Array<HistoryItem>;

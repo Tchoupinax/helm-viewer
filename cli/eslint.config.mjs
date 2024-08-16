@@ -1,8 +1,6 @@
 import perfectionist from "eslint-plugin-perfectionist";
 
-import withNuxt from "./.nuxt/eslint.config.mjs";
-
-export default withNuxt({
+export default {
   ignores: ["cli/**", "binary/**"],
   plugins: {
     perfectionist,
@@ -15,4 +13,4 @@ export default withNuxt({
     "vue/html-self-closing": "off",
     "perfectionist/sort-imports": "error",
   },
-});
+};
