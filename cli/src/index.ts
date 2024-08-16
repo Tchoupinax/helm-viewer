@@ -15,6 +15,7 @@ import { computeChart } from "./functions/compute-chart";
 import { nanoid } from "nanoid";
 import { checkNodeVersion } from "./functions/check-node-version";
 import { computeUrls } from "./functions/compute-urls";
+import { readFileSync } from "node:fs";
 
 type BrowserName = "firefox" | "chrome" | "default";
 
@@ -24,12 +25,13 @@ async function run() {
   checkNodeVersion();
 
   const args = getArguments();
+  const version = JSON.parse(readFileSync("package.json", "utf8")).version;
 
   // Display options
   if (args.values.help) {
-    console.log(`\nhelm-viewer v0.17.0
+    console.log(`\nhelm-viewer v${version}
 
-  -b/--browser:       allow to open with a specific browser (firefox, chromium)
+  -b/--browser:       allow to open with a specific browser (firefox, chromium) | HELM_VIEWER_FAVORITE_BROWSER
   -h/--help:          displays this menu
   -k/--encryptionKey: specify the encryption key
   -n/--name:          provide a release name to Helm
@@ -60,8 +62,8 @@ async function run() {
     valuesPathArray.length > 0
       ? chalk.greenBright(`🔑 Values detected : ${valuesPathArray.join(",")}`)
       : chalk.yellowBright(
-          `⚠️  No value detected, computing with default values in the Chart`,
-        ),
+          `⚠️  No value detected, computing with default values in the Chart`
+        )
   );
 
   const tmpDir = `${tmpdir()}/${randomUUID()}`;
@@ -81,16 +83,24 @@ async function run() {
     payload = await computeChart(
       currentPath,
       args.values.name,
-      valuesPathArray,
+      valuesPathArray
     );
   } catch (err) {
     console.log("\n");
     console.log(
-      chalk.bgRedBright("The computation of the chart failed. (message below)"),
+      chalk.bgRedBright("The computation of the chart failed. (message below)")
     );
     console.log((err as Error).message);
     console.log("\n");
     process.exit(1);
+  }
+
+  let browser = null;
+  if (process.env.HELM_VIEWER_FAVORITE_BROWSER) {
+    browser = process.env.HELM_VIEWER_FAVORITE_BROWSER as BrowserName;
+  }
+  if (args.values.browser) {
+    browser = args.values.browser as BrowserName;
   }
 
   if (args.values.push) {
@@ -100,8 +110,8 @@ async function run() {
       payload,
       currentPath,
       args.values.watch,
-      (args.values.browser as BrowserName) ?? null,
-      args.values.name,
+      browser,
+      args.values.name
     );
   }
 
@@ -110,7 +120,7 @@ async function run() {
 
 async function pushOnlineFunction(
   payload: { name: string; version: string; templated: {}; sources: {} },
-  encryptionKey: string,
+  encryptionKey: string
 ) {
   const id = nanoid();
   const { version, name } = yaml.load(payload.sources["Chart.yaml"]) as {
@@ -140,7 +150,7 @@ async function pushOnlineFunction(
 
   fs.writeFileSync(
     ".helm-viewer-url",
-    `${remoteReadURL}?id=${id}&k=${encryptionKey}&o=t`,
+    `${remoteReadURL}?id=${id}&k=${encryptionKey}&o=t`
   );
 }
 
@@ -149,7 +159,7 @@ async function serveLocally(
   currentPath: string,
   watchingMode: boolean,
   browserName: BrowserName,
-  releaseName: string,
+  releaseName: string
 ) {
   const id = nanoid();
   if (process.env.NODE_ENV === "development") {
