@@ -6,17 +6,17 @@
 
     <div class="p-2">
       <div
-        v-if="data.templated"
         v-for="(template, index) of Object.keys(data.templated).sort((a, b) =>
           a.length > b.length ? 1 : -1
         )"
+        v-if="data.templated"
         class="mb-2"
       >
         <SidebarTemplate
           :key="index"
           :name="template"
           :reset="resetTemplate"
-          :resetSelectedFile="resetSelectedFile"
+          :reset-selected-file="resetSelectedFile"
           :template="data.templated[template]"
           @file-selected="(file) => onFileSelected(template, file)"
         />
@@ -28,10 +28,10 @@
         Sources
       </h2>
       <div
-        class="mb-1"
         v-for="filename of Object.keys(data.sources).filter(
           (n) => n !== 'templates'
         )"
+        class="mb-1"
       >
         <p
           class="ml-6 font-thin hover:bg-slate-300 pl-2 cursor-pointer"
@@ -46,8 +46,8 @@
       </p>
 
       <div
-        v-if="data.sources['templates']"
         v-for="filename of Object.keys(data.sources['templates'])"
+        v-if="data.sources['templates']"
         class="mb-1 hover:bg-slate-300 pl-2 cursor-pointer"
       >
         <p class="ml-8 font-thin" @click="onSourceSelected(filename)">
@@ -60,7 +60,6 @@
 
 <script lang="ts">
 export default {
-  emits: ["displayTemplateFile", "displaySourceFile"],
   props: {
     data: {
       type: Object,
@@ -71,6 +70,7 @@ export default {
       required: true,
     },
   },
+  emits: ["displayTemplateFile", "displaySourceFile"],
   data() {
     return {
       resetTemplate: new Date().toISOString(),

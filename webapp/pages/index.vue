@@ -6,7 +6,7 @@
     <Error v-if="helmError" :error="helmError" />
 
     <modal v-if="sharingProcess" @close="closeSharingModal">
-      <template #body v-if="sharedUrl">
+      <template v-if="sharedUrl" #body>
         <div class="flex flex-col w-full h-full items-center">
           <h1 class="text-4xl mt-16 underline">Sharing URL</h1>
 
@@ -18,8 +18,8 @@
           </div>
 
           <button
-            @click="copyText(sharedUrl)"
             class="mt-16 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
+            @click="copyText(sharedUrl)"
           >
             {{ copyButtonText }}
           </button>
@@ -29,38 +29,39 @@
 
     <HistoryMenu
       v-if="showHistoryMenu"
-      @close="showHistoryMenu = false"
       class="absolute h-full bg-white top-0 right-0 w-96 z-40"
+      @close="showHistoryMenu = false"
     />
 
     <button
       v-if="!showHistoryMenu && !fetchDataError && data.templated"
-      @click="showHistoryMenu = !showHistoryMenu"
       class="absolute bg-purple-300 p-2 text-purple-700 bottom-0 right-0 z-50 mr-4 mb-4 tracking-widest text-xl rounded-xl"
+      @click="showHistoryMenu = !showHistoryMenu"
     >
       History
     </button>
 
     <button
       v-if="!showHistoryMenu && !fetchDataError && data.templated"
-      @click="shared"
       class="cursor-pointer absolute bg-purple-300 p-2 text-purple-700 bottom-0 right-0 z-50 mr-32 mb-4 tracking-widest text-xl rounded-xl"
+      @click="shared"
     >
       Share
     </button>
 
-    <div class="flex" v-if="!fetchDataError && data.templated">
+    <div v-if="!fetchDataError && data.templated" class="flex">
       <Sidebar
         :data="data"
-        :fetchDataError="fetchDataError"
-        @displayTemplateFile="
+        :fetch-data-error="fetchDataError"
+        @display-template-file="
           ({ file, k8sResourceName }) =>
             displayTemplatedFile(k8sResourceName, file)
         "
-        @displaySourceFile="({ filename }) => displaySourceFile(filename)"
+        @display-source-file="({ filename }) => displaySourceFile(filename)"
       />
 
       <MonacoEditor
+        v-model="editorValue"
         :options="{
           theme: 'vs-dark',
           fontSize: 16,
@@ -68,7 +69,6 @@
           automaticLayout: true,
         }"
         class="w-full h-full text-xl"
-        v-model="editorValue"
         :lang="fileLanguage"
       />
 
@@ -78,15 +78,16 @@
 </template>
 
 <script lang="ts">
-import { loadChart } from "../functions/load-chart";
-import { readRemoteChart } from "../functions/read-remote-chart";
-import { encrypt } from "../functions/encryption";
+import { useNotification } from "@kyvg/vue3-notification";
+import { useAppConfig } from "#app";
+import levenshtein from "js-levenshtein";
 import yaml from "js-yaml";
 import { nanoid } from "nanoid";
-import { useNotification } from "@kyvg/vue3-notification";
+
 import Error from "../components/global/error.vue";
-import levenshtein from "js-levenshtein";
-import { useAppConfig } from "#app";
+import { encrypt } from "../functions/encryption";
+import { loadChart } from "../functions/load-chart";
+import { readRemoteChart } from "../functions/read-remote-chart";
 
 export type Store = {
   helmError: string | null;

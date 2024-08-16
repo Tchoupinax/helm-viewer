@@ -1,4 +1,5 @@
 import { defineEventHandler, readBody } from "h3";
+
 import { uploadFileToS3 } from "../infrastructure/upload-to-s3";
 
 export default defineEventHandler(async (event) => {
