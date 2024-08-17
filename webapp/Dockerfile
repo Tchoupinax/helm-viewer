@@ -1,10 +1,10 @@
-FROM node:22-alpine as builder
+FROM node:22-alpine AS builder
 
 RUN  apk add --no-cache --virtual .gyp git
 
 ARG BACKEND_ENDPOINT
 
-ENV BACKEND_ENDPOINT $BACKEND_ENDPOINT
+ENV BACKEND_ENDPOINT=$BACKEND_ENDPOINT
 
 WORKDIR /app
 
