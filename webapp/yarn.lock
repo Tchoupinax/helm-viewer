@@ -1450,7 +1450,12 @@
   resolved "https://registry.yarnpkg.com/@kwsites/promise-deferred/-/promise-deferred-1.1.1.tgz#8ace5259254426ccef57f3175bc64ed7095ed919"
   integrity sha512-GaHYm+c0O9MjZRu0ongGBRbinu8gVAMd2UZjji6jVmqKtZluZnptXGWhz1E8j8D2HJ3f/yMxKAUC0b+57wncIw==
 
-"@kyvg/vue3-notification@3.2.1", "@kyvg/vue3-notification@^3.2.1":
+"@kyvg/vue3-notification@3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@kyvg/vue3-notification/-/vue3-notification-3.3.0.tgz#736a1313151a12aef7870fe24ceb0995a424546e"
+  integrity sha512-8kv8jfGgK/1F2L+BzojUEWCaWkLOICui4y4SsxwZeTnWA7ZAZrc9r+OL8gM2F9D/UzDNoB9dNEqi8B8bgsmoVA==
+
+"@kyvg/vue3-notification@^3.2.1":
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/@kyvg/vue3-notification/-/vue3-notification-3.2.1.tgz#b7dc9f1855b43a24797acee92988dff89aefb45d"
   integrity sha512-qn4bCBBCxW0Ya+RmHXu2SYBVwGXWsAGdlDKqCqyLryaZTbtFXi32iSSLnuKjSUVxFqQRToFc6g1zp1XLTyHrvw==

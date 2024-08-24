@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "3.637.0",
-    "@kyvg/vue3-notification": "3.2.1",
+    "@kyvg/vue3-notification": "3.3.0",
     "@nuxt/devtools": "latest",
     "@nuxtjs/tailwindcss": "6.12.1",
     "@types/node": "22.5.0",
