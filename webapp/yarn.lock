@@ -4731,10 +4731,10 @@ eslint-plugin-jsdoc@^50.2.2:
     spdx-expression-parse "^4.0.0"
     synckit "^0.9.1"
 
-eslint-plugin-perfectionist@3.4.0:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-perfectionist/-/eslint-plugin-perfectionist-3.4.0.tgz#de3b26a7712e7b00ee21511ce52eb06e5df7e767"
-  integrity sha512-vXyd1sFg3H/7aKgBUie62bA6E0EN3Dh0LCD5r4vR/IYtTljxOnyckI1AV0Arw4eYjC/W9T1X04Pl2mdLsdWtMA==
+eslint-plugin-perfectionist@3.5.0:
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-perfectionist/-/eslint-plugin-perfectionist-3.5.0.tgz#e20d0fd98a8780c2e200c2eccbc7bcf7931aa268"
+  integrity sha512-vwDNuxlAlbZJ3DjHo6GnfZrmMlJBLFrkOLBV/rYvVnLFD+x54u9VyJcGOfJ2DK9d1cd3a/C/vtBrbBNgAC6Mrg==
   dependencies:
     "@typescript-eslint/types" "^8.4.0"
     "@typescript-eslint/utils" "^8.4.0"
