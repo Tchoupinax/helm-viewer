@@ -27,7 +27,7 @@
     "watch": "nuxt dev"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "3.650.0",
+    "@aws-sdk/client-s3": "3.651.0",
     "@kyvg/vue3-notification": "3.3.0",
     "@nuxt/devtools": "latest",
     "@nuxtjs/tailwindcss": "6.12.1",
