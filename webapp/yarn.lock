@@ -6482,10 +6482,10 @@ nuxt-shiki@0.3.0:
     shiki "^1.2.3"
     unwasm "^0.3.9"
 
-nuxt3-notifications@1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/nuxt3-notifications/-/nuxt3-notifications-1.2.2.tgz#4ae0a30ac3aacfed27aa52acf3a2352223424b65"
-  integrity sha512-hJ2ONUjagfWPzPrk2YylG5W1U34w1wBDEJwQyYN2jGZAe3jX9Osi/KVC+K2cmSKA8KLZHDEfCiMxOwRPDcupSQ==
+nuxt3-notifications@1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/nuxt3-notifications/-/nuxt3-notifications-1.2.3.tgz#db9a16950b29d83a05e2e2e83609b6d9a6ecf442"
+  integrity sha512-kDtHoL+8eFB6DgjPU/SYSwzZx5bDl1gRM60DHfvzAUgC7noBRkIuqUS5JNGczwQvusSJKR12y35ARJwUsC2gfA==
   dependencies:
     "@kyvg/vue3-notification" "^3.2.1"
     defu "^6.1.4"
