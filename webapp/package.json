@@ -41,7 +41,7 @@
     "nuxt": "3.13.1",
     "nuxt-monaco-editor": "1.2.9",
     "nuxt-shiki": "0.3.0",
-    "nuxt3-notifications": "1.2.2",
+    "nuxt3-notifications": "1.2.3",
     "shikiji": "0.10.2",
     "timeago.js": "4.0.2",
     "ws": "8.18.0"
