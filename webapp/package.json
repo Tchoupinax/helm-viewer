@@ -36,7 +36,7 @@
     "crypto-js": "4.2.0",
     "js-levenshtein": "1.1.6",
     "js-yaml": "4.1.0",
-    "monaco-editor": "0.50.0",
+    "monaco-editor": "0.52.0",
     "nanoid": "5.0.7",
     "nuxt": "3.13.1",
     "nuxt-monaco-editor": "1.2.9",
