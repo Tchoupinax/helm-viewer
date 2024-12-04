@@ -1,7 +1,7 @@
-import http from "http";
 import chalk from "chalk";
+import http from "http";
 
-export function serverFileTemporary(payload: Object, port: number) {
+export function serverFileTemporary(payload: object, port: number) {
   return new Promise((resolve) => {
     const httpServer = http.createServer((request, response) => {
       const headers = {

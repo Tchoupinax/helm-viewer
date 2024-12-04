@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.19.0 | 2024-11-04
+
+#### Chores
+
+- Upgrade dependencies
+- Eslint configuration
+
 ## 0.17.1 | 2024-07-11
 
 #### Fixes

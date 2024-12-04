@@ -1,21 +1,22 @@
-import { isChartFolder } from "./functions/is-chart-folder";
-import { mkdirSync } from "fs";
-import { randomUUID } from "crypto";
-import chalk from "chalk";
-import { tmpdir } from "os";
-import { serverFileTemporary } from "./functions/serve-file-temporary";
-import open from "open";
-import yaml from "js-yaml";
-import { encrypt } from "./functions/encryption";
-import fs from "fs";
-import { startWebsocketServer } from "./functions/websocket-server";
-import { watchHelmChartFilesModifications } from "./functions/file-watcher";
-import { getArguments } from "./functions/parse-cli";
-import { computeChart } from "./functions/compute-chart";
-import { nanoid } from "nanoid";
-import { checkNodeVersion } from "./functions/check-node-version";
-import { computeUrls } from "./functions/compute-urls";
 import { readFileSync } from "node:fs";
+
+import chalk from "chalk";
+import { randomUUID } from "crypto";
+import fs, { mkdirSync } from "fs";
+import yaml from "js-yaml";
+import { nanoid } from "nanoid";
+import open from "open";
+import { tmpdir } from "os";
+
+import { checkNodeVersion } from "./functions/check-node-version";
+import { computeChart } from "./functions/compute-chart";
+import { computeUrls } from "./functions/compute-urls";
+import { encrypt } from "./functions/encryption";
+import { watchHelmChartFilesModifications } from "./functions/file-watcher";
+import { isChartFolder } from "./functions/is-chart-folder";
+import { getArguments } from "./functions/parse-cli";
+import { serverFileTemporary } from "./functions/serve-file-temporary";
+import { startWebsocketServer } from "./functions/websocket-server";
 
 type BrowserName = "firefox" | "chrome" | "default";
 
@@ -62,8 +63,8 @@ async function run() {
     valuesPathArray.length > 0
       ? chalk.greenBright(`🔑 Values detected : ${valuesPathArray.join(",")}`)
       : chalk.yellowBright(
-          `⚠️  No value detected, computing with default values in the Chart`
-        )
+          `⚠️  No value detected, computing with default values in the Chart`,
+        ),
   );
 
   const tmpDir = `${tmpdir()}/${randomUUID()}`;
@@ -83,12 +84,12 @@ async function run() {
     payload = await computeChart(
       currentPath,
       args.values.name,
-      valuesPathArray
+      valuesPathArray,
     );
   } catch (err) {
     console.log("\n");
     console.log(
-      chalk.bgRedBright("The computation of the chart failed. (message below)")
+      chalk.bgRedBright("The computation of the chart failed. (message below)"),
     );
     console.log((err as Error).message);
     console.log("\n");
@@ -111,7 +112,7 @@ async function run() {
       currentPath,
       args.values.watch,
       browser,
-      args.values.name
+      args.values.name,
     );
   }
 
@@ -119,8 +120,8 @@ async function run() {
 }
 
 async function pushOnlineFunction(
-  payload: { name: string; version: string; templated: {}; sources: {} },
-  encryptionKey: string
+  payload: { name: string; version: string; templated: any; sources: any },
+  encryptionKey: string,
 ) {
   const id = nanoid();
   const { version, name } = yaml.load(payload.sources["Chart.yaml"]) as {
@@ -150,16 +151,16 @@ async function pushOnlineFunction(
 
   fs.writeFileSync(
     ".helm-viewer-url",
-    `${remoteReadURL}?id=${id}&k=${encryptionKey}&o=t`
+    `${remoteReadURL}?id=${id}&k=${encryptionKey}&o=t`,
   );
 }
 
 async function serveLocally(
-  payload: { name: string; version: string; templated: {}; sources: {} },
+  payload: { name: string; version: string; templated: any; sources: any },
   currentPath: string,
   watchingMode: boolean,
   browserName: BrowserName,
-  releaseName: string
+  releaseName: string,
 ) {
   const id = nanoid();
   if (process.env.NODE_ENV === "development") {
@@ -178,7 +179,7 @@ async function serveLocally(
   };
 
   await Promise.all([
-    serverFileTemporary(JSON.stringify(payload), 12094),
+    serverFileTemporary(payload, 12094),
     serverFileTemporary({ chartName: name, chartVersion: version }, 12095),
   ]);
 

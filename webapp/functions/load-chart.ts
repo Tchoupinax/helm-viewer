@@ -23,8 +23,9 @@ export async function loadChart(id: string): Promise<Payload> {
     const payload = await fetch("http://localhost:12094").then((res) =>
       res.json()
     );
+    console.log(payload);
     localStorage.setItem(key, payload);
-    return JSON.parse(payload);
+    return payload;
   } else {
     return JSON.parse(localStorage.getItem(key)!);
   }

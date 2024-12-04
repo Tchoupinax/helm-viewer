@@ -12,6 +12,7 @@
     "incremental": true,
     "lib": ["dom", "es2021"],
     "module": "commonjs",
+    "moduleResolution": "node",
     "noEmit": false,
     "noFallthroughCasesInSwitch": false,
     "noImplicitAny": false,
@@ -27,9 +28,8 @@
     "strictBindCallApply": false,
     "strictNullChecks": false,
     "stripInternal": true,
-    "target": "es2015",
-    "moduleResolution": "node"
+    "target": "es2015"
   },
-  "include": ["src/**/*", "test/**/*"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "include": ["src/**/*", "test/**/*"]
 }
