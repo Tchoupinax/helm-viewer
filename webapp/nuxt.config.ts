@@ -1,3 +1,4 @@
+import wasm from "@rollup/plugin-wasm";
 import { defineNuxtConfig } from "nuxt/config";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
@@ -5,7 +6,6 @@ export default defineNuxtConfig({
   compatibilityDate: "2024-08-06",
   ssr: true,
   devtools: { enabled: process.env.NODE_ENV !== "production" },
-
   modules: [
     "@nuxt/eslint",
     "@nuxtjs/tailwindcss",
@@ -13,11 +13,9 @@ export default defineNuxtConfig({
     "nuxt3-notifications",
     "nuxt-monaco-editor",
   ],
-
   experimental: {
     payloadExtraction: false,
   },
-
   app: {
     head: {
       script: [
@@ -28,7 +26,6 @@ export default defineNuxtConfig({
       ],
     },
   },
-
   runtimeConfig: {
     public: {
       remoteURL:
@@ -36,5 +33,8 @@ export default defineNuxtConfig({
         process.env.REMOTE_URL ??
         "http://localhost:3000",
     },
+  },
+  vite: {
+    plugins: [wasm()],
   },
 });

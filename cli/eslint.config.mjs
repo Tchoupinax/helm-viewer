@@ -1,16 +1,46 @@
-import perfectionist from "eslint-plugin-perfectionist";
+import eslint from "@eslint/js";
 
-export default {
-  ignores: ["cli/**", "binary/**"],
-  plugins: {
-    perfectionist,
+import eslintPluginJsonc from "eslint-plugin-jsonc";
+import eslintPluginPrettierRecommended from "eslint-plugin-prettier";
+import simpleImportSort from "eslint-plugin-simple-import-sort";
+import tseslint from "typescript-eslint";
+
+export default tseslint.config(
+  eslint.configs.recommended,
+  tseslint.configs.recommended,
+  ...eslintPluginJsonc.configs["flat/recommended-with-jsonc"],
+  {
+    plugins: {
+      "eslint-plugin-prettier": eslintPluginPrettierRecommended,
+    },
   },
-  rules: {
-    "@typescript-eslint/no-invalid-void-type": "off",
-    // It's because maybe one day default html component will be called
-    // and there are always in one word
-    "vue/multi-word-component-names": "off",
-    "vue/html-self-closing": "off",
-    "perfectionist/sort-imports": "error",
+  {
+    plugins: {
+      "simple-import-sort": simpleImportSort,
+    },
+    ignores: ["package.json"],
+    rules: {
+      // https://github.com/lydell/eslint-plugin-simple-import-sort
+      "simple-import-sort/imports": [
+        "error",
+        {
+          // https://dev.to/receter/automatic-import-sorting-in-vscode-275m
+          groups: [["^@?\\w", "^node"], ["^[^@]?\\w"]],
+        },
+      ],
+      "simple-import-sort/exports": "error",
+    },
   },
-};
+  {
+    rules: {
+      "@typescript-eslint/no-explicit-any": "off",
+    },
+  },
+  {
+    files: ["**/*.json"],
+    ignores: ["package.json"],
+    rules: {
+      "jsonc/sort-keys": ["error"],
+    },
+  },
+);

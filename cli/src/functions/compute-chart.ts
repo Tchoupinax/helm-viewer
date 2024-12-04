@@ -1,16 +1,16 @@
+import chalk from "chalk";
 import { randomUUID } from "crypto";
 import { $ } from "execa";
 import {
   mkdirSync,
-  readFileSync,
   readdirSync,
+  readFileSync,
   statSync,
   writeFileSync,
 } from "fs";
 import yaml from "js-yaml";
-import { join } from "path";
 import { tmpdir } from "os";
-import chalk from "chalk";
+import { join } from "path";
 
 export async function computeChart(
   currentPath: string,
@@ -51,7 +51,7 @@ export async function computeChart(
 
 export async function computeTemplated(
   chartInYaml: string,
-): Promise<{ templated: {} }> {
+): Promise<{ templated: any }> {
   const dataFileJSON = { templated: {} };
   const files = chartInYaml.split("---");
 
@@ -91,7 +91,7 @@ async function computeCommands(
 export async function computeSources(
   chartInYaml: string,
   currentPath: string,
-): Promise<{ sources: {} }> {
+): Promise<{ sources: any }> {
   const tmpDir = `${tmpdir()}/${randomUUID()}`;
   mkdirSync(tmpDir, { recursive: true });
   mkdirSync(`${tmpDir}/sources`, { recursive: true });

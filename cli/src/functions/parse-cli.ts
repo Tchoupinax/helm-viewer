@@ -1,5 +1,6 @@
-import { nanoid } from "nanoid";
 import { parseArgs } from "node:util";
+
+import { nanoid } from "nanoid";
 
 export function getArguments() {
   return parseArgs({
