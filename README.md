@@ -1,4 +1,4 @@
-ac# helm-viewer
+# helm-viewer
 
 - Github: https://github.com/Tchoupinax/helm-viewer
 - NPM: https://www.npmjs.com/package/helm-viewer
