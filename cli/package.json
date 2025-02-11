@@ -39,8 +39,8 @@
     "clean": "rm -rf dist binary tmp compiled src/assets"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "3.716.0",
-    "chalk": "5.4.0",
+    "@aws-sdk/client-s3": "3.744.0",
+    "chalk": "5.4.1",
     "chokidar": "3.6.0",
     "crypto-js": "4.2.0",
     "execa": "9.5.2",
@@ -50,21 +50,21 @@
   },
   "devDependencies": {
     "@types/js-yaml": "4.0.9",
-    "@types/node": "22.10.2",
-    "@types/ws": "8.5.13",
+    "@types/node": "22.13.1",
+    "@types/ws": "8.5.14",
     "@vercel/ncc": "0.38.3",
-    "eslint": "9.17.0",
-    "eslint-plugin-jsonc": "2.18.2",
-    "eslint-plugin-perfectionist": "4.4.0",
-    "eslint-plugin-prettier": "5.2.1",
+    "eslint": "9.20.1",
+    "eslint-plugin-jsonc": "2.19.1",
+    "eslint-plugin-perfectionist": "4.8.0",
+    "eslint-plugin-prettier": "5.2.3",
     "eslint-plugin-simple-import-sort": "12.1.1",
     "js-yaml": "4.1.0",
     "npm-packlist": "8.0.2",
     "postject": "1.0.0-alpha.6",
-    "prettier": "3.4.2",
-    "typescript": "5.7.2",
-    "typescript-eslint": "8.18.1",
-    "vite-node": "2.1.8",
-    "vitest": "2.1.8"
+    "prettier": "3.5.0",
+    "typescript": "5.7.3",
+    "typescript-eslint": "8.24.0",
+    "vite-node": "2.1.9",
+    "vitest": "2.1.9"
   }
 }
