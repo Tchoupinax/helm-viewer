@@ -7,6 +7,8 @@ import yaml from "js-yaml";
 import { nanoid } from "nanoid";
 import open from "open";
 import { tmpdir } from "os";
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 import { checkNodeVersion } from "./functions/check-node-version";
 import { computeChart } from "./functions/compute-chart";
