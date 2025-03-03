@@ -64,7 +64,7 @@
     "prettier": "3.5.3",
     "typescript": "5.8.2",
     "typescript-eslint": "8.26.0",
-    "vite-node": "2.1.9",
-    "vitest": "2.1.9"
+    "vite-node": "3.0.7",
+    "vitest": "3.0.7"
   }
 }
