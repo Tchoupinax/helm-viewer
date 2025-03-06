@@ -6,6 +6,7 @@ binary/xdg-open
 compiled
 dist
 justfile
+mise.toml
 src
 tailwind.config.ts
 tmp
