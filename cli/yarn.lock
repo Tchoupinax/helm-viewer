@@ -1844,10 +1844,10 @@ eslint-plugin-jsonc@2.20.0:
     natural-compare "^1.4.0"
     synckit "^0.6.2 || ^0.7.3 || ^0.10.3"
 
-eslint-plugin-perfectionist@4.12.0:
-  version "4.12.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-perfectionist/-/eslint-plugin-perfectionist-4.12.0.tgz#8501da73743a92a6c569506db6d38fcf0b617e7d"
-  integrity sha512-qvjf2IK3w11kyA24eLBKRifjtnwu+kluYTALmKdYCg5xWH1W5uQar3QXGHNOIvGuIM1djpy0FDMssVPPIbTe4Q==
+eslint-plugin-perfectionist@4.12.1:
+  version "4.12.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-perfectionist/-/eslint-plugin-perfectionist-4.12.1.tgz#de14f99c364299e94e7d0c089d36905daffc57d0"
+  integrity sha512-0w0zF4ugHqFfsSFfZcg/pQTUoKkSJOYqqFPURRgA8hkpZsbYksCO4rfpDdiMkOgCJ3y4wxPvwKm3eTrP7jl7zg==
   dependencies:
     "@typescript-eslint/types" "^8.31.0"
     "@typescript-eslint/utils" "^8.31.0"
