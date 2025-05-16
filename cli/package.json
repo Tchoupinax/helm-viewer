@@ -51,7 +51,7 @@
     "@types/node": "22.15.18",
     "@types/ws": "8.18.1",
     "@vercel/ncc": "0.38.3",
-    "eslint": "9.26.0",
+    "eslint": "9.27.0",
     "eslint-plugin-jsonc": "2.20.0",
     "eslint-plugin-perfectionist": "4.13.0",
     "eslint-plugin-prettier": "5.4.0",
