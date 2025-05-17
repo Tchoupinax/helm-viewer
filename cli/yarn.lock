@@ -803,7 +803,7 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@pkgr/core@^0.2.0", "@pkgr/core@^0.2.3":
+"@pkgr/core@^0.2.3", "@pkgr/core@^0.2.4":
   version "0.2.4"
   resolved "https://registry.yarnpkg.com/@pkgr/core/-/core-0.2.4.tgz#d897170a2b0ba51f78a099edccd968f7b103387c"
   integrity sha512-ROFF39F6ZrnzSUEmQQZUar0Jt4xVoP9WnDRdWwF4NNcXs3xBTLgBUDoOwW141y1jP+S8nahIbdxbFC7IShw9Iw==
@@ -1838,10 +1838,10 @@ eslint-json-compat-utils@^0.2.1:
   dependencies:
     esquery "^1.6.0"
 
-eslint-plugin-jsonc@2.20.0:
-  version "2.20.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jsonc/-/eslint-plugin-jsonc-2.20.0.tgz#7f3ae51abd38176487ba7324dee77578a92e15e0"
-  integrity sha512-FRgCn9Hzk5eKboCbVMrr9QrhM0eO4G+WKH8IFXoaeqhM/2kuWzbStJn4kkr0VWL8J5H8RYZF+Aoam1vlBaZVkw==
+eslint-plugin-jsonc@2.20.1:
+  version "2.20.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jsonc/-/eslint-plugin-jsonc-2.20.1.tgz#138b41e857a2add02b5408b13f3bc6f14d51d702"
+  integrity sha512-gUzIwQHXx7ZPypUoadcyRi4WbHW2TPixDr0kqQ4miuJBU0emJmyGTlnaT3Og9X2a8R1CDayN9BFSq5weGWbTng==
   dependencies:
     "@eslint-community/eslint-utils" "^4.5.1"
     eslint-compat-utils "^0.6.4"
@@ -1850,7 +1850,7 @@ eslint-plugin-jsonc@2.20.0:
     graphemer "^1.4.0"
     jsonc-eslint-parser "^2.4.0"
     natural-compare "^1.4.0"
-    synckit "^0.6.2 || ^0.7.3 || ^0.10.3"
+    synckit "^0.6.2 || ^0.7.3 || ^0.11.5"
 
 eslint-plugin-perfectionist@4.13.0:
   version "4.13.0"
@@ -2634,13 +2634,12 @@ synckit@^0.11.0:
     "@pkgr/core" "^0.2.3"
     tslib "^2.8.1"
 
-"synckit@^0.6.2 || ^0.7.3 || ^0.10.3":
-  version "0.10.3"
-  resolved "https://registry.yarnpkg.com/synckit/-/synckit-0.10.3.tgz#940aea2c7b6d141a4f74dbdebc81e0958c331a4b"
-  integrity sha512-R1urvuyiTaWfeCggqEvpDJwAlDVdsT9NM+IP//Tk2x7qHCkSvBk/fwFgw/TLAHzZlrAnnazMcRw0ZD8HlYFTEQ==
+"synckit@^0.6.2 || ^0.7.3 || ^0.11.5":
+  version "0.11.6"
+  resolved "https://registry.yarnpkg.com/synckit/-/synckit-0.11.6.tgz#e742a0c27bbc1fbc96f2010770521015cca7ed5c"
+  integrity sha512-2pR2ubZSV64f/vqm9eLPz/KOvR9Dm+Co/5ChLgeHl0yEDRc6h5hXHoxEQH8Y5Ljycozd3p1k5TTSVdzYGkPvLw==
   dependencies:
-    "@pkgr/core" "^0.2.0"
-    tslib "^2.8.1"
+    "@pkgr/core" "^0.2.4"
 
 tinybench@^2.9.0:
   version "2.9.0"
