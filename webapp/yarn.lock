@@ -1722,7 +1722,7 @@
     pathe "^2.0.3"
     unimport "^5.2.0"
 
-"@nuxt/kit@3.18.1", "@nuxt/kit@^3.11.1", "@nuxt/kit@^3.15.4", "@nuxt/kit@^3.16.0", "@nuxt/kit@^3.17.5", "@nuxt/kit@^3.17.6":
+"@nuxt/kit@3.18.1", "@nuxt/kit@^3.11.1", "@nuxt/kit@^3.15.4", "@nuxt/kit@^3.16.0", "@nuxt/kit@^3.17.6":
   version "3.18.1"
   resolved "https://registry.yarnpkg.com/@nuxt/kit/-/kit-3.18.1.tgz#67b2fa8c5af7552f4a9dfa0160042849b8a0478f"
   integrity sha512-z6w1Fzv27CIKFlhct05rndkJSfoslplWH5fJ9dtusEvpYScLXp5cATWIbWkte9e9zFSmQTgDQJjNs3geQHE7og==
@@ -7090,14 +7090,14 @@ nth-check@^2.0.1, nth-check@^2.1.1:
   dependencies:
     boolbase "^1.0.0"
 
-nuxt-monaco-editor@1.3.2:
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/nuxt-monaco-editor/-/nuxt-monaco-editor-1.3.2.tgz#6d6df91553fa480f193798c2f5970771d59efd5d"
-  integrity sha512-yA91ecXDgD6z2EddnsByfND9lBjbNs2BG0lg25yPC9Ge0A0N3u0cBXNNmDrhew8o+yXQSHqy8AykaRiBAeSYWQ==
+nuxt-monaco-editor@1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/nuxt-monaco-editor/-/nuxt-monaco-editor-1.4.0.tgz#4033e0d4dd94e4325b2a483a0e454400a89d1208"
+  integrity sha512-uRvPr3FbuSFV4LIHNUJMTAJnrfggBVP+o8WsIJiN8iRK5u+ejN4Nhuz1u5bM90et30p0S3YYvvB/YNPsNKoD0g==
   dependencies:
-    "@nuxt/kit" "^3.17.5"
+    "@nuxt/kit" "^4.0.3"
     defu "^6.1.4"
-    vite-plugin-static-copy "^3.0.2"
+    vite-plugin-static-copy "^3.1.1"
 
 nuxt-shiki@0.3.1:
   version "0.3.1"
@@ -9446,7 +9446,7 @@ vite-plugin-inspect@^11.3.0:
     unplugin-utils "^0.2.4"
     vite-dev-rpc "^1.1.0"
 
-vite-plugin-static-copy@^3.0.2:
+vite-plugin-static-copy@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/vite-plugin-static-copy/-/vite-plugin-static-copy-3.1.1.tgz#25d6f52c9a760d2d2e84d0803a37e3310aed644a"
   integrity sha512-oR53SkL5cX4KT1t18E/xU50vJDo0N8oaHza4EMk0Fm+2/u6nQivxavOfrDk3udWj+dizRizB/QnBvJOOQrTTAQ==
