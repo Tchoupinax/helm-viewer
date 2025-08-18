@@ -47,7 +47,7 @@
     "ws": "8.18.3"
   },
   "devDependencies": {
-    "@nuxt/eslint": "1.8.0",
+    "@nuxt/eslint": "1.9.0",
     "@rollup/plugin-wasm": "6.2.2",
     "@types/crypto-js": "4.2.2",
     "@types/js-levenshtein": "1.1.3",
