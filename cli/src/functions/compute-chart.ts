@@ -108,7 +108,7 @@ async function computeCommands(
   } else if (valuesPathArray.length === 2) {
     try {
       ({ stdout } = execaCommandSync(
-        `helm template ${namespace} --name-template ${releaseName} ${currentPath} --values ${valuesPathArray.at(0)} --values ${valuesPathArray.at(1)}`,
+        `helm template ${namespace} --name-template ${releaseName} ${currentPath} --values ${valuesPathArray[0]} --values ${valuesPathArray[1]}`,
       ));
     } catch (err) {
       return { error: (err as any).stderr as string };

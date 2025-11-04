@@ -54,23 +54,26 @@ export function saveSourcesYamlToFiles(
     if (!statSync(fileFullPath).isDirectory()) {
       const fileContent = readFileSync(fileFullPath);
       let destinationPath = `${tmpDir}/sources/${file}`;
+
+      const lastParts = path.split("/");
+      const lastPart = lastParts[path.split("/").length - 1];
+
       if (prefix) {
-        mkdirSync(`${tmpDir}/sources/${path.split("/").at(-1)}`, {
+        mkdirSync(`${tmpDir}/sources/${lastPart}`, {
           recursive: true,
         });
-        destinationPath = `${tmpDir}/sources/${path.split("/").at(-1)}/${file}`;
+        destinationPath = `${tmpDir}/sources/${lastPart}/${file}`;
       }
       writeFileSync(destinationPath, fileContent);
 
       if (!prefix) {
         dataFileJSON["sources"][file] = String(fileContent);
       } else {
-        if (!dataFileJSON["sources"][path.split("/").at(-1)]) {
-          dataFileJSON["sources"][path.split("/").at(-1)] = {};
+        if (!dataFileJSON["sources"][lastPart]) {
+          dataFileJSON["sources"][lastPart] = {};
         }
 
-        dataFileJSON["sources"][path.split("/").at(-1)][file] =
-          String(fileContent);
+        dataFileJSON["sources"][lastPart][file] = String(fileContent);
         writeFileSync(
           `${tmpDir}/global-data.json`,
           JSON.stringify(dataFileJSON, null, 2),

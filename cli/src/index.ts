@@ -27,7 +27,7 @@ async function run() {
   checkNodeVersion();
 
   const args = getArguments();
-  const version = "0.21.3";
+  const version = "0.22.0";
 
   // Display options
   if (args.values.help) {
@@ -56,7 +56,7 @@ async function run() {
     process.exit(0);
   }
 
-  const currentPath = args.positionals.at(0) ?? process.cwd();
+  const currentPath = args.positionals[0] ?? process.cwd();
   const valuesPathArray = args.values.values;
 
   console.log(chalk.cyanBright(`⚡️ Path detected ${currentPath}`));
@@ -64,8 +64,8 @@ async function run() {
     valuesPathArray.length > 0
       ? chalk.greenBright(`🔑 Values detected : ${valuesPathArray.join(",")}`)
       : chalk.yellowBright(
-          `⚠️  No value detected, computing with default values in the Chart`
-        )
+          `⚠️  No value detected, computing with default values in the Chart`,
+        ),
   );
 
   const tmpDir = `${tmpdir()}/${randomUUID()}`;
@@ -85,12 +85,12 @@ async function run() {
     payload = await computeChart(
       currentPath,
       args.values.name,
-      valuesPathArray
+      valuesPathArray,
     );
   } catch (err) {
     console.log("\n");
     console.log(
-      chalk.bgRedBright("The computation of the chart failed. (message below)")
+      chalk.bgRedBright("The computation of the chart failed. (message below)"),
     );
     console.log((err as Error).message);
     console.log("\n");
@@ -113,7 +113,7 @@ async function run() {
       currentPath,
       args.values.watch,
       browser,
-      args.values.name
+      args.values.name,
     );
   }
 
@@ -122,7 +122,7 @@ async function run() {
 
 async function pushOnlineFunction(
   payload: { name: string; version: string; templated: any; sources: any },
-  encryptionKey: string
+  encryptionKey: string,
 ) {
   const id = nanoid();
   const { version, name } = yaml.load(payload.sources["Chart.yaml"]) as {
@@ -152,7 +152,7 @@ async function pushOnlineFunction(
 
   fs.writeFileSync(
     ".helm-viewer-url",
-    `${remoteReadURL}?id=${id}&k=${encryptionKey}&o=t`
+    `${remoteReadURL}?id=${id}&k=${encryptionKey}&o=t`,
   );
 }
 
@@ -161,7 +161,7 @@ async function serveLocally(
   currentPath: string,
   watchingMode: boolean,
   browserName: BrowserName,
-  releaseName: string
+  releaseName: string,
 ) {
   const id = nanoid();
   if (process.env.NODE_ENV === "development") {
