@@ -2492,6 +2492,11 @@ npm-run-path@^6.0.0:
     path-key "^4.0.0"
     unicorn-magic "^0.3.0"
 
+obug@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/obug/-/obug-2.0.0.tgz#30c1ebb521ea0af82c06339e1b7835b0ce8b54ac"
+  integrity sha512-dpSQuPXoKUjulinHmXjZV1YIRhOLEqBl1J6PYi9mRQR2dYcSK+OULRr+GuT1vufk2f40mtIOqmSL/aTikjmq5Q==
+
 open@10:
   version "10.2.0"
   resolved "https://registry.yarnpkg.com/open/-/open-10.2.0.tgz#b9d855be007620e80b6fb05fac98141fe62db73c"
@@ -2838,18 +2843,18 @@ uri-js@^4.2.2:
   dependencies:
     punycode "^2.1.0"
 
-vite-node@5.1.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/vite-node/-/vite-node-5.1.0.tgz#da27c12c1e535b3117bdd751173b6a3275df328e"
-  integrity sha512-ci+CXFFrQfRgdO0WDSKNQ28OOglURJUw2hVlfir4IA+Q2nHKmU/qIbmiYO7oB8CZvvSoyCmHycXz5MiX03BrsQ==
+vite-node@5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/vite-node/-/vite-node-5.2.0.tgz#26d2f684ffbd1a049d8ea45cd481f72bd21f5f23"
+  integrity sha512-7UT39YxUukIA97zWPXUGb0SGSiLexEGlavMwU3HDE6+d/HJhKLjLqu4eX2qv6SQiocdhKLRcusroDwXHQ6CnRQ==
   dependencies:
     cac "^6.7.14"
-    debug "^4.4.3"
     es-module-lexer "^1.7.0"
+    obug "^2.0.0"
     pathe "^2.0.3"
-    vite "^7.2.0"
+    vite "^7.2.2"
 
-"vite@^6.0.0 || ^7.0.0", vite@^7.2.0:
+"vite@^6.0.0 || ^7.0.0", vite@^7.2.2:
   version "7.2.2"
   resolved "https://registry.yarnpkg.com/vite/-/vite-7.2.2.tgz#17dd62eac2d0ca0fa90131c5f56e4fefb8845362"
   integrity sha512-BxAKBWmIbrDgrokdGZH1IgkIk/5mMHDreLDmCJ0qpyJaAteP8NvMhkwr/ZCQNqNH97bw/dANTE9PDzqwJghfMQ==
