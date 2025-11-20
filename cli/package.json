@@ -37,7 +37,7 @@
     "build": "ncc build --no-cache --no-source-map-register src/index.ts --out dist --minify"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "3.935.0",
+    "@aws-sdk/client-s3": "3.936.0",
     "chalk": "5.6.2",
     "chokidar": "4.0.3",
     "crypto-js": "4.2.0",
