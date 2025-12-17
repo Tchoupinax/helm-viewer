@@ -37,7 +37,7 @@
     "build": "ncc build --no-cache --no-source-map-register src/index.ts --out dist --minify"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "3.952.0",
+    "@aws-sdk/client-s3": "3.953.0",
     "chalk": "5.6.2",
     "chokidar": "4.0.3",
     "crypto-js": "4.2.0",
@@ -63,6 +63,6 @@
     "typescript": "5.9.3",
     "typescript-eslint": "8.50.0",
     "vite-node": "5.2.0",
-    "vitest": "4.0.15"
+    "vitest": "4.0.16"
   }
 }
