@@ -43,7 +43,7 @@
     "crypto-js": "4.2.0",
     "execa": "9.6.1",
     "nanoid": "5.1.6",
-    "open": "10",
+    "open": "11",
     "ws": "8.19.0"
   },
   "devDependencies": {
