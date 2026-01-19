@@ -165,12 +165,12 @@ async function serveLocally(
 ) {
   const id = nanoid();
   if (process.env.NODE_ENV === "development") {
-    open(`${remoteURL}?id=${id}`, { app: { name: "firefox" } });
+    await open(`${remoteURL}?id=${id}`);
   } else {
     if (browserName !== "default") {
-      open(`${remoteURL}?id=${id}`, { app: { name: browserName } });
+      await open(`${remoteURL}?id=${id}`, { app: { name: browserName } });
     } else {
-      open(`${remoteURL}?id=${id}`);
+      await open(`${remoteURL}?id=${id}`);
     }
   }
 
