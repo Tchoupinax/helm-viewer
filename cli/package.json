@@ -37,32 +37,32 @@
     "build": "ncc build --no-cache --no-source-map-register src/index.ts --out dist --minify"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "3.962.0",
+    "@aws-sdk/client-s3": "3.971.0",
     "chalk": "5.6.2",
     "chokidar": "4.0.3",
     "crypto-js": "4.2.0",
     "execa": "9.6.1",
     "nanoid": "5.1.6",
     "open": "10",
-    "ws": "8.18.3"
+    "ws": "8.19.0"
   },
   "devDependencies": {
     "@types/js-yaml": "4.0.9",
-    "@types/node": "24.10.4",
+    "@types/node": "24.10.9",
     "@types/ws": "8.18.1",
     "@vercel/ncc": "0.38.4",
     "eslint": "9.39.2",
     "eslint-plugin-jsonc": "2.21.0",
-    "eslint-plugin-perfectionist": "5.2.0",
-    "eslint-plugin-prettier": "5.5.4",
+    "eslint-plugin-perfectionist": "5.3.1",
+    "eslint-plugin-prettier": "5.5.5",
     "eslint-plugin-simple-import-sort": "12.1.1",
     "js-yaml": "4.1.1",
     "npm-packlist": "10.0.3",
     "postject": "1.0.0-alpha.6",
-    "prettier": "3.7.4",
+    "prettier": "3.8.0",
     "typescript": "5.9.3",
-    "typescript-eslint": "8.51.0",
-    "vite-node": "5.2.0",
-    "vitest": "4.0.16"
+    "typescript-eslint": "8.53.1",
+    "vite-node": "5.3.0",
+    "vitest": "4.0.17"
   }
 }
