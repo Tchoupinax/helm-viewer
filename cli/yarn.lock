@@ -1610,7 +1610,7 @@
     tinyglobby "^0.2.15"
     ts-api-utils "^2.4.0"
 
-"@typescript-eslint/utils@8.53.1", "@typescript-eslint/utils@^8.52.0":
+"@typescript-eslint/utils@8.53.1", "@typescript-eslint/utils@^8.53.1":
   version "8.53.1"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/utils/-/utils-8.53.1.tgz#81fe6c343de288701b774f4d078382f567e6edaa"
   integrity sha512-c4bMvGVWW4hv6JmDUEG7fSYlWOl3II2I4ylt0NM+seinYQlZMQIaKaXIIVJWt9Ofh6whrpM+EdDQXKXjNovvrg==
@@ -1942,12 +1942,12 @@ eslint-plugin-jsonc@2.21.0:
     natural-compare "^1.4.0"
     synckit "^0.6.2 || ^0.7.3 || ^0.11.5"
 
-eslint-plugin-perfectionist@5.3.1:
-  version "5.3.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-perfectionist/-/eslint-plugin-perfectionist-5.3.1.tgz#f5003eb5d5163c8db059f80e827531ea199aea61"
-  integrity sha512-v8kAP8TarQYqDC4kxr343ZNi++/oOlBnmWovsUZpbJ7A/pq1VHGlgsf/fDh4CdEvEstzkrc8NLvoVKtfpsC4oA==
+eslint-plugin-perfectionist@5.4.0:
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-perfectionist/-/eslint-plugin-perfectionist-5.4.0.tgz#4849ee1e5b88a85dbee6bde3a217cc0d0351ea8f"
+  integrity sha512-XxpUMpeVaSJF5rpF6NHmhj3xavHZrflKcRbDssAUWrHUU/+l3l7PPYnVJ6IOpR2KjQ1Blucaeb0cFL3LIBis0A==
   dependencies:
-    "@typescript-eslint/utils" "^8.52.0"
+    "@typescript-eslint/utils" "^8.53.1"
     natural-orderby "^5.0.0"
 
 eslint-plugin-prettier@5.5.5:
