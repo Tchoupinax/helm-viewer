@@ -6469,10 +6469,10 @@ nuxt-shiki@0.3.2:
     knitwork "^1.3.0"
     shiki "^3.20.0"
 
-nuxt3-notifications@1.3.1:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/nuxt3-notifications/-/nuxt3-notifications-1.3.1.tgz#697b76b467b23d5a7e1a11902c75b3b38b98bf25"
-  integrity sha512-r5gSyvHrf20xzb3j5DIrz3DZpaRcaLzjI9Sf8J2DvCugtgslnKQwCH/KKAOKKIqyeujhCWwrAk9LhcG+//uq8g==
+nuxt3-notifications@1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/nuxt3-notifications/-/nuxt3-notifications-1.4.0.tgz#1778730763e938595483c6f795dcd648b90f5ab4"
+  integrity sha512-bLFGJGu6LWzuCAazLaa0AuYQ07r+h5lalO5I5qNnyje0TZ9/fIzlQoS7/X58TuYbbmQa0lxtBSP2qPhaK0xYnQ==
   dependencies:
     "@kyvg/vue3-notification" "^3.4.1"
     scule "^1.0.0"
