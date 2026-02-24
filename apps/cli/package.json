@@ -24,7 +24,6 @@
     "lint": "eslint --fix .",
     "=== PUBLICATION ======================================": "",
     "pack": "npm pack --dry-run",
-    "publish": "npm publish",
     "=== RUN ==============================================": "",
     "run": "NODE_ENV=development npx vite-node src/index.ts ~/Downloads/traefik",
     "=== BUILD ============================================": "",
