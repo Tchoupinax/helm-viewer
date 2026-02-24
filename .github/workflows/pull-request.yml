@@ -37,7 +37,7 @@ jobs:
         privateKey: ${{ secrets.DEPLOY_APP_KEY }}
 
   publication:
-    name: Publish
+    name: Publish next version on NPM 📦
     runs-on: ubuntu-latest
     permissions:
       # https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services#adding-permissions-settings
@@ -70,19 +70,19 @@ jobs:
     - name: Set Commit
       run: echo "COMMIT=$(echo ${GITHUB_SHA} | cut -c1-4)" >> $GITHUB_ENV
 
-    - name: Test Version total
-      run: echo ${{ env.APP_VERSION }}-${{ env.COMMIT }}
-
     - name: Build
       uses: tchoupinax/repo-config/shared-actions/steps/node/build@v0
       with:
         nodeVersion: 25
         pnpmVersion: 10.30.2
+        workingDirectory: packages/cli
 
     - name: Update package.json version
       run: npm version ${{ env.APP_VERSION }}-${{ env.COMMIT }} --no-git-tag-version
+      working-directory: packages/cli
 
     - name: Publish package on NPM 📦
       run: npm publish --tag next
+      working-directory: packages/cli
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
