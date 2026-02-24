@@ -35,3 +35,54 @@ jobs:
       with:
         appId: ${{ secrets.DEPLOY_APP_ID }}
         privateKey: ${{ secrets.DEPLOY_APP_KEY }}
+
+  publication:
+    name: Publish
+    runs-on: ubuntu-latest
+    permissions:
+      # https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services#adding-permissions-settings
+      # https://docs.npmjs.com/trusted-publishers#supported-cicd-providers
+      id-token: write # Required for OIDC
+      contents: read
+
+    steps:
+    - uses: actions/create-github-app-token@v2
+      id: app-token
+      with:
+        app-id: ${{ secrets.DEPLOY_APP_ID }}
+        private-key: ${{ secrets.DEPLOY_APP_KEY }}
+        owner: ${{ github.repository_owner }}
+
+    - name: Checkout
+      uses: actions/checkout@v6
+      with:
+        fetch-depth: 0
+        token: ${{ steps.app-token.outputs.token }}
+
+    - name: Setup Node
+      uses: actions/setup-node@v6
+      with:
+        node-version: "25.x"
+
+    - name: Set app version
+      run: echo "APP_VERSION=$(npm pkg get version  | sed 's/"//g')" >> $GITHUB_ENV
+
+    - name: Set Commit
+      run: echo "COMMIT=$(echo ${GITHUB_SHA} | cut -c1-4)" >> $GITHUB_ENV
+
+    - name: Test Version total
+      run: echo ${{ env.APP_VERSION }}-${{ env.COMMIT }}
+
+    - name: Run install
+      run: pnpm install
+
+    - name: Run Build
+      run: pnpm run build
+
+    - name: Update package.json version
+      run: npm version ${{ env.APP_VERSION }}-${{ env.COMMIT }} --no-git-tag-version
+
+    - name: Publish package on NPM 📦
+      run: npm publish --tag next
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
