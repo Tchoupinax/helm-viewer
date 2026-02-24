@@ -1,7 +1,9 @@
 name: Publish CLI next 📦
 
 on:
+  pull_request:
   workflow_dispatch:
+
 
 jobs:
   publication:
@@ -54,4 +56,3 @@ jobs:
       working-directory: apps/cli
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
-
