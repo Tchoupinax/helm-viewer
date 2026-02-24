@@ -1,8 +1,6 @@
 name: 2️⃣ Publish CLI next 📦
 
-on:
-  workflow_dispatch:
-
+on: workflow_dispatch
 
 jobs:
   publication:
