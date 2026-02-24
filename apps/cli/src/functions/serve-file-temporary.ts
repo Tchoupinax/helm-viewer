@@ -2,7 +2,7 @@ import chalk from "chalk";
 import http from "http";
 
 export function serverFileTemporary(payload: object, port: number) {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     const httpServer = http.createServer((request, response) => {
       const headers = {
         "Access-Control-Allow-Origin": "*",
