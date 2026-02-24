@@ -75,14 +75,14 @@ jobs:
       with:
         nodeVersion: 25
         pnpmVersion: 10.30.2
-        workingDirectory: packages/cli
+        workingDirectory: apps/cli
 
     - name: Update package.json version
       run: npm version ${{ env.APP_VERSION }}-${{ env.COMMIT }} --no-git-tag-version
-      working-directory: packages/cli
+      working-directory: apps/cli
 
     - name: Publish package on NPM 📦
       run: npm publish --tag next
-      working-directory: packages/cli
+      working-directory: apps/cli
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
