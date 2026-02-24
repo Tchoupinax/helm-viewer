@@ -2,7 +2,7 @@ name: Pull request checks 🔎
 
 on:
   pull_request:
-
+  workflow_dispatch: {}
 
 jobs:
   lint:
@@ -37,6 +37,7 @@ jobs:
         privateKey: ${{ secrets.DEPLOY_APP_KEY }}
 
   publication:
+    if: ${{ github.event_name == 'workflow_dispatch' }}
     name: Publish next version on NPM 📦
     runs-on: ubuntu-latest
     permissions:
