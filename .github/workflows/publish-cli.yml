@@ -1,4 +1,4 @@
-name: Publish CLI next 📦
+name: 2️⃣ Publish CLI next 📦
 
 on:
   workflow_dispatch:
