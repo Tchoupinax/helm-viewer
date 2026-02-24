@@ -1,6 +1,5 @@
 {
   "name": "helm-viewer",
-  "version": "0.23.0",
   "description": "Quick tool to easily view your helm charts.",
   "author": "Tchoupinax <corentinfiloche@hotmail.fr> (https://corentinfiloche.xyz)",
   "license": "MIT",
@@ -25,7 +24,6 @@
     "lint": "eslint --fix .",
     "=== PUBLICATION ======================================": "",
     "pack": "npm pack --dry-run",
-    "publish": "npm publish",
     "=== RUN ==============================================": "",
     "run": "NODE_ENV=development npx vite-node src/index.ts ~/Downloads/traefik",
     "=== BUILD ============================================": "",
@@ -47,6 +45,7 @@
     "@types/node": "25.3.0",
     "@types/ws": "8.18.1",
     "@vercel/ncc": "0.38.4",
+    "eslint": "10.0.2",
     "eslint-config-tchoupinax": "^2.4.0",
     "js-yaml": "4.1.1",
     "npm-packlist": "10.0.4",

@@ -1,4 +1,4 @@
-name: Release 🔥
+name: 4️⃣ Release 🔥
 
 on:
   push:
@@ -6,6 +6,68 @@ on:
     - "*"
 
 jobs:
+  update-version:
+    name: "📦 Set package.json version from tag"
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/create-github-app-token@v2
+      id: app-token
+      with:
+        app-id: ${{ secrets.DEPLOY_APP_ID }}
+        private-key: ${{ secrets.DEPLOY_APP_KEY }}
+        owner: ${{ github.repository_owner }}
+
+    - name: Checkout
+      uses: actions/checkout@v6
+      with:
+        fetch-depth: 0
+        token: ${{ steps.app-token.outputs.token }}
+
+    - name: Use Node.js 25
+      uses: actions/setup-node@v6
+      with:
+        node-version: 25
+
+    - name: Get version from tag
+      id: version
+      run: |
+        VERSION="${GITHUB_REF_NAME#v}"
+        echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+        echo "Version: $VERSION"
+
+    - name: Get GitHub App bot user
+      id: app-user
+      run: |
+        resp=$(curl -s "https://api.github.com/users/mystique-as-code%5Bbot%5D")
+        echo "$resp" | jq
+        echo "login<<EOF" >> $GITHUB_OUTPUT
+        echo "$(echo "$resp" | jq -r .login)" >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
+        echo "id<<EOF" >> $GITHUB_OUTPUT
+        echo "$(echo "$resp" | jq -r .id)" >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
+
+    - name: Configure git identity
+      run: |
+        git config --global user.name "${{ steps.app-user.outputs.login }}"
+        git config --global user.email "${{ steps.app-user.outputs.id }}+${{ steps.app-user.outputs.login }}@users.noreply.github.com"
+
+    - name: Update package.json version
+      run: npm version $VERSION --no-git-tag-version
+      env:
+        VERSION: ${{ steps.version.outputs.version }}
+
+    - name: Commit changes
+      run: |
+        git add .
+        git commit -m "chore: set version to ${{ steps.version.outputs.version }} [skip ci]"
+        git push origin HEAD:master
+
+    - name: Publish package on NPM 📦
+      run: npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+
   docker:
     name: Build official container 🐳
     runs-on: ubuntu-latest

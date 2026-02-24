@@ -60,6 +60,9 @@ importers:
       '@vercel/ncc':
         specifier: 0.38.4
         version: 0.38.4
+      eslint:
+        specifier: 10.0.2
+        version: 10.0.2(jiti@2.6.1)
       eslint-config-tchoupinax:
         specifier: ^2.4.0
         version: 2.4.0(@typescript-eslint/utils@8.56.1(eslint@10.0.2(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(jiti@2.6.1)(typescript@5.9.3)
