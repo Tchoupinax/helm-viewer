@@ -5,6 +5,10 @@ import { defineNuxtConfig } from "nuxt/config";
 export default defineNuxtConfig({
   compatibilityDate: "2024-08-06",
   ssr: true,
+  nitro: {
+    // Use Vercel serverless preset when building on Vercel (Docker keeps default node-server)
+    preset: process.env.VERCEL ? "vercel" : undefined,
+  },
   devtools: { enabled: process.env.NODE_ENV !== "production" },
   modules: [
     "@nuxt/eslint",
