@@ -27,7 +27,7 @@ export async function computeChart(
     if (error.includes("You may need to run `helm dependency build`")) {
       console.log(
         chalk.greenBright(
-          `⬇️ Trying to refresh helm dependencies. Might be long...`,
+          "⬇️ Trying to refresh helm dependencies. Might be long...",
         ),
       );
       const $$ = $({ cwd: currentPath });
@@ -95,7 +95,7 @@ async function computeCommands(
         `helm template ${namespace} --name-template ${releaseName} ${currentPath}`,
       ));
     } catch (err) {
-      return { error: (err as any).stderr as string };
+      return { error: (err).stderr as string };
     }
   } else if (valuesPathArray.length === 1) {
     try {
@@ -103,7 +103,7 @@ async function computeCommands(
         `helm template ${namespace} --name-template ${releaseName} ${currentPath}`,
       ));
     } catch (err) {
-      return { error: (err as any).stderr as string };
+      return { error: (err).stderr as string };
     }
   } else if (valuesPathArray.length === 2) {
     try {
@@ -111,7 +111,7 @@ async function computeCommands(
         `helm template ${namespace} --name-template ${releaseName} ${currentPath} --values ${valuesPathArray[0]} --values ${valuesPathArray[1]}`,
       ));
     } catch (err) {
-      return { error: (err as any).stderr as string };
+      return { error: (err).stderr as string };
     }
   }
   return { stdout };
@@ -139,7 +139,7 @@ export async function computeSources(
 
   const files = readdirSync(currentPath);
 
-  for (const file of files.filter((name) => !name.includes("tgz"))) {
+  for (const file of files.filter(name => !name.includes("tgz"))) {
     const fileFullPath = join(currentPath, file);
 
     if (!statSync(fileFullPath).isDirectory()) {

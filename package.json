@@ -1,0 +1,20 @@
+{
+  "version": "1.1.0",
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "watch": "turbo run watch",
+    "test": "turbo run test",
+    "knip": "knip",
+    "upgrade": "npx ncu -i -w",
+    "check": "gitleaks dir -v && gitleaks git -v"
+  },
+  "devDependencies": {
+    "knip": "5.85.0",
+    "npm-check-updates": "19.4.1",
+    "prettier": "3.8.1",
+    "turbo": "2.8.10"
+  },
+  "packageManager": "pnpm@10.30.2"
+}

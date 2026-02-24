@@ -48,7 +48,7 @@ export function saveSourcesYamlToFiles(
 
   const files = readdirSync(path);
 
-  for (const file of files.filter((name) => !name.includes("tgz"))) {
+  for (const file of files.filter(name => !name.includes("tgz"))) {
     const fileFullPath = join(path, file);
 
     if (!statSync(fileFullPath).isDirectory()) {

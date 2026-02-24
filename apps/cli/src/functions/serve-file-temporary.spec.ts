@@ -8,7 +8,7 @@ describe("serve file temporary", () => {
   });
 
   it("should return the payload via HTTP", async () => {
-    const data = await fetch("http://localhost:8888").then((res) => res.json());
+    const data = await fetch("http://localhost:8888").then(res => res.json());
     expect(data).toEqual({ data: 1, date: "2023-08-20T08:39:53.882Z" });
     // The server should be cut after delivering the payload
     expect(() => fetch("http://localhost:8888")).rejects.toThrow();

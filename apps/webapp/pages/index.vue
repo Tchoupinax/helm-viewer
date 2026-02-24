@@ -11,11 +11,13 @@
           <h1 class="text-4xl mt-16 underline">Sharing URL</h1>
 
           <div class="flex items-center justify-center mt-28 w-2/3">
-            <textarea v-model="sharedUrl"
+            <textarea
+v-model="sharedUrl"
               class="rounded-xl h-40 text-gray-600 p-2 bg-gray-100 border-black border text-2xl w-full" />
           </div>
 
-          <button class="mt-16 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
+          <button
+class="mt-16 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
             @click="copyText(sharedUrl)">
             {{ copyButtonText }}
           </button>
@@ -23,27 +25,32 @@
       </template>
     </modal>
 
-    <HistoryMenu v-if="showHistoryMenu" class="absolute h-full bg-white top-0 right-0 w-96 z-40"
+    <HistoryMenu
+v-if="showHistoryMenu" class="absolute h-full bg-white top-0 right-0 w-96 z-40"
       @close="showHistoryMenu = false" />
 
-    <button v-if="!showHistoryMenu && !fetchDataError && data.templated"
+    <button
+v-if="!showHistoryMenu && !fetchDataError && data.templated"
       class="absolute bg-purple-300 p-2 text-purple-700 bottom-0 right-0 z-50 mr-4 mb-4 tracking-widest text-xl rounded-xl"
       @click="showHistoryMenu = !showHistoryMenu">
       History
     </button>
 
-    <button v-if="!showHistoryMenu && !fetchDataError && data.templated"
+    <button
+v-if="!showHistoryMenu && !fetchDataError && data.templated"
       class="cursor-pointer absolute bg-purple-300 p-2 text-purple-700 bottom-0 right-0 z-50 mr-32 mb-4 tracking-widest text-xl rounded-xl"
       @click="shared">
       Share
     </button>
 
     <div v-if="!fetchDataError && data.templated" class="flex">
-      <Sidebar :data="data" :fetch-data-error="fetchDataError" @display-template-file="({ file, k8sResourceName }) =>
+      <Sidebar
+:data="data" :fetch-data-error="fetchDataError" @display-template-file="({ file, k8sResourceName }) =>
         displayTemplatedFile(k8sResourceName, file)
         " @display-source-file="({ filename }) => displaySourceFile(filename)" />
 
-      <MonacoEditor v-model="editorValue" :options="{
+      <MonacoEditor
+v-model="editorValue" :options="{
         theme: 'vs-dark',
         fontSize: 16,
         readOnly: true,

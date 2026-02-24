@@ -5,7 +5,7 @@ compiled
 dist
 global-data.js
 global-data.json
+local.json
 node_modules
 tmp
-
-local.json
+.turbo

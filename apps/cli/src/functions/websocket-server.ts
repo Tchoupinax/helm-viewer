@@ -7,10 +7,10 @@ import { computeChart } from "./compute-chart";
 export function startWebsocketServer(currentPath: string, releaseName: string) {
   const wss = new WebSocketServer({ port: 12096 });
 
-  console.log(chalk.cyanBright(`⚡️ Web socket started on 12096`));
+  console.log(chalk.cyanBright("⚡️ Web socket started on 12096"));
   console.log(
     chalk.cyanBright(
-      `Don't touch this terminal anymore and see your chart change directly in the browser`,
+      "Don't touch this terminal anymore and see your chart change directly in the browser",
     ),
   );
 
@@ -32,7 +32,7 @@ export function startWebsocketServer(currentPath: string, releaseName: string) {
           JSON.stringify({
             filePath: null,
             chartContentUpdated: null,
-            error: (err as any).stderr,
+            error: (err).stderr,
           }),
         );
       }

@@ -64,7 +64,7 @@ async function run() {
     valuesPathArray.length > 0
       ? chalk.greenBright(`🔑 Values detected : ${valuesPathArray.join(",")}`)
       : chalk.yellowBright(
-          `⚠️  No value detected, computing with default values in the Chart`,
+          "⚠️  No value detected, computing with default values in the Chart",
         ),
   );
 
@@ -187,7 +187,7 @@ async function serveLocally(
   if (watchingMode) {
     startWebsocketServer(currentPath, releaseName);
     watchHelmChartFilesModifications(currentPath);
-    await new Promise((resolve) => setTimeout(resolve, 1e8));
+    await new Promise(resolve => setTimeout(resolve, 1e8));
   }
 }
 
