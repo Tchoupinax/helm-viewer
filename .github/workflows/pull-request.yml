@@ -73,11 +73,11 @@ jobs:
     - name: Test Version total
       run: echo ${{ env.APP_VERSION }}-${{ env.COMMIT }}
 
-    - name: Run install
-      run: pnpm install
-
-    - name: Run Build
-      run: pnpm run build
+    - name: Build
+      uses: tchoupinax/repo-config/shared-actions/steps/node/build@v0
+      with:
+        nodeVersion: 25
+        pnpmVersion: 10.30.2
 
     - name: Update package.json version
       run: npm version ${{ env.APP_VERSION }}-${{ env.COMMIT }} --no-git-tag-version
