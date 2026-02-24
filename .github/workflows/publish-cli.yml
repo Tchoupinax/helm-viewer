@@ -1,7 +1,6 @@
 name: Publish CLI next 📦
 
 on:
-  pull_request:
   workflow_dispatch:
 
 
