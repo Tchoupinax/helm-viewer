@@ -1,0 +1,22 @@
+{
+  "$schema": "https://turborepo.dev/schema.json",
+  "ui": "tui",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"]
+    },
+    "lint": {
+      "dependsOn": ["^lint"]
+    },
+    "test": {
+      "dependsOn": ["^test"]
+    },
+    "check-types": {
+      "dependsOn": ["^check-types"]
+    },
+    "watch": {
+      "cache": false,
+      "persistent": true
+    }
+  }
+}
