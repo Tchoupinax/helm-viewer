@@ -47,11 +47,6 @@ jobs:
         echo "$(echo "$resp" | jq -r .id)" >> $GITHUB_OUTPUT
         echo "EOF" >> $GITHUB_OUTPUT
 
-    - name: Configure git identity
-      run: |
-        git config --global user.name "${{ steps.app-user.outputs.login }}"
-        git config --global user.email "${{ steps.app-user.outputs.id }}+${{ steps.app-user.outputs.login }}@users.noreply.github.com"
-
     - name: Check build success 🦫
       uses: tchoupinax/repo-config/shared-actions/steps/node/build@v0
       with:
@@ -64,6 +59,8 @@ jobs:
       run: |
         git checkout master
         git pull origin master
+        git config --global user.name "${{ steps.app-user.outputs.login }}"
+        git config --global user.email "${{ steps.app-user.outputs.id }}+${{ steps.app-user.outputs.login }}@users.noreply.github.com"
         npm version $VERSION --no-git-tag-version        
         git add .
         git commit -m "chore: set version to ${{ steps.version.outputs.version }} [skip ci]" || echo "No changes to commit"
