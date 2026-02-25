@@ -1,5 +1,6 @@
 {
-  "version": "0.22.2",
+  "name": "helm-viewer",
+  "version": "0.25.0",
   "private": true,
   "scripts": {
     "build": "turbo run build",
