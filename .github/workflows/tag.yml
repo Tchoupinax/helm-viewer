@@ -58,6 +58,13 @@ jobs:
       env:
         VERSION: ${{ steps.version.outputs.version }}
 
+    - name: Check build success 🦫
+      uses: tchoupinax/repo-config/shared-actions/steps/node/build@v0
+      with:
+        nodeVersion: 25
+        pnpmVersion: 10.30.2
+        workingDirectory: apps/cli
+
     - name: Commit changes
       run: |
         git add .
