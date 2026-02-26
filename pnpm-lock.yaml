@@ -12,8 +12,8 @@ importers:
         specifier: 5.85.0
         version: 5.85.0(@types/node@25.3.2)(typescript@5.9.3)
       npm-check-updates:
-        specifier: 19.6.1
-        version: 19.6.1
+        specifier: 19.6.2
+        version: 19.6.2
       prettier:
         specifier: 3.8.1
         version: 3.8.1
@@ -4425,8 +4425,8 @@ packages:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
     engines: {node: '>=0.10.0'}
 
-  npm-check-updates@19.6.1:
-    resolution: {integrity: sha512-oa0ZBydDx6ShvBVxMP5kaTHH3K2S6isMTYn4AhOa9l7k8m/QGY/D7VWbmI97GSXxRmmq9PAtRBMNOgOgwpD0yA==}
+  npm-check-updates@19.6.2:
+    resolution: {integrity: sha512-fxoQAhn90dx/pLOHY0w3U0IzW02DGDgkNwjTsPpHexo3niLxkL3xAggTQNjODMwTtWoRhP7rhnm7ji0hw/F1kA==}
     engines: {node: '>=20.0.0', npm: '>=8.12.1'}
     hasBin: true
 
@@ -11139,7 +11139,7 @@ snapshots:
 
   normalize-path@3.0.0: {}
 
-  npm-check-updates@19.6.1: {}
+  npm-check-updates@19.6.2: {}
 
   npm-packlist@10.0.4:
     dependencies:
