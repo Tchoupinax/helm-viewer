@@ -60,6 +60,7 @@ jobs:
         git pull origin master
         git config --global user.name "${{ steps.app-user.outputs.login }}"
         git config --global user.email "${{ steps.app-user.outputs.id }}+${{ steps.app-user.outputs.login }}@users.noreply.github.com"
+        git remote set-url origin "https://x-access-token:${{ steps.app-token.outputs.token }}@github.com/${{ github.repository }}.git"
         cd apps/cli
         npm version $VERSION --no-git-tag-version        
         git add .
