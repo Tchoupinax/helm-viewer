@@ -22,13 +22,18 @@ jobs:
         app-id: ${{ secrets.DEPLOY_APP_ID }}
         private-key: ${{ secrets.DEPLOY_APP_KEY }}
         owner: ${{ github.repository_owner }}
+        repository: ${{ github.repository }}
 
     - name: Checkout
       uses: actions/checkout@v6
       with:
         fetch-depth: 0
         token: ${{ steps.app-token.outputs.token }}
-        persist-credentials: false # 🔥 VERY IMPORTANT
+
+    - name: Remove default auth header
+      run: |
+        git config --local --unset-all http.https://github.com/.extraheader || true
+        git config --global --unset-all http.https://github.com/.extraheader || true
 
     - name: Use Node.js 25
       uses: actions/setup-node@v6
@@ -49,6 +54,17 @@ jobs:
         pnpmVersion: 10.30.3
         workingDirectory: apps/cli
 
+    - name: Debug git config
+      run: |
+        git config --global user.name "mystique-as-code[bot]"
+        git config user.email "190078197+mystique-as-code[bot]@users.noreply.github.com"
+        git remote set-url origin https://x-access-token:${{ steps.app-token.outputs.token }}@github.com/${{ github.repository }}.git
+
+        echo "---- REMOTE ----"
+        git remote -v
+        echo "---- EXTRAHEADER ----"
+        git config --get-all http.https://github.com/.extraheader || echo "No extraheader"
+
     - name: Commit changes
       run: |
         git checkout master
@@ -57,8 +73,8 @@ jobs:
         cd apps/cli
         npm version $VERSION --no-git-tag-version
 
-        git config user.name "mystique-as-code[bot]"
-        git config user.email "190078197+mystique-as-code[bot]@users.noreply.github.com"
+        git config --global user.name "mystique-as-code[bot]"
+        git config --global user.email "190078197+mystique-as-code[bot]@users.noreply.github.com"
            
         git add .
         git commit -m "chore: set version to ${{ steps.version.outputs.version }} [skip ci]" || echo "No changes to commit"
