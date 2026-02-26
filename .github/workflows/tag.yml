@@ -5,13 +5,16 @@ on:
     tags:
     - "*"
 
-permissions:
-  contents: write
-  
 jobs:
   update-version:
     name: "📦 Set package.json version from tag"
     runs-on: ubuntu-latest
+    permissions:
+      # https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services#adding-permissions-settings
+      # https://docs.npmjs.com/trusted-publishers#supported-cicd-providers
+      id-token: write # Required for OIDC
+      contents: write
+
     steps:
     - uses: actions/create-github-app-token@v2
       id: app-token
@@ -64,8 +67,11 @@ jobs:
         git config --global user.name "${{ steps.app-user.outputs.login }}"
         git config --global user.email "${{ steps.app-user.outputs.id }}+${{ steps.app-user.outputs.login }}@users.noreply.github.com"
         git remote set-url origin "https://x-access-token:${{ steps.app-token.outputs.token }}@github.com/${{ github.repository }}.git"
+        git config user.eemail
         cd apps/cli
+        git config user.eemail
         npm version $VERSION --no-git-tag-version        
+        git config user.eemail
         git add .
         git commit -m "chore: set version to ${{ steps.version.outputs.version }} [skip ci]" || echo "No changes to commit"
         git push origin master
