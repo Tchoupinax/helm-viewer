@@ -1,6 +1,6 @@
 {
   "name": "helm-viewer",
-  "version": "0.25.11",
+  "version": "0.25.13",
   "description": "Quick tool to easily view your helm charts.",
   "author": "Tchoupinax <corentinfiloche@hotmail.fr> (https://corentinfiloche.xyz)",
   "license": "MIT",
