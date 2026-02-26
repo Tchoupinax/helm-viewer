@@ -13,7 +13,7 @@ jobs:
       # https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services#adding-permissions-settings
       # https://docs.npmjs.com/trusted-publishers#supported-cicd-providers
       id-token: write # Required for OIDC
-      contents: write
+      contents: read
 
     steps:
     - uses: actions/create-github-app-token@v2
@@ -28,6 +28,7 @@ jobs:
       with:
         fetch-depth: 0
         token: ${{ steps.app-token.outputs.token }}
+        persist-credentials: false
 
     - name: Use Node.js 25
       uses: actions/setup-node@v6
@@ -41,18 +42,6 @@ jobs:
         echo "version=$VERSION" >> "$GITHUB_OUTPUT"
         echo "Version: $VERSION"
 
-    - name: Get GitHub App bot user
-      id: app-user
-      run: |
-        resp=$(curl -s "https://api.github.com/users/mystique-as-code%5Bbot%5D")
-        echo "$resp" | jq
-        echo "login<<EOF" >> $GITHUB_OUTPUT
-        echo "$(echo "$resp" | jq -r .login)" >> $GITHUB_OUTPUT
-        echo "EOF" >> $GITHUB_OUTPUT
-        echo "id<<EOF" >> $GITHUB_OUTPUT
-        echo "$(echo "$resp" | jq -r .id)" >> $GITHUB_OUTPUT
-        echo "EOF" >> $GITHUB_OUTPUT
-
     - name: Check build success 🦫
       uses: tchoupinax/repo-config/shared-actions/steps/node/build@v0
       with:
@@ -64,14 +53,9 @@ jobs:
       run: |
         git checkout master
         git pull origin master
-        git config --global user.name "${{ steps.app-user.outputs.login }}"
-        git config --global user.email "${{ steps.app-user.outputs.id }}+${{ steps.app-user.outputs.login }}@users.noreply.github.com"
         git remote set-url origin "https://x-access-token:${{ steps.app-token.outputs.token }}@github.com/${{ github.repository }}.git"
-        git config user.email
         cd apps/cli
-        git config user.email
         npm version $VERSION --no-git-tag-version        
-        git config user.email
         git add .
         git commit -m "chore: set version to ${{ steps.version.outputs.version }} [skip ci]" || echo "No changes to commit"
         git push origin master
