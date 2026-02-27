@@ -8,6 +8,12 @@ on:
 jobs:
   commit:
     runs-on: ubuntu-latest
+    permissions:
+      # https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services#adding-permissions-settings
+      # https://docs.npmjs.com/trusted-publishers#supported-cicd-providers
+      id-token: write # Required for OIDC
+      contents: read
+
     steps:
     - name: Checkout
       uses: actions/checkout@v6
