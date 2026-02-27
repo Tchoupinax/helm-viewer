@@ -16,19 +16,17 @@ jobs:
       contents: read
 
     steps:
-    - uses: actions/create-github-app-token@v2
+    - name: Checkout
+      uses: actions/checkout@v6
+      with:
+        persist-credentials: false # 🔥 VERY IMPORTANT
+
+    - uses: actions/create-github-app-token@v1
       id: app-token
       with:
         app-id: ${{ secrets.DEPLOY_APP_ID }}
         private-key: ${{ secrets.DEPLOY_APP_KEY }}
         owner: ${{ github.repository_owner }}
-
-    - name: Checkout
-      uses: actions/checkout@v6
-      with:
-        fetch-depth: 0
-        token: ${{ steps.app-token.outputs.token }}
-        persist-credentials: false # 🔥 VERY IMPORTANT
 
     - name: Use Node.js 25
       uses: actions/setup-node@v6
@@ -51,21 +49,21 @@ jobs:
 
     - name: Commit changes
       run: |
-        git checkout master
-        git pull origin master
-
         cd apps/cli
         npm version $VERSION --no-git-tag-version
+        cd ../..
 
         git config user.name "mystique-as-code[bot]"
         git config user.email "190078197+mystique-as-code[bot]@users.noreply.github.com"
-           
         git add .
         git commit -m "chore: set version to ${{ steps.version.outputs.version }} [skip ci]" || echo "No changes to commit"
-        git remote set-url origin https://x-access-token:${{ steps.app-token.outputs.token }}@github.com/${{ github.repository }}.git
-        git push origin master
       env:
         VERSION: ${{ steps.version.outputs.version }}
+
+    - name: Push with App Token
+      run: |
+        git remote set-url origin https://x-access-token:${{ steps.app-token.outputs.token }}@github.com/${{ github.repository }}.git
+        git push origin HEAD:master
 
     - name: Publish package on NPM 📦
       run: npm publish
