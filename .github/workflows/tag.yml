@@ -61,7 +61,6 @@ jobs:
 
     - name: Push with App Token
       run: |
-        git pull origin master --rebase
         git push origin HEAD:master
 
     - name: Publish package on NPM 📦
