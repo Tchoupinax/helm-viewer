@@ -6,64 +6,6 @@ on:
     - "*"
 
 jobs:
-  commit:
-    runs-on: ubuntu-latest
-    permissions:
-      # https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services#adding-permissions-settings
-      # https://docs.npmjs.com/trusted-publishers#supported-cicd-providers
-      id-token: write # Required for OIDC
-      contents: read
-
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v6
-      with:
-        persist-credentials: false
-
-    - name: Generate App Token
-      id: app-token
-      uses: actions/create-github-app-token@v2
-      with:
-        app-id: ${{ secrets.DEPLOY_APP_ID }}
-        private-key: ${{ secrets.DEPLOY_APP_KEY }}
-        owner: ${{ github.repository_owner }}
-
-    - name: Use Node.js 25
-      uses: actions/setup-node@v6
-      with:
-        node-version: 25
-
-    - name: Get version from tag
-      id: version
-      run: |
-        VERSION="${GITHUB_REF_NAME#v}"
-        echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-        echo "Version: $VERSION"
-
-    - name: Check build success 🦫
-      uses: tchoupinax/repo-config/shared-actions/steps/node/build@v0
-      with:
-        nodeVersion: 25
-        pnpmVersion: 10.30.3
-        workingDirectory: apps/cli
-        checkout: false
-
-    - name: Make change
-      run: echo "test $(date)" >> test.txt
-
-    - name: Commit
-      run: |
-        git config user.name "mystique-as-code[bot]"
-        git config user.email "190078197+mystique-as-code[bot]@users.noreply.github.com"
-        git add .
-        git commit -m "Test commit2345" || echo "No changes"
-
-    - name: Push with App Token
-      run: |
-        git remote set-url origin https://x-access-token:${{ steps.app-token.outputs.token }}@github.com/${{ github.repository }}.git
-        git pull origin master --rebase
-        git push origin HEAD:master
-
   update-version:
     name: "📦 Set package.json version from tag"
     runs-on: ubuntu-latest
@@ -74,17 +16,17 @@ jobs:
       contents: read
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v6
-      with:
-        persist-credentials: false # 🔥 VERY IMPORTANT
-
     - uses: actions/create-github-app-token@v1
       id: app-token
       with:
         app-id: ${{ secrets.DEPLOY_APP_ID }}
         private-key: ${{ secrets.DEPLOY_APP_KEY }}
         owner: ${{ github.repository_owner }}
+
+    - name: Checkout
+      uses: actions/checkout@v6
+      with:
+        token: ${{ steps.app-token.outputs.token }}
 
     - name: Use Node.js 25
       uses: actions/setup-node@v6
@@ -122,6 +64,7 @@ jobs:
     - name: Push with App Token
       run: |
         git remote set-url origin https://x-access-token:${{ steps.app-token.outputs.token }}@github.com/${{ github.repository }}.git
+        git pull origin master --rebase
         git push origin HEAD:master
 
     - name: Publish package on NPM 📦
