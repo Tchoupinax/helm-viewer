@@ -6,8 +6,8 @@ on:
     - "*"
 
 jobs:
-  update-version:
-    name: "📦 Set package.json version from tag"
+  cli-upload-npm:
+    name: "📦 Package and send CLI to NPM"
     runs-on: ubuntu-latest
     permissions:
       # https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services#adding-permissions-settings
