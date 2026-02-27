@@ -13,7 +13,6 @@ jobs:
       # https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services#adding-permissions-settings
       # https://docs.npmjs.com/trusted-publishers#supported-cicd-providers
       id-token: write # Required for OIDC
-      contents: read
 
     steps:
     - uses: actions/create-github-app-token@v1
@@ -53,9 +52,6 @@ jobs:
         cd apps/cli
         npm version $VERSION --no-git-tag-version
         cd ../..
-
-        git config user.name "mystique-as-code[bot]"
-        git config user.email "190078197+mystique-as-code[bot]@users.noreply.github.com"
         git add .
         git commit -m "chore: set version to ${{ steps.version.outputs.version }} [skip ci]" || echo "No changes to commit"
       env:
@@ -63,7 +59,6 @@ jobs:
 
     - name: Push with App Token
       run: |
-        git remote set-url origin https://x-access-token:${{ steps.app-token.outputs.token }}@github.com/${{ github.repository }}.git
         git pull origin master --rebase
         git push origin HEAD:master
 
