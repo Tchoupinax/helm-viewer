@@ -28,6 +28,25 @@ jobs:
         private-key: ${{ secrets.DEPLOY_APP_KEY }}
         owner: ${{ github.repository_owner }}
 
+    - name: Use Node.js 25
+      uses: actions/setup-node@v6
+      with:
+        node-version: 25
+
+    - name: Get version from tag
+      id: version
+      run: |
+        VERSION="${GITHUB_REF_NAME#v}"
+        echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+        echo "Version: $VERSION"
+
+    - name: Check build success 🦫
+      uses: tchoupinax/repo-config/shared-actions/steps/node/build@v0
+      with:
+        nodeVersion: 25
+        pnpmVersion: 10.30.3
+        workingDirectory: apps/cli
+
     - name: Make change
       run: echo "test $(date)" >> test.txt
 
