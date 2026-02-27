@@ -46,6 +46,7 @@ jobs:
         nodeVersion: 25
         pnpmVersion: 10.30.3
         workingDirectory: apps/cli
+        checkout: false
 
     - name: Make change
       run: echo "test $(date)" >> test.txt
@@ -103,6 +104,7 @@ jobs:
         nodeVersion: 25
         pnpmVersion: 10.30.3
         workingDirectory: apps/cli
+        checkout: false
 
     - name: Commit changes
       run: |
