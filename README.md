@@ -1,7 +1,21 @@
-# helm-viewer
+<div align="center">
 
-- Github: https://github.com/Tchoupinax/helm-viewer
-- NPM: https://www.npmjs.com/package/helm-viewer
+# ⎈ helm-viewer
+
+**Instantly visualize your Helm chart templates in the browser**
+
+[![Build](https://github.com/Tchoupinax/helm-viewer/actions/workflows/pull-request.yml/badge.svg)](https://github.com/Tchoupinax/helm-viewer/actions/workflows/pull-request.yml)
+[![Release](https://github.com/Tchoupinax/helm-viewer/actions/workflows/tag.yml/badge.svg)](https://github.com/Tchoupinax/helm-viewer/actions/workflows/tag.yml)
+[![npm version](https://img.shields.io/npm/v/helm-viewer?color=cb3837&logo=npm&logoColor=white)](https://www.npmjs.com/package/helm-viewer)
+[![npm downloads](https://img.shields.io/npm/dm/helm-viewer?color=cb3837&logo=npm&logoColor=white)](https://www.npmjs.com/package/helm-viewer)
+[![Docker Pulls](https://img.shields.io/docker/pulls/tchoupinax/helm-viewer-webapp?color=2496ed&logo=docker&logoColor=white)](https://hub.docker.com/r/tchoupinax/helm-viewer-webapp)
+[![Docker Image Size](https://img.shields.io/docker/image-size/tchoupinax/helm-viewer-webapp/latest?color=2496ed&logo=docker&logoColor=white)](https://hub.docker.com/r/tchoupinax/helm-viewer-webapp)
+[![Node.js >= 20](https://img.shields.io/badge/node-%3E%3D20-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
+[![License](https://img.shields.io/github/license/Tchoupinax/helm-viewer?color=blue)](https://github.com/Tchoupinax/helm-viewer/blob/master/LICENSE)
+
+[GitHub](https://github.com/Tchoupinax/helm-viewer) · [npm](https://www.npmjs.com/package/helm-viewer) · [Docker Hub](https://hub.docker.com/r/tchoupinax/helm-viewer-webapp)
+
+</div>
 
 ## Motivation
 

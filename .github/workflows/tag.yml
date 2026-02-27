@@ -9,8 +9,13 @@ jobs:
   update-version:
     name: "📦 Set package.json version from tag"
     runs-on: ubuntu-latest
+    permissions:
+      # https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services#adding-permissions-settings
+      # https://docs.npmjs.com/trusted-publishers#supported-cicd-providers
+      id-token: write # Required for OIDC
+
     steps:
-    - uses: actions/create-github-app-token@v2
+    - uses: actions/create-github-app-token@v1
       id: app-token
       with:
         app-id: ${{ secrets.DEPLOY_APP_ID }}
@@ -20,7 +25,6 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v6
       with:
-        fetch-depth: 0
         token: ${{ steps.app-token.outputs.token }}
 
     - name: Use Node.js 25
@@ -35,36 +39,30 @@ jobs:
         echo "version=$VERSION" >> "$GITHUB_OUTPUT"
         echo "Version: $VERSION"
 
-    - name: Get GitHub App bot user
-      id: app-user
-      run: |
-        resp=$(curl -s "https://api.github.com/users/mystique-as-code%5Bbot%5D")
-        echo "$resp" | jq
-        echo "login<<EOF" >> $GITHUB_OUTPUT
-        echo "$(echo "$resp" | jq -r .login)" >> $GITHUB_OUTPUT
-        echo "EOF" >> $GITHUB_OUTPUT
-        echo "id<<EOF" >> $GITHUB_OUTPUT
-        echo "$(echo "$resp" | jq -r .id)" >> $GITHUB_OUTPUT
-        echo "EOF" >> $GITHUB_OUTPUT
-
-    - name: Configure git identity
-      run: |
-        git config --global user.name "${{ steps.app-user.outputs.login }}"
-        git config --global user.email "${{ steps.app-user.outputs.id }}+${{ steps.app-user.outputs.login }}@users.noreply.github.com"
-
-    - name: Update package.json version
-      run: npm version $VERSION --no-git-tag-version
-      env:
-        VERSION: ${{ steps.version.outputs.version }}
+    - name: Check build success 🦫
+      uses: tchoupinax/repo-config/shared-actions/steps/node/build@v0
+      with:
+        nodeVersion: 25
+        pnpmVersion: 10.30.3
+        workingDirectory: apps/cli
+        checkout: false
 
     - name: Commit changes
       run: |
+        cd apps/cli
+        npm version $VERSION --no-git-tag-version
+        cd ../..
+        git config user.name "mystique-as-code[bot]"
+        git config user.email "190078197+mystique-as-code[bot]@users.noreply.github.com"
         git add .
-        git commit -m "chore: set version to ${{ steps.version.outputs.version }} [skip ci]"
+        git commit -m "chore: set version to ${{ steps.version.outputs.version }}" || echo "No changes to commit"
         git push origin HEAD:master
+      env:
+        VERSION: ${{ steps.version.outputs.version }}
 
     - name: Publish package on NPM 📦
       run: npm publish
+      working-directory: apps/cli
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
 
@@ -73,12 +71,14 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       packages: write
+
     steps:
     - name: Build application 🦫
       uses: tchoupinax/repo-config/shared-actions/steps/node/build@v0
       with:
         nodeVersion: 25
-        pnpmVersion: 10.30.2
+        pnpmVersion: 10.30.3
+        workingDirectory: apps/webapp
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
@@ -114,7 +114,7 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v6
       with:
-        context: .
+        context: apps/webapp
         platforms: linux/amd64,linux/arm64
         push: true
         tags: ${{ steps.meta.outputs.tags }}
