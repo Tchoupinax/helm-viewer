@@ -43,7 +43,6 @@ jobs:
       uses: tchoupinax/repo-config/shared-actions/steps/node/build@v0
       with:
         nodeVersion: 25
-        pnpmVersion: 10.30.3
         workingDirectory: apps/cli
         checkout: false
 
@@ -77,7 +76,6 @@ jobs:
       uses: tchoupinax/repo-config/shared-actions/steps/node/build@v0
       with:
         nodeVersion: 25
-        pnpmVersion: 10.30.3
         workingDirectory: apps/webapp
 
     - name: Set up QEMU
