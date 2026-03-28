@@ -22,7 +22,7 @@
     "watch": "nuxt dev"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "3.1014.0",
+    "@aws-sdk/client-s3": "3.1019.0",
     "@kyvg/vue3-notification": "3.4.2",
     "@nuxt/devtools": "latest",
     "@nuxtjs/tailwindcss": "6.14.0",
@@ -39,7 +39,7 @@
     "nuxt3-notifications": "1.4.0",
     "shiki": "3.23.0",
     "timeago.js": "4.0.2",
-    "ws": "8.19.0"
+    "ws": "8.20.0"
   },
   "devDependencies": {
     "@nuxt/eslint": "1.15.2",
@@ -53,8 +53,8 @@
     "prettier": "3.8.1",
     "typescript": "5.9.3",
     "vite-plugin-wasm": "3.6.0",
-    "vitest": "4.1.0",
+    "vitest": "4.1.2",
     "vue-tsc": "3.2.6"
   },
-  "packageManager": "pnpm@10.32.1"
+  "packageManager": "pnpm@10.33.0"
 }
