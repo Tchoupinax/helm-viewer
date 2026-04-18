@@ -12,8 +12,8 @@ importers:
         specifier: 6.4.1
         version: 6.4.1(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)
       npm-check-updates:
-        specifier: 20.0.2
-        version: 20.0.2
+        specifier: 21.0.0
+        version: 21.0.0
       prettier:
         specifier: 3.8.3
         version: 3.8.3
@@ -5068,9 +5068,9 @@ packages:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
     engines: {node: '>=0.10.0'}
 
-  npm-check-updates@20.0.2:
-    resolution: {integrity: sha512-nvbcXiprjMOoSX0FCHC41kjpZhNFURV53KMU0MMa0U10RPHeoHpiilMg2P8g9NLSQoo0umSH77tUqHWTOH3w7A==}
-    engines: {node: '>=20.0.0', npm: '>=8.12.1'}
+  npm-check-updates@21.0.0:
+    resolution: {integrity: sha512-iGFLoW1QWsEDLR6Cnklyk+iHTf20hS84o79idR6AKhjSwk0whMdCd5FS0bTgEe6gMrRnJ0fGr2P6BEZ2zOelYg==}
+    engines: {node: ^20.19.0 || ^22.12.0 || >=24.0.0, npm: '>=10.0.0'}
     hasBin: true
 
   npm-packlist@10.0.4:
@@ -12577,7 +12577,7 @@ snapshots:
 
   normalize-path@3.0.0: {}
 
-  npm-check-updates@20.0.2: {}
+  npm-check-updates@21.0.0: {}
 
   npm-packlist@10.0.4:
     dependencies:
