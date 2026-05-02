@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "knip": "6.6.1",
-    "npm-check-updates": "21.0.3",
+    "npm-check-updates": "22.0.1",
     "prettier": "3.8.3",
     "turbo": "2.9.6"
   },
