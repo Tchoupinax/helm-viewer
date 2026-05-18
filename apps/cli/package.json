@@ -57,5 +57,5 @@
     "vite-node": "6.0.0",
     "vitest": "4.1.6"
   },
-  "packageManager": "pnpm@10.33.4"
+  "packageManager": "pnpm@11.1.2"
 }
