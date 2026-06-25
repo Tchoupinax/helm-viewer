@@ -70,8 +70,8 @@ importers:
         specifier: 4.2.0
         version: 4.2.0
       npm-packlist:
-        specifier: 10.0.4
-        version: 10.0.4
+        specifier: 11.3.0
+        version: 11.3.0
       postject:
         specifier: 1.0.0-alpha.6
         version: 1.0.0-alpha.6
@@ -4317,9 +4317,9 @@ packages:
   ieee754@1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
 
-  ignore-walk@8.0.0:
-    resolution: {integrity: sha512-FCeMZT4NiRQGh+YkeKMtWrOmBgWjHjMJ26WQWrRQyoyzqevdaGSakUaJW5xQYmjLlUVk2qUnCjYVBax9EKKg8A==}
-    engines: {node: ^20.17.0 || >=22.9.0}
+  ignore-walk@9.0.0:
+    resolution: {integrity: sha512-tCBEZV2z2FNpIDl2vrhiWzIHzs4qOAuIDEO85eS02vZ3L1U3P56qpPL8GuGGAijDktAEaq2swMkO/Fmbo7YmfQ==}
+    engines: {node: ^22.22.2 || ^24.15.0 || >=26.0.0}
 
   ignore@5.3.2:
     resolution: {integrity: sha512-hsBTNUqQTDwkWtcdYI2i06Y/nUBEsNEDJKjWdigLvegy8kDuJAS8uRlpkkcQpyEXL0Z/pjDy5HBmMjRCJ2gq+g==}
@@ -5018,9 +5018,9 @@ packages:
     engines: {node: ^20.19.0 || ^22.12.0 || >=24.0.0, npm: '>=10.0.0'}
     hasBin: true
 
-  npm-packlist@10.0.4:
-    resolution: {integrity: sha512-uMW73iajD8hiH4ZBxEV3HC+eTnppIqwakjOYuvgddnalIw2lJguKviK1pcUJDlIWm1wSJkchpDZDSVVsZEYRng==}
-    engines: {node: ^20.17.0 || >=22.9.0}
+  npm-packlist@11.3.0:
+    resolution: {integrity: sha512-cS1yVkyriZgQAbiK8PtwhZHEtsFOsKHsCg5Ww2ONckAvXIspgqd6o4WirOzvkupU24iMRZ4xtO4kb2iK2rbnag==}
+    engines: {node: ^22.22.2 || ^24.15.0 || >=26.0.0}
 
   npm-run-path@5.3.0:
     resolution: {integrity: sha512-ppwTtiJZq0O/ai0z7yfudtBpWIoxM8yE6nHi1X47eFR2EWORqfbu6CnPlNsjeN683eT0qG6H/Pyf9fCcvjnnnQ==}
@@ -5563,9 +5563,9 @@ packages:
     resolution: {integrity: sha512-gjVS5hOP+M3wMm5nmNOucbIrqudzs9v/57bWRHQWLYklXqoXKrVfYW2W9+glfGsqtPgpiz5WwyEEB+ksXIx3gQ==}
     engines: {node: '>=18'}
 
-  proc-log@6.1.0:
-    resolution: {integrity: sha512-iG+GYldRf2BQ0UDUAd6JQ/RwzaQy6mXmsk/IzlYyal4A4SNFw54MeH4/tLkF4I5WoWG9SQwuqWzS99jaFQHBuQ==}
-    engines: {node: ^20.17.0 || >=22.9.0}
+  proc-log@7.0.0:
+    resolution: {integrity: sha512-FYgfaA69XZ93zaXLoMNQ+ViDXGGBgR8aLh03txzcFhV+9xOXx7+8DLCULrKKpR9+GsH9ZfHm82aSUPpozX0Ztg==}
+    engines: {node: ^22.22.2 || ^24.15.0 || >=26.0.0}
 
   process-nextick-args@2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}
@@ -11290,7 +11290,7 @@ snapshots:
 
   ieee754@1.2.1: {}
 
-  ignore-walk@8.0.0:
+  ignore-walk@9.0.0:
     dependencies:
       minimatch: 10.2.5
 
@@ -12062,10 +12062,11 @@ snapshots:
 
   npm-check-updates@22.2.3: {}
 
-  npm-packlist@10.0.4:
+  npm-packlist@11.3.0:
     dependencies:
-      ignore-walk: 8.0.0
-      proc-log: 6.1.0
+      glob: 13.0.6
+      ignore-walk: 9.0.0
+      proc-log: 7.0.0
 
   npm-run-path@5.3.0:
     dependencies:
@@ -12820,7 +12821,7 @@ snapshots:
     dependencies:
       parse-ms: 4.0.0
 
-  proc-log@6.1.0: {}
+  proc-log@7.0.0: {}
 
   process-nextick-args@2.0.1: {}
 
