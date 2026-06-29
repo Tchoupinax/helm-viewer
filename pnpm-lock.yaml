@@ -67,8 +67,8 @@ importers:
         specifier: ^2.4.0
         version: 2.6.0(@typescript-eslint/utils@8.62.0(eslint@10.5.0(jiti@2.7.0))(typescript@5.9.3))(eslint-import-resolver-node@0.3.10)(jiti@2.7.0)(typescript@5.9.3)
       js-yaml:
-        specifier: 4.2.0
-        version: 4.2.0
+        specifier: 5.2.0
+        version: 5.2.0
       npm-packlist:
         specifier: 10.0.4
         version: 10.0.4
@@ -118,8 +118,8 @@ importers:
         specifier: 1.1.6
         version: 1.1.6
       js-yaml:
-        specifier: 4.2.0
-        version: 4.2.0
+        specifier: 5.2.0
+        version: 5.2.0
       monaco-editor:
         specifier: 0.55.1
         version: 0.55.1
@@ -4633,6 +4633,10 @@ packages:
 
   js-yaml@4.2.0:
     resolution: {integrity: sha512-ePWsvanv0DWuDRsW8dnt+R4jQ31SCRCQ7hhNcPXZPsoBZiemuZNYGf7adZdqX2D86j6rvKp3RpCxVTSb8WQlOw==}
+    hasBin: true
+
+  js-yaml@5.2.0:
+    resolution: {integrity: sha512-YeLUMlvR4Ou1B119LIaM0r65JvbOBooJDc9yEu0dClb/uSC5P4FrLU8OCCz/HXWvtPoIrR0dRzABTjo1sTN9Bw==}
     hasBin: true
 
   jsdoc-type-pratt-parser@7.2.0:
@@ -11664,6 +11668,10 @@ snapshots:
   js-tokens@9.0.1: {}
 
   js-yaml@4.2.0:
+    dependencies:
+      argparse: 2.0.1
+
+  js-yaml@5.2.0:
     dependencies:
       argparse: 2.0.1
 
