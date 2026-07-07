@@ -49,7 +49,7 @@
     "eslint": "10.6.0",
     "eslint-config-tchoupinax": "^2.4.0",
     "js-yaml": "4.3.0",
-    "npm-packlist": "10.0.4",
+    "npm-packlist": "11.3.0",
     "postject": "1.0.0-alpha.6",
     "prettier": "3.9.4",
     "typescript": "5.9.3",
