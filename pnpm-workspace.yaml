@@ -1,3 +1,7 @@
 packages:
-- apps/cli
-- apps/webapp
+  - apps/cli
+  - apps/webapp
+allowBuilds:
+  '@parcel/watcher': false
+  esbuild: false
+  unrs-resolver: false
