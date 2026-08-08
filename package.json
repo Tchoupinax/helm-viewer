@@ -12,10 +12,10 @@
     "check": "gitleaks dir -v && gitleaks git -v"
   },
   "devDependencies": {
-    "npm-check-updates": "23.0.0",
-    "knip": "6.25.0",
-    "prettier": "3.9.4",
-    "turbo": "2.10.4"
+    "npm-check-updates": "23.0.1",
+    "knip": "6.31.0",
+    "prettier": "3.9.6",
+    "turbo": "2.10.8"
   },
-  "packageManager": "pnpm@11.13.0"
+  "packageManager": "pnpm@11.20.0"
 }
