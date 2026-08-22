@@ -1,5 +1,28 @@
 # Changelog
 
+## 1.0.0 | 2026-08-22
+
+First stable release. The viewer keeps the same local-first, encrypted-share workflow, with a rebuilt interface.
+
+#### Features
+
+- Redesign the web UI: header with chart metadata, filterable sidebar, editor chrome, and status bar
+- Add light and dark themes, with a toggle persisted in the browser
+- Show recent charts on the empty state
+- Display a live watch / snapshot indicator when the CLI websocket is connected
+
+#### Fixes
+
+- Open source files under `templates/` correctly
+- Keep the current file after a live chart reload
+- Allow dismissing Helm render errors
+
+#### Chores
+
+- Align CLI, webapp, and workspace versions
+- Require Node.js >= 20 on the published CLI package
+- Upgrade dependencies
+
 ## 0.19.0 | 2024-11-04
 
 #### Chores

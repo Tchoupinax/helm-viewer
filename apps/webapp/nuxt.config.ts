@@ -1,4 +1,5 @@
 import wasm from "@rollup/plugin-wasm";
+
 import { defineNuxtConfig } from "nuxt/config";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
@@ -17,12 +18,25 @@ export default defineNuxtConfig({
     "nuxt3-notifications",
     "nuxt-monaco-editor",
   ],
+  css: ["~/assets/css/main.css"],
   experimental: {
     payloadExtraction: false,
   },
   app: {
     head: {
+      title: "helm-viewer",
+      htmlAttrs: { lang: "en" },
+      meta: [
+        {
+          name: "description",
+          content: "Instantly visualize your Helm chart templates",
+        },
+      ],
       script: [
+        {
+          innerHTML:
+            "try{document.documentElement.dataset.theme=localStorage.getItem('helm-viewer-theme')==='dark'?'dark':'light'}catch(e){}",
+        },
         {
           src: "https://www.gstatic.com/charts/loader.js",
           type: "text/javascript",
