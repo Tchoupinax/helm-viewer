@@ -1,0 +1,163 @@
+:root,
+[data-theme="light"] {
+  --ink: #f4f1ea;
+  --harbor: #fffdf8;
+  --dock: #ebe6dc;
+  --line: #d8d0c4;
+  --foam: #1c2430;
+  --mist: #667384;
+  --signal: #0f8f86;
+  --brass: #9a7420;
+  --coral: #c23b4a;
+  --editor: #ffffff;
+  --overlay: rgb(28 36 48 / 0.28);
+  --grid: rgba(28, 36, 48, 0.04);
+  --glow: rgba(15, 143, 134, 0.08);
+  --thumb: #c8c0b4;
+  --thumb-hover: #b0a898;
+  --notify-shadow: rgba(28, 36, 48, 0.12);
+}
+
+[data-theme="dark"] {
+  --ink: #0a0e13;
+  --harbor: #121820;
+  --dock: #1a222c;
+  --line: #2c3644;
+  --foam: #dce6f0;
+  --mist: #7d8b9a;
+  --signal: #3ecfbf;
+  --brass: #e0b45a;
+  --coral: #e06c75;
+  --editor: #1e1e1e;
+  --overlay: rgb(10 14 19 / 0.5);
+  --grid: rgba(255, 255, 255, 0.018);
+  --glow: rgba(62, 207, 191, 0.07);
+  --thumb: #3a4554;
+  --thumb-hover: #516073;
+  --notify-shadow: rgba(0, 0, 0, 0.35);
+}
+
+html,
+body,
+#__nuxt {
+  height: 100%;
+  background: var(--ink);
+  color: var(--foam);
+}
+
+body {
+  font-family:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  background-image:
+    radial-gradient(ellipse 90% 50% at 50% -25%, var(--glow), transparent 55%),
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size:
+    100% 100%,
+    28px 28px,
+    28px 28px;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--signal) 28%, transparent);
+  color: var(--foam);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--thumb);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--thumb-hover);
+}
+
+.font-display {
+  font-family:
+    ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+}
+
+.bg-ink { background-color: var(--ink); }
+.bg-ink\/50 { background-color: var(--overlay); }
+.bg-harbor { background-color: var(--harbor); }
+.bg-harbor\/80 { background-color: color-mix(in srgb, var(--harbor) 80%, transparent); }
+.bg-harbor\/90 { background-color: color-mix(in srgb, var(--harbor) 90%, transparent); }
+.bg-dock { background-color: var(--dock); }
+.bg-dock\/70 { background-color: color-mix(in srgb, var(--dock) 70%, transparent); }
+.hover\:bg-dock:hover { background-color: var(--dock); }
+.bg-signal { background-color: var(--signal); }
+.bg-signal\/10 { background-color: color-mix(in srgb, var(--signal) 10%, transparent); }
+.hover\:bg-signal\/90:hover { background-color: color-mix(in srgb, var(--signal) 90%, transparent); }
+.bg-mist { background-color: var(--mist); }
+.bg-editor { background-color: var(--editor); }
+
+.text-ink { color: var(--ink); }
+.text-foam { color: var(--foam); }
+.hover\:text-foam:hover { color: var(--foam); }
+.group:hover .group-hover\:text-foam { color: var(--foam); }
+.text-mist { color: var(--mist); }
+.placeholder\:text-mist\/70::placeholder { color: color-mix(in srgb, var(--mist) 70%, transparent); }
+.text-signal { color: var(--signal); }
+.text-signal\/70 { color: color-mix(in srgb, var(--signal) 75%, transparent); }
+.text-brass { color: var(--brass); }
+.text-coral { color: var(--coral); }
+
+.border-line { border-color: var(--line); }
+
+.ring-line { --tw-ring-color: var(--line); }
+.focus-within\:ring-signal\/50:focus-within { --tw-ring-color: color-mix(in srgb, var(--signal) 50%, transparent); }
+.hover\:ring-signal\/40:hover { --tw-ring-color: color-mix(in srgb, var(--signal) 40%, transparent); }
+
+.vue-notification-group {
+  margin: 16px !important;
+}
+
+.vue-notification {
+  background: var(--harbor) !important;
+  border: 1px solid var(--line) !important;
+  border-left: 3px solid var(--signal) !important;
+  color: var(--foam) !important;
+  font-size: 13px !important;
+  box-shadow: 0 12px 40px var(--notify-shadow) !important;
+}
+
+.vue-notification.info,
+.vue-notification.success {
+  border-left-color: var(--signal) !important;
+}
+
+.vue-notification.error {
+  border-left-color: var(--coral) !important;
+}
+
+.drawer-enter-active,
+.drawer-leave-active {
+  transition:
+    transform 0.22s ease,
+    opacity 0.22s ease;
+}
+
+.drawer-enter-from,
+.drawer-leave-to {
+  transform: translateX(16px);
+  opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.18s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}

@@ -27,7 +27,7 @@ async function run() {
   checkNodeVersion();
 
   const args = getArguments();
-  const version = "0.25.0";
+  const version = "1.0.0";
 
   // Display options
   if (args.values.help) {
