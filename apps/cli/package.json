@@ -51,7 +51,7 @@
     "@vercel/ncc": "0.44.1",
     "eslint": "10.9.0",
     "eslint-config-tchoupinax": "^2.6.1",
-    "js-yaml": "4.3.0",
+    "js-yaml": "5.4.1",
     "npm-packlist": "11.3.0",
     "postject": "1.0.0-alpha.6",
     "prettier": "3.9.6",
