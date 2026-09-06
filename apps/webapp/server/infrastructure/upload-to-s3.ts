@@ -4,11 +4,12 @@ import {
   S3Client,
   type S3ClientConfig,
 } from "@aws-sdk/client-s3";
+
 import { join } from "path";
 
 export async function uploadFileToS3(
   path: string,
-  content: string
+  content: string,
 ): Promise<PutObjectCommandOutput> {
   const command = new PutObjectCommand({
     Body: content,

@@ -5,16 +5,15 @@ export type HistoryItem = {
   id: string;
 };
 
-export class History {
-  private static key = "helm-viewer-history";
+const HISTORY_KEY = "helm-viewer-history";
 
-  static list(): Array<HistoryItem> {
-    return JSON.parse(localStorage.getItem(this.key) ?? "[]");
-  }
-
-  static append(element: HistoryItem) {
-    const histories = this.list();
+export const History = {
+  list(): Array<HistoryItem> {
+    return JSON.parse(localStorage.getItem(HISTORY_KEY) ?? "[]") as Array<HistoryItem>;
+  },
+  append(element: HistoryItem) {
+    const histories = History.list();
     histories.push(element);
-    localStorage.setItem(this.key, JSON.stringify(histories));
-  }
-}
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(histories));
+  },
+};

@@ -1,6 +1,6 @@
 import chalk from "chalk";
 import { randomUUID } from "crypto";
-import { $, execaCommandSync } from "execa";
+import { $, execaCommandSync, ExecaError } from "execa";
 import {
   mkdirSync,
   readdirSync,
@@ -12,13 +12,41 @@ import yaml from "js-yaml";
 import { tmpdir } from "os";
 import { join } from "path";
 
+export type ChartSources = Record<string, string>;
+export type ChartTemplated = Record<string, Record<string, string>>;
+export type ChartPayload = {
+  name: string;
+  sources: ChartSources;
+  templated: ChartTemplated;
+  version: string;
+};
+
+type K8sResource = {
+  kind?: string;
+  metadata?: {
+    name?: string;
+  };
+};
+
+function helmErrorMessage(err: unknown): string {
+  if (err instanceof ExecaError && typeof err.stderr === "string") {
+    return err.stderr;
+  }
+
+  if (err instanceof Error) {
+    return err.message;
+  }
+
+  return "Unknown helm error";
+}
+
 export async function computeChart(
   currentPath: string,
   releaseName: string,
   valuesPathArray: Array<string> = [],
-) {
+): Promise<ChartPayload> {
   // eslint-disable-next-line prefer-const
-  let { stdout, error } = await computeCommands(
+  let { stdout, error } = computeCommands(
     releaseName,
     valuesPathArray,
     currentPath,
@@ -32,7 +60,7 @@ export async function computeChart(
       );
       const $$ = $({ cwd: currentPath });
       await $$`helm dependency build`;
-      ({ stdout } = await computeCommands(
+      ({ stdout } = computeCommands(
         releaseName,
         valuesPathArray,
         currentPath,
@@ -42,10 +70,10 @@ export async function computeChart(
     throw new Error(error);
   }
 
-  const { templated } = await computeTemplated(stdout);
-  const { sources } = await computeSources(stdout, currentPath);
+  const { templated } = computeTemplated(stdout ?? "");
+  const { sources } = computeSources(stdout ?? "", currentPath);
 
-  const { version, name } = yaml.load(sources["Chart.yaml"]) as {
+  const { version, name } = yaml.load(sources["Chart.yaml"] ?? "") as {
     version: string;
     name: string;
   };
@@ -58,19 +86,19 @@ export async function computeChart(
   };
 }
 
-export async function computeTemplated(
+export function computeTemplated(
   chartInYaml: string,
-): Promise<{ templated: any }> {
-  const dataFileJSON = { templated: {} };
+): { templated: ChartTemplated } {
+  const dataFileJSON: { templated: ChartTemplated } = { templated: {} };
   const files = chartInYaml.split("---");
 
   for (const file of files) {
-    const jsonFile = yaml.load(file) as any;
-    if (jsonFile) {
-      if (!dataFileJSON["templated"][jsonFile.kind]) {
-        dataFileJSON["templated"][jsonFile.kind] = {};
+    const jsonFile = yaml.load(file) as K8sResource | undefined;
+    if (jsonFile?.kind && jsonFile.metadata?.name) {
+      if (!dataFileJSON.templated[jsonFile.kind]) {
+        dataFileJSON.templated[jsonFile.kind] = {};
       }
-      dataFileJSON["templated"][jsonFile.kind][jsonFile?.metadata?.name] = file;
+      dataFileJSON.templated[jsonFile.kind][jsonFile.metadata.name] = file;
     }
   }
 
@@ -80,22 +108,22 @@ type Result = {
   stdout?: string;
   error?: string;
 };
-async function computeCommands(
+function computeCommands(
   releaseName: string,
   valuesPathArray: Array<string> = [],
   currentPath: string,
-): Promise<Result> {
+): Result {
   // https://github.com/helm/helm/issues/3553
   const namespace = "--namespace fake-namespace-ded";
 
-  let stdout;
+  let stdout: string | undefined;
   if (valuesPathArray.length === 0) {
     try {
       ({ stdout } = execaCommandSync(
         `helm template ${namespace} --name-template ${releaseName} ${currentPath}`,
       ));
     } catch (err) {
-      return { error: (err).stderr as string };
+      return { error: helmErrorMessage(err) };
     }
   } else if (valuesPathArray.length === 1) {
     try {
@@ -103,7 +131,7 @@ async function computeCommands(
         `helm template ${namespace} --name-template ${releaseName} ${currentPath}`,
       ));
     } catch (err) {
-      return { error: (err).stderr as string };
+      return { error: helmErrorMessage(err) };
     }
   } else if (valuesPathArray.length === 2) {
     try {
@@ -111,28 +139,28 @@ async function computeCommands(
         `helm template ${namespace} --name-template ${releaseName} ${currentPath} --values ${valuesPathArray[0]} --values ${valuesPathArray[1]}`,
       ));
     } catch (err) {
-      return { error: (err).stderr as string };
+      return { error: helmErrorMessage(err) };
     }
   }
   return { stdout };
 }
 
-export async function computeSources(
+export function computeSources(
   chartInYaml: string,
   currentPath: string,
-): Promise<{ sources: any }> {
+): { sources: ChartSources } {
   const tmpDir = `${tmpdir()}/${randomUUID()}`;
   mkdirSync(tmpDir, { recursive: true });
   mkdirSync(`${tmpDir}/sources`, { recursive: true });
   mkdirSync(`${tmpDir}/templated`, { recursive: true });
 
-  const dataFileJSON = { sources: {} };
+  const dataFileJSON: { sources: ChartSources } = { sources: {} };
   const yamlFiles = chartInYaml.split("---");
 
   for (const file of yamlFiles) {
-    const jsonFile = yaml.load(file) as any;
-    if (jsonFile) {
-      const key = jsonFile.kind + "-" + jsonFile?.metadata?.name;
+    const jsonFile = yaml.load(file) as K8sResource | undefined;
+    if (jsonFile?.kind && jsonFile.metadata?.name) {
+      const key = `${jsonFile.kind}-${jsonFile.metadata.name}`;
       writeFileSync(`${tmpDir}/templated/${key}.yaml`, file);
     }
   }
@@ -144,7 +172,7 @@ export async function computeSources(
 
     if (!statSync(fileFullPath).isDirectory()) {
       const fileContent = readFileSync(fileFullPath);
-      dataFileJSON["sources"][file] = String(fileContent);
+      dataFileJSON.sources[file] = String(fileContent);
     }
   }
 
