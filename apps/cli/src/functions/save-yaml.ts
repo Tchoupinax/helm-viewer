@@ -8,23 +8,37 @@ import {
 import yaml from "js-yaml";
 import { join } from "path";
 
+import { type ChartSources, type ChartTemplated } from "./compute-chart";
+
+type K8sResource = {
+  kind?: string;
+  metadata?: {
+    name?: string;
+  };
+};
+
+type GlobalData = {
+  sources?: Record<string, string | Record<string, string>>;
+  templated: ChartTemplated;
+};
+
 export function saveTemplatedYamlToFiles(
   tmpDir: string,
   helmTemplate: string,
 ): void {
-  const dataFileJSON = { templated: {} };
+  const dataFileJSON: GlobalData = { templated: {} };
   const files = helmTemplate.split("---");
 
   for (const file of files) {
-    const jsonFile = yaml.load(file) as any;
-    if (jsonFile) {
-      const key = jsonFile.kind + "-" + jsonFile?.metadata?.name;
+    const jsonFile = yaml.load(file) as K8sResource | undefined;
+    if (jsonFile?.kind && jsonFile.metadata?.name) {
+      const key = `${jsonFile.kind}-${jsonFile.metadata.name}`;
       writeFileSync(`${tmpDir}/templated/${key}.yaml`, file);
 
-      if (!dataFileJSON["templated"][jsonFile.kind]) {
-        dataFileJSON["templated"][jsonFile.kind] = {};
+      if (!dataFileJSON.templated[jsonFile.kind]) {
+        dataFileJSON.templated[jsonFile.kind] = {};
       }
-      dataFileJSON["templated"][jsonFile.kind][jsonFile?.metadata?.name] = file;
+      dataFileJSON.templated[jsonFile.kind][jsonFile.metadata.name] = file;
     }
   }
 
@@ -41,11 +55,13 @@ export function saveSourcesYamlToFiles(
 ): void {
   const dataFileJSON = JSON.parse(
     readFileSync(`${tmpDir}/global-data.json`, "utf-8"),
-  );
-  if (!dataFileJSON["sources"]) {
-    dataFileJSON["sources"] = {};
+  ) as GlobalData;
+  if (!dataFileJSON.sources) {
+    dataFileJSON.sources = {};
   }
 
+  const sources: ChartSources | Record<string, string | Record<string, string>> =
+    dataFileJSON.sources;
   const files = readdirSync(path);
 
   for (const file of files.filter(name => !name.includes("tgz"))) {
@@ -56,7 +72,7 @@ export function saveSourcesYamlToFiles(
       let destinationPath = `${tmpDir}/sources/${file}`;
 
       const lastParts = path.split("/");
-      const lastPart = lastParts[path.split("/").length - 1];
+      const lastPart = lastParts[lastParts.length - 1] ?? "";
 
       if (prefix) {
         mkdirSync(`${tmpDir}/sources/${lastPart}`, {
@@ -67,13 +83,17 @@ export function saveSourcesYamlToFiles(
       writeFileSync(destinationPath, fileContent);
 
       if (!prefix) {
-        dataFileJSON["sources"][file] = String(fileContent);
+        sources[file] = String(fileContent);
       } else {
-        if (!dataFileJSON["sources"][lastPart]) {
-          dataFileJSON["sources"][lastPart] = {};
+        const folder = sources[lastPart];
+        if (!folder || typeof folder === "string") {
+          sources[lastPart] = {};
         }
 
-        dataFileJSON["sources"][lastPart][file] = String(fileContent);
+        const nested = sources[lastPart];
+        if (nested && typeof nested !== "string") {
+          nested[file] = String(fileContent);
+        }
         writeFileSync(
           `${tmpDir}/global-data.json`,
           JSON.stringify(dataFileJSON, null, 2),

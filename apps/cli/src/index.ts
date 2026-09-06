@@ -10,7 +10,7 @@ import open from "open";
 import { tmpdir } from "os";
 
 import { checkNodeVersion } from "./functions/check-node-version";
-import { computeChart } from "./functions/compute-chart";
+import { type ChartPayload, computeChart } from "./functions/compute-chart";
 import { computeUrls } from "./functions/compute-urls";
 import { encrypt } from "./functions/encryption";
 import { watchHelmChartFilesModifications } from "./functions/file-watcher";
@@ -80,7 +80,7 @@ async function run() {
   }
 
   // Template files and save them
-  let payload;
+  let payload: ChartPayload;
   try {
     payload = await computeChart(
       currentPath,
@@ -97,7 +97,7 @@ async function run() {
     process.exit(1);
   }
 
-  let browser = null;
+  let browser: BrowserName = "default";
   if (process.env.HELM_VIEWER_FAVORITE_BROWSER) {
     browser = process.env.HELM_VIEWER_FAVORITE_BROWSER as BrowserName;
   }
@@ -121,7 +121,7 @@ async function run() {
 }
 
 async function pushOnlineFunction(
-  payload: { name: string; version: string; templated: any; sources: any },
+  payload: ChartPayload,
   encryptionKey: string,
 ) {
   const id = nanoid();
@@ -157,7 +157,7 @@ async function pushOnlineFunction(
 }
 
 async function serveLocally(
-  payload: { name: string; version: string; templated: any; sources: any },
+  payload: ChartPayload,
   currentPath: string,
   watchingMode: boolean,
   browserName: BrowserName,
@@ -191,4 +191,4 @@ async function serveLocally(
   }
 }
 
-run();
+void run();

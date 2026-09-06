@@ -4,10 +4,11 @@ import {
   S3Client,
   type S3ClientConfig,
 } from "@aws-sdk/client-s3";
+
 import { join } from "path";
 
 export async function readFileFromS3(
-  path: string
+  path: string,
 ): Promise<string | undefined> {
   const command = new GetObjectCommand({
     Bucket: process.env.BACKEND_S3_BUCKETNAME,

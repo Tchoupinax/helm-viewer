@@ -1,6 +1,9 @@
 packages:
   - apps/cli
   - apps/webapp
+# The local pnpm (12.0.0-rc via mise) cannot download 12.3.4:
+# it rejects --no-dangerously-allow-all-builds. mise pins the real 12.3.4.
+pmOnFail: ignore
 allowBuilds:
   '@parcel/watcher': false
   esbuild: false

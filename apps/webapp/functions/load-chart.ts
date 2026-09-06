@@ -11,8 +11,8 @@ export async function loadChart(id: string): Promise<Payload> {
 
   if (!localStorage.getItem(key)) {
     await fetch("http://localhost:12095")
-      .then((res) => res.json())
-      .then((payload) => {
+      .then(res => res.json())
+      .then(payload => {
         History.append({
           date: new Date(),
           id: id ?? "",
@@ -20,8 +20,8 @@ export async function loadChart(id: string): Promise<Payload> {
         });
       });
 
-    const payload = await fetch("http://localhost:12094").then((res) =>
-      res.json()
+    const payload = await fetch("http://localhost:12094").then(res =>
+      res.json(),
     );
     console.log(payload);
     localStorage.setItem(key, payload);

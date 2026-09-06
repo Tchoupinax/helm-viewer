@@ -17,25 +17,33 @@ export function startWebsocketServer(currentPath: string, releaseName: string) {
   wss.on("connection", function connection(ws) {
     ws.on("error", console.error);
 
-    helmChartModifiedEvent.addListener("changed", async (filePath: string) => {
-      try {
-        const payload = await computeChart(currentPath, releaseName);
-        ws.send(
-          JSON.stringify({
-            filePath,
-            chartContentUpdated: payload,
-            error: null,
-          }),
-        );
-      } catch (err) {
-        ws.send(
-          JSON.stringify({
-            filePath: null,
-            chartContentUpdated: null,
-            error: (err).stderr,
-          }),
-        );
-      }
+    helmChartModifiedEvent.addListener("changed", (filePath: string) => {
+      void computeChart(currentPath, releaseName)
+        .then(payload => {
+          ws.send(
+            JSON.stringify({
+              filePath,
+              chartContentUpdated: payload,
+              error: null,
+            }),
+          );
+        })
+        .catch((err: unknown) => {
+          const message =
+            err instanceof Error && "stderr" in err
+              ? String((err as { stderr?: string }).stderr)
+              : err instanceof Error
+                ? err.message
+                : "Unknown helm error";
+
+          ws.send(
+            JSON.stringify({
+              filePath: null,
+              chartContentUpdated: null,
+              error: message,
+            }),
+          );
+        });
     });
   });
 }
