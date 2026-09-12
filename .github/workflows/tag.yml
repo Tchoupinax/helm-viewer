@@ -40,7 +40,7 @@ jobs:
         echo "Version: $VERSION"
 
     - name: Check build success 🦫
-      uses: tchoupinax/repo-config/shared-actions/steps/node/build@v0.9.2
+      uses: tchoupinax/repo-config/shared-actions/steps/node/build@v0.9.4
       with:
         nodeVersion: 25
         workingDirectory: apps/cli
@@ -73,13 +73,13 @@ jobs:
 
     steps:
     - name: Build application 🦫
-      uses: tchoupinax/repo-config/shared-actions/steps/node/build@v0.9.2
+      uses: tchoupinax/repo-config/shared-actions/steps/node/build@v0.9.4
       with:
         nodeVersion: 25
         workingDirectory: apps/webapp
 
     - name: Set up QEMU
-      uses: docker/setup-qemu-action@v4.2.0
+      uses: docker/setup-qemu-action@v4.3.0
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v4.3.0
