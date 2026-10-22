@@ -1,4 +1,4 @@
-FROM node:25-alpine AS builder
+FROM node:26.12.1-alpine AS builder
 
 RUN apk add --no-cache --virtual .gyp git
 
@@ -22,7 +22,7 @@ RUN pnpm build
 #########################################################
 #########################################################
 
-FROM node:25-alpine
+FROM node:26.12.1-alpine
 
 WORKDIR /app
 

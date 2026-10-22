@@ -6,7 +6,7 @@
   "license": "MIT",
   "private": true,
   "engines": {
-    "node": "24.x"
+    "node": ">=24.22.1"
   },
   "homepage": "https://github.com/Tchoupinax/helm-viewer",
   "repository": {
