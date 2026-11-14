@@ -13,9 +13,9 @@
   },
   "devDependencies": {
     "npm-check-updates": "23.1.1",
-    "knip": "6.44.1",
-    "prettier": "3.9.10",
+    "knip": "6.45.1",
+    "prettier": "3.10.0",
     "turbo": "2.11.10"
   },
-  "packageManager": "pnpm@12.17.0"
+  "packageManager": "pnpm@12.18.0"
 }
