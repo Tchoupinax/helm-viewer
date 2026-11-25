@@ -55,7 +55,7 @@
     "eslint-config-tchoupinax": "^2.6.1",
     "eslint-plugin-perfectionist": "5.14.0",
     "prettier": "3.10.1",
-    "typescript": "5.9.3",
+    "typescript": "6.0.3",
     "vite-plugin-wasm": "3.6.0",
     "vitest": "5.1.1",
     "vue-tsc": "3.3.14"
