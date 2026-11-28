@@ -26,18 +26,18 @@
     "watch": "nuxt dev"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "3.1171.0",
+    "@aws-sdk/client-s3": "3.1177.0",
     "@kyvg/vue3-notification": "3.4.2",
     "@nuxt/devtools": "latest",
     "@nuxtjs/tailwindcss": "6.14.0",
-    "@types/node": "26.6.6",
+    "@types/node": "26.6.10",
     "body-scroll-lock": "4.0.0-beta.0",
     "crypto-js": "4.2.0",
     "js-levenshtein": "1.1.6",
     "js-yaml": "4.3.2",
-    "monaco-editor": "0.57.0",
+    "monaco-editor": "0.58.0",
     "nanoid": "6.0.2",
-    "nuxt": "4.6.4",
+    "nuxt": "4.7.0",
     "nuxt-monaco-editor": "1.5.0",
     "nuxt-shiki": "0.3.2",
     "nuxt3-notifications": "1.4.0",
@@ -57,8 +57,8 @@
     "prettier": "3.10.1",
     "typescript": "5.9.3",
     "vite-plugin-wasm": "3.6.0",
-    "vitest": "5.1.1",
+    "vitest": "5.1.2",
     "vue-tsc": "3.3.14"
   },
-  "packageManager": "pnpm@12.21.0"
+  "packageManager": "pnpm@12.23.0"
 }
